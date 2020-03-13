@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {
     Col, Card, CardBody,
     CardTitle, Button, Form, FormGroup, Label, Input, FormText
