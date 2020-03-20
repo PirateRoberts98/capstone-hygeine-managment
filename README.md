@@ -41,3 +41,6 @@ This created another folder in the root of your project named build. You'll have
     serve -s build -l 4000
                                                         
 This will start a local web server on port 4000, on which the production folder (/build/) will be available in your browser.
+
+### References
+Logo - https://www.e-apostolidis.gr/wp-content/uploads/2018/07/image_thumb_64DE19F2.png
