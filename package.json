@@ -1,28 +1,28 @@
 {
-  "name": "architectui-react-theme-free",
   "version": "1.0.0",
   "private": true,
-  "description": "ArchitectUI - Bootstrap 4 ReactJS Admin Dashboard Template FREE",
-  "author": "DashboardPack.com",
+  "description": "CapstoneProject",
+  "author": "Group2CEG4912",
   "homepage": "",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DashboardPack/architectui-react-theme-free"
+    "type": "gitlab",
+    "url": "https://gitlab.com/ceg4912project/webappv2"
   },
   "dependencies": {
+    "@babel/core": "^7.8.7",
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-brands-svg-icons": "^5.7.2",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "ajv": "^6.12.0",
+    "@types/googlemaps": "^3.39.3",
+    "@types/markerclustererplus": "^2.1.33",
     "autoprefixer": "9.4.2",
     "babel-core": "^6.26.3",
     "babel-eslint": "7.2.3",
-    "babel-jest": "^25.1.0",
-    "babel-loader": "7.1.1",
-    "babel-preset-react-app": "^3.0.2",
+    "babel-loader": "^8.0.0",
+    "babel-preset-react-app": "^9.0.0",
     "babel-runtime": "6.26.0",
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.4.1",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chart.js": "^2.7.2",
     "chroma-js": "^2.0.2",
@@ -46,11 +46,11 @@
     "gh-pages": "^2.0.1",
     "globalize": "^0.1.1",
     "google-map-react": "^1.1.2",
-    "hamburgers": "^1.1.3",
+    "hamburgers": "^0.8.1",
     "html-webpack-plugin": "3.2.0",
     "i": "^0.3.6",
     "identicon.js": "^2.3.3",
-    "jest": "^25.1.0",
+    "immutable": "^3.0.0",
     "jquery": "^3.4.1",
     "jw-react-pagination": "^1.0.7",
     "lorem-ipsum": "^1.0.6",
@@ -78,11 +78,11 @@
     "react-getscreen": "^1.1.3",
     "react-google-maps": "^9.4.5",
     "react-hamburgers": "^1.0.0",
-    "react-map-gl": "^4.0.5",
+    "react-map-gl": "^5.2.3",
     "react-metismenu": "^1.4.0",
     "react-motion": "^0.5.2",
     "react-perfect-scrollbar": "^1.4.4",
-    "react-redux": "^7.2.0",
+    "react-redux": "^7.0.0",
     "react-redux-form": "^1.16.12",
     "react-responsive-tabs": "^3.0.0",
     "react-router-dom": "^4.4.0-beta.6",
@@ -91,7 +91,7 @@
     "react-simple-maps": "^0.12.1",
     "react-sizeme": "^2.5.2",
     "react-toastify": "^4.5.2",
-    "react-transition-group": "^2.5.3",
+    "react-transition-group": "^2.9.0",
     "reactstrap": "^6.5.0",
     "recharts": "^1.3.2",
     "redux": "^4.0.1",
@@ -103,19 +103,18 @@
     "style-loader": "0.18.2",
     "styled-components": "^4.1.3",
     "sw-precache-webpack-plugin": "0.11.5",
-    "url-loader": "^3.0.0",
+    "url-loader": "^1.0.0",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.0.0",
-    "webpack-manifest-plugin": "1.2.1",
-    "webpack-split-chunks": "^0.2.1",
-    "whatwg-fetch": "2.0.3",
-    "window-resize-listener-react": "^1.1.0"
+    "webpack-manifest-plugin": "2.2.0",
+    "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
     "animate-sass": "^0.8.2",
-    "css-loader": "^1.0.1",
+    "css-loader": "^0.1.0",
     "node-sass": "^4.10.0",
-    "sass-loader": "^6.0.6"
+    "sass-loader": "^6.0.6",
+    "webpack-inline-manifest-plugin": "^4.0.1"
   },
   "scripts": {
     "start": "cross-env NODE_PATH=./src node scripts/start.js",
@@ -123,39 +122,6 @@
     "test": "cross-env NODE_PATH=./src node scripts/test.js --env=jsdom",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ]
   },
   "babel": {
     "presets": [
