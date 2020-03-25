@@ -3,13 +3,13 @@ import {Route} from 'react-router-dom';
 
 // Charts
 
-import ChartsChartJs from "./ChartJs/";
+import ChartsChartJs from "./ChartJs";
 
 // Layout
 
-import AppHeader from '../../Layout/AppHeader/';
-import AppSidebar from '../../Layout/AppSidebar/';
-import AppFooter from '../../Layout/AppFooter/';
+import AppHeader from '../../Layout/AppHeader';
+import AppSidebar from '../../Layout/AppSidebar';
+import AppFooter from '../../Layout/AppFooter';
 
 const Charts = ({match}) => (
     <Fragment>

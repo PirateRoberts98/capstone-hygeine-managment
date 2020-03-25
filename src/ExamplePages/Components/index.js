@@ -5,38 +5,38 @@ import {Route} from 'react-router-dom';
 
 // Tabs
 
-import TabExample from './Tabs/';
+import TabExample from './Tabs';
 
 // Notifications
 
-import NotificationsExamples from './Notifications/';
+import NotificationsExamples from './Notifications';
 
 
 // Tooltips & Popovers
 
-import TooltipsPopoversExample from './TooltipsPopovers/';
+import TooltipsPopoversExample from './TooltipsPopovers';
 
 // Modals
 
-import ModalsExample from './Modal/';
+import ModalsExample from './Modal';
 
 // Progress Bar
 
-import ProgressBarsExamples from './ProgressBar/';
+import ProgressBarsExamples from './ProgressBar';
 
 // Carousel
 
-import CarouselExample from './Carousel/';
+import CarouselExample from './Carousel';
 
 // Maps
 
-import MapsExample from './Maps/';
+import MapsExample from './Maps';
 
 // Layout
 
-import AppHeader from '../../Layout/AppHeader/';
-import AppSidebar from '../../Layout/AppSidebar/';
-import AppFooter from '../../Layout/AppFooter/';
+import AppHeader from '../../Layout/AppHeader';
+import AppSidebar from '../../Layout/AppSidebar';
+import AppFooter from '../../Layout/AppFooter';
 
 const Components = ({match}) => (
     <Fragment>

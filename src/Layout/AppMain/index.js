@@ -5,20 +5,46 @@ import {
     ToastContainer,
 } from 'react-toastify';
 
-const Dashboards = lazy(() => import('../../Pages/Dashboards'));
+//These will be used for the Health Monitoring System.
+const MainDashboard = lazy(() => import('../../Pages/Dashboard'));
 
-const Widgets = lazy(() => import('../../Pages/Widgets'));
-const Elements = lazy(() => import('../../Pages/Elements'));
-const Components = lazy(() => import('../../Pages/Components'));
-const Charts = lazy(() => import('../../Pages/Charts'));
-const Forms = lazy(() => import('../../Pages/Forms'));
-const Tables = lazy(() => import('../../Pages/Tables'));
+//These are all examples.
+const Dashboards = lazy(() => import('../../ExamplePages/Dashboards'));
+const Widgets = lazy(() => import('../../ExamplePages/Widgets'));
+const Elements = lazy(() => import('../../ExamplePages/Elements'));
+const Components = lazy(() => import('../../ExamplePages/Components'));
+const Charts = lazy(() => import('../../ExamplePages/Charts'));
+const Forms = lazy(() => import('../../ExamplePages/Forms'));
+const Tables = lazy(() => import('../../ExamplePages/Tables'));
 
 const AppMain = () => {
 
     return (
         <Fragment>
+            {/* Health Monitoring System Routes */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/maindashboard" component={MainDashboard}/>
+            </Suspense>
 
+
+
+
+            {/**
+             * Everything below here are Examples of Routes
+             * 
+             * 
+             * 
+             * 
+             */}
             {/* Components */}
 
             <Suspense fallback={
@@ -125,7 +151,7 @@ const AppMain = () => {
             </Suspense>
 
             <Route exact path="/" render={() => (
-                <Redirect to="/dashboards/basic"/>
+                <Redirect to="/maindashboard"/>
             )}/>
             <ToastContainer/>
         </Fragment>
