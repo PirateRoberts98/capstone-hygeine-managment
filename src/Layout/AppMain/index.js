@@ -5,14 +5,14 @@ import {
     ToastContainer,
 } from 'react-toastify';
 
-const Dashboards = lazy(() => import('../../DemoPages/Dashboards'));
+const Dashboards = lazy(() => import('../../Pages/Dashboards'));
 
-const Widgets = lazy(() => import('../../DemoPages/Widgets'));
-const Elements = lazy(() => import('../../DemoPages/Elements'));
-const Components = lazy(() => import('../../DemoPages/Components'));
-const Charts = lazy(() => import('../../DemoPages/Charts'));
-const Forms = lazy(() => import('../../DemoPages/Forms'));
-const Tables = lazy(() => import('../../DemoPages/Tables'));
+const Widgets = lazy(() => import('../../Pages/Widgets'));
+const Elements = lazy(() => import('../../Pages/Elements'));
+const Components = lazy(() => import('../../Pages/Components'));
+const Charts = lazy(() => import('../../Pages/Charts'));
+const Forms = lazy(() => import('../../Pages/Forms'));
+const Tables = lazy(() => import('../../Pages/Tables'));
 
 const AppMain = () => {
 
