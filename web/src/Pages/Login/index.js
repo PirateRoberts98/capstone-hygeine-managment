@@ -13,6 +13,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
+// Firebase imports
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 function Copyright() {
   return (
@@ -66,7 +69,19 @@ class SignIn extends React.Component {
     }
 
     handleSignIn() {
-        console.log("working");
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => this.setState({ isSignedIn: true }))
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+          });
+    }
+
+    handleDeveloperButton() {
         this.setState({ isSignedIn: true })
     }
 
@@ -126,7 +141,7 @@ class SignIn extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={()=>this.handleSignIn()}
+                        onClick={()=>this.handleDeveloperButton()}
                     >
                         / Developer
                     </Button>

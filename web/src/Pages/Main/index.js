@@ -6,14 +6,30 @@ import {withRouter} from 'react-router-dom';
 import ResizeDetector from 'react-resize-detector';
 
 import AppMain from '../../Layout/AppMain';
+// Firebase Imports
+import * as firebase from "firebase/app";
+require("firebase/auth");
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            closedSmallerSidebar: false
-        };
-
+        this.state = ({
+            closedSmallerSidebar: false,
+            firebaseConfig :{
+                apiKey: "AIzaSyB3pKW3ySHeWEI9bqrwwOLBXALrH1RBu4M",
+                authDomain: "ceg4912project.firebaseapp.com",
+                databaseURL: "https://ceg4912project.firebaseio.com",
+                projectId: "ceg4912project",
+                storageBucket: "ceg4912project.appspot.com",
+                messagingSenderId: "1065298873625",
+                appId: "1:1065298873625:web:72647a9fc8c16b94764988",
+                measurementId: "G-3FQY5ZVMNC"
+              },
+        });
+        // Initialize Firebase
+        if(!firebase.apps.length) {
+            firebase.initializeApp(this.state.firebaseConfig);
+        }
     }
 
     render() {
