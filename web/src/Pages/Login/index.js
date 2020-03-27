@@ -120,6 +120,16 @@ class SignIn extends React.Component {
                     >
                         Sign In
                     </Button>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={()=>this.handleSignIn()}
+                    >
+                        / Developer
+                    </Button>
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
