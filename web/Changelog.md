@@ -14,3 +14,5 @@ Added Material UI, JSS depedency
 
 Added Firebase dependency.
 
+Updated all depdencies and went from Webpack 3 to 4. Webpack Dev Server from 2 to 3.
+
