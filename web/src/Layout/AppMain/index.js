@@ -24,20 +24,6 @@ const AppMain = () => {
         <Fragment>
             {/* Health Monitoring System Routes */}
 
-            {/* Login */}
-            <Suspense fallback={
-                <div className="loader-container">
-                    <div className="loader-container-inner">
-                        <h6 className="mt-5">
-                            Please wait while we load...
-                            <small>Please Wait...</small>
-                        </h6>
-                    </div>
-                </div>
-            }>
-                <Route path="/login" component={Login}/>
-            </Suspense>
-
             {/* Dashboard */}
             <Suspense fallback={
                 <div className="loader-container">
@@ -51,6 +37,11 @@ const AppMain = () => {
             }>
                 <Route path="/maindashboard" component={MainDashboard}/>
             </Suspense>
+
+            {/* Default Route */}
+            <Route exact path="/" render={() => (
+                <Redirect to="/maindashboard"/>
+            )}/>
 
 
 
@@ -168,13 +159,6 @@ const AppMain = () => {
             }>
                 <Route path="/dashboards" component={Dashboards}/>
             </Suspense>
-
-
-
-            {/* Default Route */}
-            <Route exact path="/" render={() => (
-                <Redirect to="/login"/>
-            )}/>
             <ToastContainer/>
         </Fragment>
     )
