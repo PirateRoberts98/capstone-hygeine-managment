@@ -63,16 +63,13 @@ const styles = (theme) => ({
 class SignIn extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isSignedIn: false
-        };
     }
 
     handleSignIn() {
         let email = document.getElementById("email").value;
         let password = document.getElementById("password").value;
         firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(() => this.setState({ isSignedIn: true }))
+        .then(() => this.props.handleLogin())
         .catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -82,7 +79,7 @@ class SignIn extends React.Component {
     }
 
     handleDeveloperButton() {
-        this.setState({ isSignedIn: true })
+        this.props.handleLogin()
     }
 
     render() {
@@ -160,11 +157,6 @@ class SignIn extends React.Component {
                     <Box mt={5}>
                         <Copyright />
                     </Box>
-
-                    {/* If Sign in was successful, redirect. */}
-                    {this.state.isSignedIn &&
-                        <Redirect to="/maindashboard"/>
-                    }
                 </div>
             </Grid>
             </Grid>

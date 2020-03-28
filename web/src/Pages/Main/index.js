@@ -5,7 +5,12 @@ import {withRouter} from 'react-router-dom';
 
 import ResizeDetector from 'react-resize-detector';
 
+// Layouts
 import AppMain from '../../Layout/AppMain';
+
+// Pages
+import LoginPage from '../Login'
+
 // Firebase Imports
 import * as firebase from "firebase/app";
 require("firebase/auth");
@@ -15,6 +20,7 @@ class Main extends React.Component {
         super(props);
         this.state = ({
             closedSmallerSidebar: false,
+            isLoggedIn: false,
             firebaseConfig :{
                 apiKey: "AIzaSyB3pKW3ySHeWEI9bqrwwOLBXALrH1RBu4M",
                 authDomain: "ceg4912project.firebaseapp.com",
@@ -30,6 +36,12 @@ class Main extends React.Component {
         if(!firebase.apps.length) {
             firebase.initializeApp(this.state.firebaseConfig);
         }
+    }
+
+    handleLogin(){
+        this.setState({
+            isLoggedIn: true
+        });
     }
 
     render() {
@@ -58,7 +70,12 @@ class Main extends React.Component {
                             {'closed-sidebar-mobile': closedSmallerSidebar || width < 1250},
                             {'sidebar-mobile-open': enableMobileMenu},
                         )}>
-                            <AppMain/>
+                            {!this.state.isLoggedIn &&
+                                <LoginPage handleLogin={()=>this.handleLogin()} />
+                            }
+                            {this.state.isLoggedIn &&
+                                <AppMain/>
+                            }
                         </div>
                     </Fragment>
                 )}
