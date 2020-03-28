@@ -9,7 +9,7 @@ import ResizeDetector from 'react-resize-detector';
 import AppMain from '../../Layout/AppMain';
 
 // Pages
-import LoginPage from '../Login'
+import LoginMain from '../Login';
 
 // Firebase Imports
 import * as firebase from "firebase/app";
@@ -71,7 +71,7 @@ class Main extends React.Component {
                             {'sidebar-mobile-open': enableMobileMenu},
                         )}>
                             {!this.state.isLoggedIn &&
-                                <LoginPage handleLogin={()=>this.handleLogin()} />
+                                <LoginMain handleLogin={()=>this.handleLogin()} />
                             }
                             {this.state.isLoggedIn &&
                                 <AppMain/>
