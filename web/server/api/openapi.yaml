@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+  title: Sensor API
+  description: This is an API for sensor interfacing
+  contact:
+    email: mdiep044@uottawa.ca
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/mikemd833/SensorAPI/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /alert:
+    post:
+      tags:
+      - admins
+      - developers
+      summary: Retrieves Alert
+      description: retrieve Alert
+      operationId: retrieveAlert
+      requestBody:
+        description: alert to retrieve
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alert'
+      responses:
+        "201":
+          description: alert retrieved
+        "400":
+          description: invalid input, object invalid
+      x-swagger-router-controller: Admins
+  /sensor/temperature:
+    post:
+      tags:
+      - admins
+      - developers
+      summary: Retrieves Sensor Data
+      description: Adds sensorID Temperature data
+      operationId: retrieveSensorTemperatureID
+      requestBody:
+        description: temperature sensor data to retrieve
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorDataTemperature'
+      responses:
+        "201":
+          description: temperature sensor data retrieved
+        "400":
+          description: invalid input, object invalid
+      x-swagger-router-controller: Admins
+  /sensor/pressure:
+    post:
+      tags:
+      - admins
+      - developers
+      summary: Retrieves Sensor Pressure State
+      description: Adds sensorID Pressure State
+      operationId: retrieveSensorPressureID
+      requestBody:
+        description: pressure sensor state to retrieve
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorStatePressure'
+      responses:
+        "201":
+          description: pressure sensor state retrieved
+        "400":
+          description: invalid input, object invalid
+      x-swagger-router-controller: Admins
+components:
+  schemas:
+    SensorDataTemperature:
+      required:
+      - sensorid
+      - timestamp
+      - value
+      type: object
+      properties:
+        sensorid:
+          type: string
+          example: "0"
+        timestamp:
+          type: string
+          example: 2016-08-29T09:12:33.001Z
+        value:
+          type: string
+          format: number
+          example: "23"
+    Alert:
+      required:
+      - severity
+      - warning_message
+      type: object
+      properties:
+        severity:
+          type: string
+          example: High
+        warning_message:
+          type: string
+          example: Has not showered for 4 weeks
+    SensorStatePressure:
+      required:
+      - sensorid
+      - timestamp
+      - value
+      type: object
+      properties:
+        sensorid:
+          type: string
+          example: "0"
+        timestamp:
+          type: string
+          example: 2016-08-29T09:12:33.001Z
+        value:
+          type: boolean
+          example: true
