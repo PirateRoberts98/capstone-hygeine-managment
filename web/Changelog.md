@@ -16,3 +16,9 @@ Added Firebase dependency.
 
 Updated all depdencies and went from Webpack 3 to 4. Webpack Dev Server from 2 to 3.
 
+## Version 1.0.0 (30 March 2020)
+
+Added Swagger API
+
+Added Chartjs into Dashboard
+
