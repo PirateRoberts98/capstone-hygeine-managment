@@ -7,6 +7,15 @@ import AppHeader from '../../Layout/AppHeader';
 import AppSidebar from '../../Layout/AppSidebar';
 import AppFooter from '../../Layout/AppFooter';
 
+//Charts
+import WaterUsageChart from './Charts/WaterUsageChart';
+
+import {
+    Row, Col,
+    Card, CardBody,
+    CardTitle
+} from 'reactstrap';
+
 const MainDashboard = ({match}) => (
     <Fragment>
         <AppHeader/>
@@ -25,13 +34,23 @@ const MainDashboard = ({match}) => (
                             <div>
                                 <PageTitle
                                     heading="Dashboard"
-                                    subheading="This is an example dashboard created using build-in elements and components."
-                                    icon="pe-7s-car icon-gradient bg-mean-fruit"
+                                    subheading="This dashboard shows you information of the water usage based on the collection of sensor data."
+                                    icon="pe-7s-user icon-gradient bg-mean-fruit"
                                 />
                             </div>
+                            <Row form>
+                                <Col md={9}>
+                                    <Card className="main-card mb-3">
+                                        <CardBody>
+                                            <CardTitle>Water Usage Chart</CardTitle>
+                                            <WaterUsageChart/>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+
                         </ReactCSSTransitionGroup>
                     </Fragment>
-                    <AppFooter/>
                 </div>
             </div>
         </div>
