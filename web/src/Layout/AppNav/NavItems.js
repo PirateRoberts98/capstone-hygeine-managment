@@ -5,6 +5,27 @@ export const MainNav = [
         to: '#/maindashboard',
     },
 ];
+export const ContactDoctorNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Contact Doctor',
+        to: '#/contactdoctor',
+    },
+];
+export const PillsNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Pills',
+        to: '#/pills',
+    },
+];
+export const ScheduleNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Schedule',
+        to: '#/schedule',
+    },
+];
 export const ExampleMainNav = [
     {
         icon: 'pe-7s-rocket',
