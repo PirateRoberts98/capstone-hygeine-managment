@@ -32,3 +32,5 @@ Fixed Webpack 4 issue, to explicity set mode to development.
 
 Added Sign Up Firebase Authentication.
 
+Added User Profile into Firebase Real-Time Database.
+
