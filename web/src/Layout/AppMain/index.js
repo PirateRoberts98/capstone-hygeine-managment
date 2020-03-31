@@ -7,7 +7,10 @@ import {
 
 //These will be used for the Health Monitoring System.
 const MainDashboard = lazy(() => import('../../Pages/Dashboard'));
-const Login = lazy(() => import('../../Pages/Login'));
+const ContactDoctorPage = lazy(() => import('../../Pages/ContactDoctor'));
+const PillsPage = lazy(() => import('../../Pages/Pills'));
+const SchedulePage = lazy(() => import('../../Pages/Schedule'));
+
 
 //These are all examples.
 const Dashboards = lazy(() => import('../../ExamplePages/Dashboards'));
@@ -36,6 +39,48 @@ const AppMain = () => {
                 </div>
             }>
                 <Route path="/maindashboard" component={MainDashboard}/>
+            </Suspense>
+
+            {/* Contact Doctor */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/contactdoctor" component={ContactDoctorPage}/>
+            </Suspense>
+
+            {/* Pills */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/pills" component={PillsPage}/>
+            </Suspense>
+
+            {/* Schedule */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/schedule" component={SchedulePage}/>
             </Suspense>
 
             {/* Default Route */}
