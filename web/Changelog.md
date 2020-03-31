@@ -35,3 +35,8 @@ Added Sign Up Firebase Authentication.
 Added Pills + Contact Doctors + Schedule Page.
 
 Added new pages above to app side bar navigation.
+
+Added User Profile into Firebase Real-Time Database.
+
+Added user centric UI (Added fname and lname to be displayed).
+

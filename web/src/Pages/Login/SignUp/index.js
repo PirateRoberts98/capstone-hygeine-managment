@@ -80,15 +80,16 @@ class SignUp extends React.Component {
         })
     }
 
-    handleSignUp = (email,password1,password2,fname,lname,bday,gender) => {
+    handleSignUp = (email,password1,password2,fname,lname,bday, doctor) => {
         firebase.auth().createUserWithEmailAndPassword(email, password1)
         .then(()=>{
-            firebase.database().ref('users/').push({
+            firebase.database().ref('users/'+ firebase.auth().currentUser.uid).set({
                 email: email,
                 fname:fname,
                 lname:lname,
                 bday:bday,
-                gender:this.state.selectedGender
+                gender:this.state.selectedGender,
+                doctor: doctor
             })
             .then(()=>{
                 this.props.handleLogin();
@@ -167,6 +168,17 @@ class SignUp extends React.Component {
                         autoComplete="email"
                         autoFocus
                     />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="doctor"
+                        label="Your General Physician"
+                        name="doctor"
+                        autoComplete="doctor"
+                        autoFocus
+                    />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                             disableToolbar
@@ -233,7 +245,8 @@ class SignUp extends React.Component {
                             document.getElementById('password2').value,
                             document.getElementById('fname').value,
                             document.getElementById('lname').value,
-                            document.getElementById('bday').value
+                            document.getElementById('bday').value,
+                            document.getElementById('doctor').value
                         )}
                     >
                         Sign Up

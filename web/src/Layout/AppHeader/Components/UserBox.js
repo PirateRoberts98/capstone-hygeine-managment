@@ -20,15 +20,37 @@ import {
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import avatar1 from '../../../assets/utils/images/avatars/1.jpg';
+import avatar1 from '../../../assets/utils/images/avatars/2.jpg';
+
+// Firebase Imports
+import * as firebase from "firebase/app";
+import "firebase/database";
 
 class UserBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             active: false,
+            fname: 'Jane',
+            lname: 'Doe',
+            doctor: 'Dr. Phil'
         };
 
+        if(firebase.auth().currentUser) {
+            var userId = firebase.auth().currentUser.uid;
+            firebase.database().ref('/users/'+userId).once('value')
+            .then(snapshot => {
+                this.setState({
+                    fname: snapshot.val().fname,
+                    lname: snapshot.val().lname,
+                    doctor: snapshot.val().doctor,
+                    active: true,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
     }
 
     notify2 = () => this.toastId = toast("You don't have any new items in your calendar for today! Go out and play!", {
@@ -39,9 +61,7 @@ class UserBox extends React.Component {
         type: 'success'
     });
 
-
     render() {
-
         return (
             <Fragment>
                 <div className="header-btn-lg pr-0">
@@ -93,10 +113,10 @@ class UserBox extends React.Component {
                             </div>
                             <div className="widget-content-left  ml-3 header-user-info">
                                 <div className="widget-heading">
-                                    Alina Mclourd
+                                    {this.state.fname+' '+this.state.lname}
                                 </div>
                                 <div className="widget-subheading">
-                                    VP People Manager
+                                    Patient of {this.state.doctor}
                                 </div>
                             </div>
 
@@ -106,7 +126,7 @@ class UserBox extends React.Component {
                                     <FontAwesomeIcon className="mr-2 ml-2" icon={faCalendarAlt}/>
                                 </Button>
                                 <UncontrolledTooltip placement="bottom" target={'Tooltip-1'}>
-                                    Click for Toastify Notifications!
+                                    Check Schedule
                                 </UncontrolledTooltip>
                             </div>
                         </div>
