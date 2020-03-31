@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import cx from 'classnames';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 
 import ResizeDetector from 'react-resize-detector';
 
@@ -74,7 +74,10 @@ class Main extends React.Component {
                                 <LoginMain handleLogin={()=>this.handleLogin()} />
                             }
                             {this.state.isLoggedIn &&
-                                <AppMain/>
+                                <div>
+                                    <Redirect to="/maindashboard" />
+                                    <AppMain />
+                                </div>
                             }
                         </div>
                     </Fragment>
