@@ -16,6 +16,7 @@ import { Link as RouterLink } from 'react-router-dom';
 // Firebase imports
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 
 function Copyright() {
   return (

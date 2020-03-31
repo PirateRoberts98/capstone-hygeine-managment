@@ -22,6 +22,8 @@ import {
 // Firebase imports
 import * as firebase from "firebase/app";
 import "firebase/auth";
+// Get a reference to the database service
+var database = firebase.database();
 
 function Copyright() {
   return (
@@ -78,10 +80,26 @@ class SignUp extends React.Component {
         })
     }
 
-    handleSignUp = (email,password1,password2) => {
+    handleSignUp = (email,password1,password2,fname,lname,bday, doctor) => {
         firebase.auth().createUserWithEmailAndPassword(email, password1)
         .then(()=>{
-            this.props.handleLogin();
+            firebase.database().ref('users/'+ firebase.auth().currentUser.uid).set({
+                email: email,
+                fname:fname,
+                lname:lname,
+                bday:bday,
+                gender:this.state.selectedGender,
+                doctor: doctor
+            })
+            .then(()=>{
+                this.props.handleLogin();
+            })
+            .catch((error)=>{
+                var errorCode = error.errorCode;
+                var errorMessage = error.message;
+                console.log(errorCode);
+                console.log(errorMessage);
+            })
         })
         .catch((error) => {
             var errorCode = error.errorCode;
@@ -150,6 +168,17 @@ class SignUp extends React.Component {
                         autoComplete="email"
                         autoFocus
                     />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="doctor"
+                        label="Your General Physician"
+                        name="doctor"
+                        autoComplete="doctor"
+                        autoFocus
+                    />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                             disableToolbar
@@ -168,8 +197,8 @@ class SignUp extends React.Component {
                     <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel id="demo-simple-select-outlined-label">Gender</InputLabel>
                         <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
+                            labelId="gender"
+                            id="gender"
                             value={this.state.selectedGender}
                             onChange={this.handleGenderChange}
                             label="Gender"
@@ -214,6 +243,10 @@ class SignUp extends React.Component {
                             document.getElementById('email').value,
                             document.getElementById('password1').value,
                             document.getElementById('password2').value,
+                            document.getElementById('fname').value,
+                            document.getElementById('lname').value,
+                            document.getElementById('bday').value,
+                            document.getElementById('doctor').value
                         )}
                     >
                         Sign Up
