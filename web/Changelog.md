@@ -40,3 +40,5 @@ Added User Profile into Firebase Real-Time Database.
 
 Added user centric UI (Added fname and lname to be displayed).
 
+Hide developer options from users.
+
