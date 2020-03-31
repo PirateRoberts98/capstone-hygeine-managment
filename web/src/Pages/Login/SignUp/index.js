@@ -78,6 +78,19 @@ class SignUp extends React.Component {
         })
     }
 
+    handleSignUp = (email,password1,password2) => {
+        firebase.auth().createUserWithEmailAndPassword(email, password1)
+        .then(()=>{
+            this.props.handleLogin();
+        })
+        .catch((error) => {
+            var errorCode = error.errorCode;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+        })
+    }
+
     handleGenderChange = event => {
         this.setState({
             selectedGender: event.target.value,
@@ -197,7 +210,11 @@ class SignUp extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={()=>this.handleSignIn()}
+                        onClick={()=>this.handleSignUp(
+                            document.getElementById('email').value,
+                            document.getElementById('password1').value,
+                            document.getElementById('password2').value,
+                        )}
                     >
                         Sign Up
                     </Button>

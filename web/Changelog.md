@@ -24,7 +24,11 @@ Added Chartjs into Dashboard
 
 Fixed bug that login button and sign in do not work.
 
+Started Firebase Database Project (Real-Time Database)
+
 ## Version 1.0.0 (31 March 2020)
 
 Fixed Webpack 4 issue, to explicity set mode to development.
+
+Added Sign Up Firebase Authentication.
 
