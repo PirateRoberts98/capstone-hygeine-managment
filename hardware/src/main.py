@@ -2,7 +2,8 @@
 # Developed by: Robert Conrad 
 
 
-import time 
+import time
+import .api_call
 
 # TODO: Move to a seperate managed package
 def initialize_sensors():
@@ -24,11 +25,13 @@ def initialize_cycle(sensors,api):
 
 def main():
     sensors = initialize_sensors()
-    api = initialize_api_handler()
+    # Initialize the handlers for alert and sensor
+    base_uri = "localhost:5000"
+    alert_handler = AlertHandler(base_uri)
+    sensor_handler = SensorHandler(base_uri)
     modules = initialize_modules()
     if  (
         sensors == NotImplementedError or
-        api    == NotImplementedError or
         modules == NotImplementedError
         ):
         print("System is not implemented to full functionality") 
