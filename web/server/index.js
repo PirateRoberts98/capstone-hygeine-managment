@@ -1,4 +1,5 @@
 'use strict';
+var admin = require('firebase-admin');
 
 var path = require('path');
 var http = require('http');
@@ -17,7 +18,26 @@ var app = expressAppConfig.getApp();
 
 // Initialize the Swagger middleware
 http.createServer(app).listen(serverPort, function () {
+    admin.initializeApp({
+        credential: admin.credential.applicationDefault(),
+        databaseURL: 'https://ceg4912project.firebaseio.com/'
+      });
     console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
     console.log('Swagger-ui is available on http://localhost:%d/docs', serverPort);
+    
 });
 
+app.post('/alert', function(req,res) {
+    console.log(req.body);
+    res.send('Received Alert');
+});
+
+app.post('/sensor/temperature', function(req,res) {
+    console.log(req.body);
+    res.send('Received Alert');
+});
+
+app.post('/sensor/pressure', function(req,res) {
+    console.log(req.body);
+    res.send('Received Alert');
+});
