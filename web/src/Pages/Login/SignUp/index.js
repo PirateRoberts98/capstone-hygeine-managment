@@ -15,6 +15,8 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
@@ -77,7 +79,8 @@ class SignUp extends React.Component {
         this.state=({
             selectedGender: "",
             selectedDate: "",
-        })
+            caregiverCheckbox: false,
+        });
     }
 
     handleSignUp = (email,password1,password2,fname,lname,bday, doctor) => {
@@ -89,7 +92,8 @@ class SignUp extends React.Component {
                 lname:lname,
                 bday:bday,
                 gender:this.state.selectedGender,
-                doctor: doctor
+                doctor: doctor,
+                isCaregiver: this.state.caregiverCheckbox,
             })
             .then(()=>{
                 this.props.handleLogin();
@@ -119,6 +123,12 @@ class SignUp extends React.Component {
         this.setState({
             selectedDate: event.target.value,
         })
+    }
+
+    handleCargiverCheckbox = event => {
+        this.setState({
+            cargiverCheckbox: !this.state.cargiverCheckbox,
+        });
     }
 
     render() {
@@ -211,6 +221,17 @@ class SignUp extends React.Component {
                         <MenuItem value="Other">Other</MenuItem>
                         </Select>
                     </FormControl>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={this.state.cargiverCheckbox}
+                                onChange={this.handleCargiverCheckbox}
+                                name="Cargiver"
+                                color="primary"
+                            />
+                        }
+                        label={"Caregiver"}
+                    />
                     <TextField
                         variant="outlined"
                         margin="normal"

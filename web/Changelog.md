@@ -42,3 +42,7 @@ Added user centric UI (Added fname and lname to be displayed).
 
 Hide developer options from users.
 
+Added Checkbox for Cargiver in Sign Up.
+
+Added Check User Analysis Page + Set Users Schedule Page + Message Users Page
+

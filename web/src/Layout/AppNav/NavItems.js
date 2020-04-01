@@ -26,6 +26,27 @@ export const ScheduleNav = [
         to: '#/schedule',
     },
 ];
+export const CheckUserAnalysisNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Users Analysis',
+        to: '#/usersanalysis',
+    },
+];
+export const SetUserScheduleNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Users Schedule',
+        to: '#/usersschedule',
+    },
+];
+export const MessageUsersNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Message Users',
+        to: '#/messageusers',
+    },
+];
 export const ExampleMainNav = [
     {
         icon: 'pe-7s-rocket',
