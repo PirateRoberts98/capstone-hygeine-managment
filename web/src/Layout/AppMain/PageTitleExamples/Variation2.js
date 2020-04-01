@@ -55,7 +55,7 @@ export default class TitleComponent2 extends Component {
                     <DropdownMenu right>
                         <Nav vertical>
                             <NavItem>
-                                <NavLink href="javascript:void(0);">
+                                <NavLink href="hello;">
                                     <i className="nav-link-icon lnr-inbox"> </i>
                                     <span>Inbox</span>
                                     <div className="ml-auto badge badge-pill badge-secondary">86
@@ -63,20 +63,20 @@ export default class TitleComponent2 extends Component {
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="javascript:void(0);">
+                                <NavLink href="hello;">
                                     <i className="nav-link-icon lnr-book"> </i>
                                     <span>Book</span>
                                     <div className="ml-auto badge badge-pill badge-danger">5</div>
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="javascript:void(0);">
+                                <NavLink href="hello;">
                                     <i className="nav-link-icon lnr-picture"> </i>
                                     <span>Picture</span>
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink disabled href="javascript:void(0);">
+                                <NavLink disabled href="hello;">
                                     <i className="nav-link-icon lnr-file-empty"> </i>
                                     <span>File Disabled</span>
                                 </NavLink>

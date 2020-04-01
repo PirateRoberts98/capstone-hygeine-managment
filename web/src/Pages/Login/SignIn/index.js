@@ -69,14 +69,22 @@ class SignIn extends React.Component {
     handleSignIn() {
         let email = document.getElementById("email").value;
         let password = document.getElementById("password").value;
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(() => this.props.handleLogin())
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(()=>{
+            // Existing and future Auth states are now persisted in the current
+            // session only. Closing the window would clear any existing state even
+            // if a user forgets to sign out.
+            // ...
+            // New sign-in will be persisted with session persistence.
+            return firebase.auth().signInWithEmailAndPassword(email, password).then(() => this.props.handleLogin());
+        })
         .catch(function(error) {
+            // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorCode);
             console.log(errorMessage);
-          });
+        });
     }
 
     handleDeveloperButton() {

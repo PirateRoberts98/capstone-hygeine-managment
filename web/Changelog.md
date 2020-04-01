@@ -46,3 +46,5 @@ Added Checkbox for Cargiver in Sign Up.
 
 Added Check User Analysis Page + Set Users Schedule Page + Message Users Page
 
+## Version 1.0.0 (1 April 2020)
+

@@ -25,17 +25,20 @@ import avatar1 from '../../../assets/utils/images/avatars/2.jpg';
 // Firebase Imports
 import * as firebase from "firebase/app";
 import "firebase/database";
-
+import "firebase/auth";
+import { Redirect } from 'react-router-dom';
 class UserBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            active: false,
+            active: true,
             fname: 'Jane',
             lname: 'Doe',
             doctor: 'Dr. Phil'
         };
+    }
 
+    componentDidMount(){
         if(firebase.auth().currentUser) {
             var userId = firebase.auth().currentUser.uid;
             firebase.database().ref('/users/'+userId).once('value')
@@ -53,6 +56,15 @@ class UserBox extends React.Component {
         }
     }
 
+    handleLogout = () => {
+        firebase.auth().signOut()
+        .then(() => {
+            this.setState({
+                active:false,
+            })
+        });
+    }
+
     notify2 = () => this.toastId = toast("You don't have any new items in your calendar for today! Go out and play!", {
         transition: Bounce,
         closeButton: true,
@@ -64,6 +76,9 @@ class UserBox extends React.Component {
     render() {
         return (
             <Fragment>
+                {!this.state.active &&
+                <Redirect to="/login" />
+                }
                 <div className="header-btn-lg pr-0">
                     <div className="widget-content p-0">
                         <div className="widget-content-wrapper">
@@ -79,32 +94,37 @@ class UserBox extends React.Component {
                                                 Activity
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">
+                                                <NavLink href="hello">
                                                     Chat
                                                     <div className="ml-auto badge badge-pill badge-info">8</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">Recover Password</NavLink>
+                                                <NavLink href="hello">Recover Password</NavLink>
                                             </NavItem>
                                             <NavItem className="nav-item-header">
                                                 My Account
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">
+                                                <NavLink href="hello">
                                                     Settings
                                                     <div className="ml-auto badge badge-success">New</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">
+                                                <NavLink href="hello">
                                                     Messages
                                                     <div className="ml-auto badge badge-warning">512</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">
+                                                <NavLink href="hello">
                                                     Logs
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem onClick={()=>this.handleLogout()}>
+                                                <NavLink href="#">
+                                                    Logout
                                                 </NavLink>
                                             </NavItem>
                                         </Nav>

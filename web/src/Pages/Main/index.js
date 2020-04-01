@@ -36,6 +36,12 @@ class Main extends React.Component {
         if(!firebase.apps.length) {
             firebase.initializeApp(this.state.firebaseConfig);
         }
+        // See if user is logged in.
+        if(firebase.auth().currentUser) {
+            this.setState({
+                isLoggedIn: true,
+            })
+        }
     }
 
     handleLogin(){
@@ -71,7 +77,10 @@ class Main extends React.Component {
                             {'sidebar-mobile-open': enableMobileMenu},
                         )}>
                             {!this.state.isLoggedIn &&
-                                <LoginMain handleLogin={()=>this.handleLogin()} />
+                                <div>
+                                    <Redirect to="/login" />
+                                    <LoginMain handleLogin={()=>this.handleLogin()} />
+                                </div>
                             }
                             {this.state.isLoggedIn &&
                                 <div>
