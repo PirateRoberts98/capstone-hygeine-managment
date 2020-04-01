@@ -16,7 +16,7 @@ class APIHandler:
         if extention == None:
             extention = ""
         try:
-            response =  requests.put(self.base + extention,data=body,timeout=10)
+            response =  requests.post(self.base + extention,json=body,timeout=10)
             if response.status_code == 201 :
                 return True
             else:
@@ -29,7 +29,7 @@ class APIHandler:
         if extention == None:
             extention = ""
         try:
-            response =  requests.get(self.base + extention,data=body,timeout=10)
+            response =  requests.get(self.base + extention,json=body,timeout=10)
             if response.status_code == 200 :
                 return True
             else:
