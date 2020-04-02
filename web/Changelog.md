@@ -40,7 +40,7 @@ Added User Profile into Firebase Real-Time Database.
 
 Added user centric UI (Added fname and lname to be displayed).
 
-Hide developer options from users.
+
 
 Added Checkbox for Cargiver in Sign Up.
 
@@ -55,3 +55,5 @@ Added server endpoints for sensor temperature and pressure and alert.
 Endpoints push JSON to Firebase.
 
 Added Sensor Page.
+
+## Version 1.0.0 (2 April 2020)
