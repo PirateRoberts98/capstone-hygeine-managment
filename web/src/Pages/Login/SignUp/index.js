@@ -78,7 +78,7 @@ class SignUp extends React.Component {
         super(props);
         this.state=({
             selectedGender: "",
-            selectedDate: "",
+            selectedDate: new Date(),
             caregiverCheckbox: false,
         });
     }
@@ -121,7 +121,7 @@ class SignUp extends React.Component {
 
     handleDateChange = event => {
         this.setState({
-            selectedDate: event.target.value,
+            selectedDate: event,
         })
     }
 
@@ -197,7 +197,7 @@ class SignUp extends React.Component {
                             margin="normal"
                             id="bday"
                             label="Birth Date"
-                            value={this.selectedDate}
+                            value={this.state.selectedDate}
                             onChange={this.handleDateChange}
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
