@@ -48,3 +48,8 @@ Added Check User Analysis Page + Set Users Schedule Page + Message Users Page
 
 ## Version 1.0.0 (1 April 2020)
 
+Added signout feature.
+
+Added server endpoints for sensor temperature and pressure and alert.
+
+Endpoints push JSON to Firebase.
