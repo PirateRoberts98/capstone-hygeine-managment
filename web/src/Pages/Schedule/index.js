@@ -5,18 +5,8 @@ import PageTitle from '../../Layout/AppMain/PageTitle';
 // Layout
 import AppHeader from '../../Layout/AppHeader';
 import AppSidebar from '../../Layout/AppSidebar';
-import AppFooter from '../../Layout/AppFooter';
 
-//Charts
-import WaterUsageChart from './Charts/WaterUsageChart';
-
-import {
-    Row, Col,
-    Card, CardBody,
-    CardTitle
-} from 'reactstrap';
-
-const MainDashboard = ({match}) => (
+const SchedulePage = ({match}) => (
     <Fragment>
         <AppHeader/>
         <div className="app-main">
@@ -33,22 +23,11 @@ const MainDashboard = ({match}) => (
                             transitionLeave={false}>
                             <div>
                                 <PageTitle
-                                    heading="Dashboard"
-                                    subheading="This dashboard shows you information of the water usage based on the collection of sensor data."
+                                    heading="Schedule"
+                                    subheading="This dashboard displays your schedule and routine."
                                     icon="pe-7s-user icon-gradient bg-mean-fruit"
                                 />
                             </div>
-                            <Row form>
-                                <Col md={9}>
-                                    <Card className="main-card mb-3">
-                                        <CardBody>
-                                            <CardTitle>Water Usage Chart</CardTitle>
-                                            <WaterUsageChart/>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-
                         </ReactCSSTransitionGroup>
                     </Fragment>
                 </div>
@@ -57,4 +36,4 @@ const MainDashboard = ({match}) => (
     </Fragment>
 );
 
-export default MainDashboard;
+export default SchedulePage;

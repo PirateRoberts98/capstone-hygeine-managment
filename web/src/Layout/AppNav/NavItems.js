@@ -2,6 +2,55 @@ export const MainNav = [
     {
         icon: 'pe-7s-rocket',
         label: 'Dashboard',
+        to: '#/maindashboard',
+    },
+];
+export const ContactDoctorNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Contact Doctor',
+        to: '#/contactdoctor',
+    },
+];
+export const PillsNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Pills',
+        to: '#/pills',
+    },
+];
+export const ScheduleNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Schedule',
+        to: '#/schedule',
+    },
+];
+export const CheckUserAnalysisNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Users Analysis',
+        to: '#/usersanalysis',
+    },
+];
+export const SetUserScheduleNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Users Schedule',
+        to: '#/usersschedule',
+    },
+];
+export const MessageUsersNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Message Users',
+        to: '#/messageusers',
+    },
+];
+export const ExampleMainNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Example Dashboard',
         to: '#/dashboards/basic',
     },
 ];

@@ -7,6 +7,10 @@ import {
 
 //These will be used for the Health Monitoring System.
 const MainDashboard = lazy(() => import('../../Pages/Dashboard'));
+const ContactDoctorPage = lazy(() => import('../../Pages/ContactDoctor'));
+const PillsPage = lazy(() => import('../../Pages/Pills'));
+const SchedulePage = lazy(() => import('../../Pages/Schedule'));
+
 
 //These are all examples.
 const Dashboards = lazy(() => import('../../ExamplePages/Dashboards'));
@@ -22,6 +26,8 @@ const AppMain = () => {
     return (
         <Fragment>
             {/* Health Monitoring System Routes */}
+
+            {/* Dashboard */}
             <Suspense fallback={
                 <div className="loader-container">
                     <div className="loader-container-inner">
@@ -35,6 +41,54 @@ const AppMain = () => {
                 <Route path="/maindashboard" component={MainDashboard}/>
             </Suspense>
 
+            {/* Contact Doctor */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/contactdoctor" component={ContactDoctorPage}/>
+            </Suspense>
+
+            {/* Pills */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/pills" component={PillsPage}/>
+            </Suspense>
+
+            {/* Schedule */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/schedule" component={SchedulePage}/>
+            </Suspense>
+
+            {/* Default Route */}
+            <Route exact path="/" render={() => (
+                <Redirect to="/maindashboard"/>
+            )}/>
+
+
 
 
 
@@ -46,7 +100,6 @@ const AppMain = () => {
              * 
              */}
             {/* Components */}
-
             <Suspense fallback={
                 <div className="loader-container">
                     <div className="loader-container-inner">
@@ -149,10 +202,6 @@ const AppMain = () => {
             }>
                 <Route path="/dashboards" component={Dashboards}/>
             </Suspense>
-
-            <Route exact path="/" render={() => (
-                <Redirect to="/maindashboard"/>
-            )}/>
             <ToastContainer/>
         </Fragment>
     )

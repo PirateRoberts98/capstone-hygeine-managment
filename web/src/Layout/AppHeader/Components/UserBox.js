@@ -20,15 +20,49 @@ import {
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import avatar1 from '../../../assets/utils/images/avatars/1.jpg';
+import avatar1 from '../../../assets/utils/images/avatars/2.jpg';
 
+// Firebase Imports
+import * as firebase from "firebase/app";
+import "firebase/database";
+import "firebase/auth";
+import { Redirect } from 'react-router-dom';
 class UserBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            active: false,
+            active: true,
+            fname: 'Jane',
+            lname: 'Doe',
+            doctor: 'Dr. Phil'
         };
+    }
 
+    componentDidMount(){
+        if(firebase.auth().currentUser) {
+            var userId = firebase.auth().currentUser.uid;
+            firebase.database().ref('/users/'+userId).once('value')
+            .then(snapshot => {
+                this.setState({
+                    fname: snapshot.val().fname,
+                    lname: snapshot.val().lname,
+                    doctor: snapshot.val().doctor,
+                    active: true,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+    }
+
+    handleLogout = () => {
+        firebase.auth().signOut()
+        .then(() => {
+            this.setState({
+                active:false,
+            })
+        });
     }
 
     notify2 = () => this.toastId = toast("You don't have any new items in your calendar for today! Go out and play!", {
@@ -39,11 +73,12 @@ class UserBox extends React.Component {
         type: 'success'
     });
 
-
     render() {
-
         return (
             <Fragment>
+                {!this.state.active &&
+                <Redirect to="/login" />
+                }
                 <div className="header-btn-lg pr-0">
                     <div className="widget-content p-0">
                         <div className="widget-content-wrapper">
@@ -59,32 +94,37 @@ class UserBox extends React.Component {
                                                 Activity
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">
+                                                <NavLink href="hello">
                                                     Chat
                                                     <div className="ml-auto badge badge-pill badge-info">8</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">Recover Password</NavLink>
+                                                <NavLink href="hello">Recover Password</NavLink>
                                             </NavItem>
                                             <NavItem className="nav-item-header">
                                                 My Account
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">
+                                                <NavLink href="hello">
                                                     Settings
                                                     <div className="ml-auto badge badge-success">New</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">
+                                                <NavLink href="hello">
                                                     Messages
                                                     <div className="ml-auto badge badge-warning">512</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="javascript:void(0);">
+                                                <NavLink href="hello">
                                                     Logs
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem onClick={()=>this.handleLogout()}>
+                                                <NavLink href="#">
+                                                    Logout
                                                 </NavLink>
                                             </NavItem>
                                         </Nav>
@@ -93,10 +133,10 @@ class UserBox extends React.Component {
                             </div>
                             <div className="widget-content-left  ml-3 header-user-info">
                                 <div className="widget-heading">
-                                    Alina Mclourd
+                                    {this.state.fname+' '+this.state.lname}
                                 </div>
                                 <div className="widget-subheading">
-                                    VP People Manager
+                                    Patient of {this.state.doctor}
                                 </div>
                             </div>
 
@@ -106,7 +146,7 @@ class UserBox extends React.Component {
                                     <FontAwesomeIcon className="mr-2 ml-2" icon={faCalendarAlt}/>
                                 </Button>
                                 <UncontrolledTooltip placement="bottom" target={'Tooltip-1'}>
-                                    Click for Toastify Notifications!
+                                    Check Schedule
                                 </UncontrolledTooltip>
                             </div>
                         </div>
