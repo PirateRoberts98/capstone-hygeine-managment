@@ -47,6 +47,13 @@ export const MessageUsersNav = [
         to: '#/messageusers',
     },
 ];
+export const SensorNav = [
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Sensors',
+        to: '#/sensors',
+    },
+];
 export const ExampleMainNav = [
     {
         icon: 'pe-7s-rocket',

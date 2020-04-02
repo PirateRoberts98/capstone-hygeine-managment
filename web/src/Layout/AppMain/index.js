@@ -10,6 +10,7 @@ const MainDashboard = lazy(() => import('../../Pages/Dashboard'));
 const ContactDoctorPage = lazy(() => import('../../Pages/ContactDoctor'));
 const PillsPage = lazy(() => import('../../Pages/Pills'));
 const SchedulePage = lazy(() => import('../../Pages/Schedule'));
+const SensorPage = lazy(() => import('../../Pages/Developer/Sensor'));
 
 
 //These are all examples.
@@ -81,6 +82,20 @@ const AppMain = () => {
                 </div>
             }>
                 <Route path="/schedule" component={SchedulePage}/>
+            </Suspense>
+
+            {/* Sensor Page */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/sensors" component={SensorPage}/>
             </Suspense>
 
             {/* Default Route */}

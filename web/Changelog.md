@@ -53,3 +53,5 @@ Added signout feature.
 Added server endpoints for sensor temperature and pressure and alert.
 
 Endpoints push JSON to Firebase.
+
+Added Sensor Page.
