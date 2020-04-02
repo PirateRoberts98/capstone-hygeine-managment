@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 import MetisMenu from 'react-metismenu';
 
 import {MainNav, ComponentsNav, FormsNav, WidgetsNav, ChartsNav, ExampleMainNav,
-ContactDoctorNav, PillsNav, ScheduleNav, CheckUserAnalysisNav, SetUserScheduleNav, MessageUsersNav} from './NavItems';
+ContactDoctorNav, PillsNav, ScheduleNav, CheckUserAnalysisNav, SetUserScheduleNav, MessageUsersNav, SensorNav} from './NavItems';
 
 import * as firebase from "firebase/app";
 import "firebase/database";
@@ -13,8 +13,9 @@ class Nav extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isDeveloper: true,
-            isCaregiver: true,
+            isDeveloper: false,
+            isCaregiver: false,
+            isPatient: false,
         }
     }
 
@@ -23,11 +24,27 @@ class Nav extends Component {
             let userId = firebase.auth().currentUser.uid;
             firebase.database().ref('/users/'+userId).once('value')
             .then(snapshot => {
-                this.setState({
-                    isDeveloper: false,
-                    isCaregiver: snapshot.val().isCaregiver,
-                })
+                let isCaregiver = snapshot.val().isCaregiver;
+                if(isCaregiver) {
+                    this.setState({
+                        isDeveloper: false,
+                        isPatient: false,
+                        isCaregiver: true,
+                    })
+                } else {
+                    this.setState({
+                        isDeveloper: false,
+                        isPatient: true,
+                        isCaregiver: false,
+                    })
+                }
             });
+        } else {
+            this.setState({
+                isDeveloper: true,
+                isPatient: false,
+                isCaregiver: false,
+            })
         }
     }
 
@@ -46,7 +63,7 @@ class Nav extends Component {
                 </div>
                 }
                 {/* Patient View */}
-                {!this.state.isCaregiver &&
+                {this.state.isPatient &&
                 <div>
                     <MetisMenu content={MainNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <MetisMenu content={PillsNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
@@ -57,13 +74,17 @@ class Nav extends Component {
                 {/* Developer View */}
                 {this.state.isDeveloper &&
                 <div>
+                    <h5 className="app-sidebar__heading">Caregiver View</h5>
                     <MetisMenu content={CheckUserAnalysisNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <MetisMenu content={SetUserScheduleNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <MetisMenu content={MessageUsersNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <h5 className="app-sidebar__heading">Patient View</h5>
                     <MetisMenu content={MainNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <MetisMenu content={PillsNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <MetisMenu content={ScheduleNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <MetisMenu content={ContactDoctorNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <h5 className="app-sidebar__heading">Developer View with Examples</h5>
+                    <MetisMenu content={SensorNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <h5 className="app-sidebar__heading">Example Menu</h5>
                     <MetisMenu content={ExampleMainNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <h5 className="app-sidebar__heading">Example UI Components</h5>
