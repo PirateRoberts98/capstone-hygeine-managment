@@ -50,7 +50,7 @@ export const MessageUsersNav = [
 export const SensorNav = [
     {
         icon: 'pe-7s-rocket',
-        label: 'Sensors',
+        label: 'Sensors \& Alerts',
         to: '#/sensors',
     },
 ];
