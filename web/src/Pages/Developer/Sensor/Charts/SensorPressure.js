@@ -29,7 +29,17 @@ class SensorPressureChart extends React.Component {
                 }
                 sensorDataArray.map(item => {
                     if(item != undefined) {
-                        sensorTimes.push(item.senPressure.timestamp);
+                        // Parse timestamp
+                        let date = new Date(item.senPressure.timestamp);
+                        let newDate = date.toString();
+                        date = new Date(newDate);
+                        let day = date.getDate();
+                        let month = date.getMonth()+1;
+                        let year = date.getFullYear();
+                        let hour = date.getHours();
+                        let minutes = date.getMinutes();
+                        let newTimestamp = day.toString() + "-" + month.toString() + "-" + year.toString() + "/" + hour.toString() +":"+ minutes.toString();
+                        sensorTimes.push(newTimestamp);
                         if(item.senPressure.value == true) {
                             sensorValues.push(1);
                         } else {
