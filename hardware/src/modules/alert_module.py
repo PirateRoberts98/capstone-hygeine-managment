@@ -20,7 +20,7 @@ class AlertModule:
             self.same_results = 0
         #current alert being raised is only based on pressure
         if self.same_results == 3 :
-            self.api.add_alert("Patient has not taken pills.")
+            self.api.add_alert(2,"Patient has not taken pills in correct order.")
 
         
     def add_to_buffer(self,data):

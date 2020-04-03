@@ -43,7 +43,7 @@ class AlertHandler(APIHandler):
         self.offline = offline
     
     def add_alert(self,severity,message):
-        if (not severity.is_integer()):
+        if (not isinstance(severity,int)):
             severity = -1
         if message is None:
             message = ""
