@@ -36,7 +36,7 @@ class SensorTemperatureChart extends React.Component {
                         let day = date.getDate();
                         let month = date.getMonth()+1;
                         let year = date.getFullYear();
-                        let hour = date.getHours();
+                        let hour = date.getHours()-3;
                         let minutes = date.getMinutes();
                         let newTimestamp = day.toString() + "-" + month.toString() + "-" + year.toString() + "/" + hour.toString() +":"+ minutes.toString();
                         sensorTimes.push(newTimestamp);
