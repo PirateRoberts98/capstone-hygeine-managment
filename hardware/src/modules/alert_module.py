@@ -10,7 +10,6 @@ class AlertModule:
         return NotImplemented # TODO for scott
         # Should use add_to_buffer if valid reading to ensure local copy 
         # if alert needed, use  api.add_alert(0,"This is a message for severity 0")
-
         
     def add_to_buffer(self,data):
         if len(self.buffer) < self.buffer_size :

@@ -26,28 +26,33 @@ def cleanup_sensor_platform():
 class PressureSensor:
     platform_enable = False
     GPIO_PIN = 4
-    def __init__(self):
-        if PressureSensor.platform_enable:
+    def __init__(self,mock):
+        self.mock = mock
+        if not self.mock and not PressureSensor.platform_enable:
+            print("Error setting up pressure enviroment, might not work as expected")
+            self.mock = True
+
+        if self.mock :
+            #Default the value of status 
+            self.status = False 
+        else:
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(PressureSensor.GPIO_PIN ,GPIO.IN)
             self.test = False # If platoform is not enabled, run as test sensor
             self.status = self.read_from_sensor()
-        else:
-            self.test = False
-            self.status = False 
 
 
     def read_from_sensor(self):
-        if PressureSensor.platform_enable:
-            self.status = GPIO.input(PressureSensor.GPIO_PIN)
-        else:
+        if  self.mock:
             self.status = not self.status
+        else:
+            self.status = GPIO.input(PressureSensor.GPIO_PIN)
         return self.status      
 
 def main():
     initialize_sensor_platform()
     cleanup_sensor_platform()
-    sensor = PressureSensor()
+    sensor = PressureSensor(True)
     try:    
         while True:
             #take a reading
