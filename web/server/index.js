@@ -1,6 +1,6 @@
 'use strict';
 var admin = require('firebase-admin');
-var serviceAccount = require("../../../ceg4912project-firebase-adminsdk-8qvzs-d95f3a692a.json");
+var serviceAccount = require("../../../ceg4912project-firebase-adminsdk-8qvzs-e630ff3920.json");
 // Get a database reference to our blog
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
