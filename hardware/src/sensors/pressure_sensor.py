@@ -1,5 +1,6 @@
 
 import time
+import random 
 
 try:
     import RPi.GPIO as GPIO
@@ -44,7 +45,7 @@ class PressureSensor:
 
     def read_from_sensor(self):
         if  self.mock:
-            self.status = not self.status
+            self.status = random.choice([True,True, False])
         else:
             self.status = GPIO.input(PressureSensor.GPIO_PIN)
         return self.status      
