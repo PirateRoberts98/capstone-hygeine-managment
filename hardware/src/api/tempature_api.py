@@ -57,7 +57,7 @@ class TempatureHandler(APIHandler):
         if self.offline:
             print( "Sending Data :%s" % data)
             return True 
-        if super().send_api_data(None,{"sensor":data}):
+        if super().send_api_data(None,data):
             return True
         else:
             #TODO: Replace exception

@@ -42,7 +42,7 @@ class PressureHandler(APIHandler):
     def __init__(self,base,offline=False):
         self.sensorid = "pressure{}".format(PressureHandler.instance)
         PressureHandler.instance = PressureHandler.instance + 1
-        APIHandler.__init__(self,base+"/sensor")
+        APIHandler.__init__(self,base+"/sensor/pressure")
         self.offline = offline
     
     def add_sensor_data(self,value):
