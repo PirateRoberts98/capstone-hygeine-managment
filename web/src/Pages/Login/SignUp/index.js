@@ -71,6 +71,17 @@ const styles = (theme) => ({
     formControl : {
         width:'50%'
     },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        marginTop: theme.spacing(1),
+        margin: theme.spacing(1),
+      },
+      textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 200,
+      },
   });
 
 class SignUp extends React.Component {
@@ -83,14 +94,14 @@ class SignUp extends React.Component {
         });
     }
 
-    handleSignUp = (email,password1,password2,fname,lname,bday, doctor) => {
+    handleSignUp = (email,password1,password2,fname,lname, doctor) => {
         firebase.auth().createUserWithEmailAndPassword(email, password1)
         .then(()=>{
             firebase.database().ref('users/'+ firebase.auth().currentUser.uid).set({
                 email: email,
                 fname:fname,
                 lname:lname,
-                bday:bday,
+                bday:this.state.selectedDate,
                 gender:this.state.selectedGender,
                 doctor: doctor,
                 isCaregiver: this.state.caregiverCheckbox,
@@ -120,14 +131,15 @@ class SignUp extends React.Component {
       };
 
     handleDateChange = event => {
+        console.log(event.target.value);
         this.setState({
-            selectedDate: event,
+            selectedDate: event.target.value,
         })
     }
 
-    handleCargiverCheckbox = event => {
+    handleCaregiverCheckbox = event => {
         this.setState({
-            cargiverCheckbox: !this.state.cargiverCheckbox,
+            caregiverCheckbox: event.target.checked,
         });
     }
 
@@ -189,21 +201,19 @@ class SignUp extends React.Component {
                         autoComplete="doctor"
                         autoFocus
                     />
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/dd/yyyy"
-                            margin="normal"
+                    <form className={classes.container} noValidate>
+                        <TextField
                             id="bday"
-                            label="Birth Date"
-                            value={this.state.selectedDate}
+                            label="Birthday"
+                            type="date"
+                            defaultValue="1990-01-01"
+                            className={classes.textField}
                             onChange={this.handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
+                            InputLabelProps={{
+                                shrink: true,
                             }}
                         />
-                    </MuiPickersUtilsProvider>
+                    </form>
                     <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel id="demo-simple-select-outlined-label">Gender</InputLabel>
                         <Select
@@ -224,8 +234,8 @@ class SignUp extends React.Component {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={this.state.cargiverCheckbox}
-                                onChange={this.handleCargiverCheckbox}
+                                checked={this.state.caregiverCheckbox}
+                                onChange={this.handleCaregiverCheckbox}
                                 name="Cargiver"
                                 color="primary"
                             />
@@ -266,7 +276,6 @@ class SignUp extends React.Component {
                             document.getElementById('password2').value,
                             document.getElementById('fname').value,
                             document.getElementById('lname').value,
-                            document.getElementById('bday').value,
                             document.getElementById('doctor').value
                         )}
                     >
