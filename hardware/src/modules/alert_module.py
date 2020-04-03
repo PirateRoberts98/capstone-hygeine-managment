@@ -5,11 +5,22 @@ class AlertModule:
         self.buffer = []
         self.buffer_size = buffer_size
         self.api = api 
+        self.same_results = 0
 
     def check_data_value(self,data):
-        return NotImplemented # TODO for scott
-        # Should use add_to_buffer if valid reading to ensure local copy 
-        # if alert needed, use  api.add_alert(0,"This is a message for severity 0")
+        #current checks on data are limited to type
+        if isinstance(data, float) or isinstance(data, bool):
+            add_to_buffer(data)
+        else:
+            return
+
+        if self.buffer[-1] == data :
+            self.same_results += 1
+        else:
+            self.same_results = 0
+        #current alert being raised is only based on pressure
+        if self.same_results == 50 :
+            self.api.add_alert("Patient has not taken pills.")
 
         
     def add_to_buffer(self,data):
@@ -17,5 +28,5 @@ class AlertModule:
             self.buffer.append(data)
         else:
             # Remove the oldest value from array
-            self.buffer.remove(0)
+            self.buffer.pop(0)
             self.buffer.append(data)
