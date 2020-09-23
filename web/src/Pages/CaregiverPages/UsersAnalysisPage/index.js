@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import PageTitle from '../../Layout/AppMain/PageTitle';
 
 // Layout
-import AppHeader from '../../Layout/AppHeader';
-import AppSidebar from '../../Layout/AppSidebar';
+import PageTitle from '../../../Layout/AppMain/PageTitle';
+import AppHeader from '../../../Layout/AppHeader';
+import AppSidebar from '../../../Layout/AppSidebar';
 
-const PillsPage = ({match}) => (
+const ContactDoctor = ({match}) => (
     <Fragment>
         <AppHeader/>
         <div className="app-main">
@@ -23,8 +23,8 @@ const PillsPage = ({match}) => (
                             transitionLeave={false}>
                             <div>
                                 <PageTitle
-                                    heading="Pills"
-                                    subheading="This dashboard shows all your required pills and consumption time and date."
+                                    heading="Contact Doctor"
+                                    subheading="Contact a general physcian or your doctor below."
                                     icon="pe-7s-user icon-gradient bg-mean-fruit"
                                 />
                             </div>
@@ -36,4 +36,4 @@ const PillsPage = ({match}) => (
     </Fragment>
 );
 
-export default PillsPage;
+export default ContactDoctor;

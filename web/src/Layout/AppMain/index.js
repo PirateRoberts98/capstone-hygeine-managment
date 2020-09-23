@@ -5,20 +5,21 @@ import {
     ToastContainer,
 } from 'react-toastify';
 
-//These will be used for the Health Monitoring System.
+// These will be used for the Health Monitoring System.
 // Caregiver Views/Pages
-const UsersAnalysisPage = lazy(() => import('../../Pages/Dashboard')); // Route to be changed.
-const UsersSchedulePage = lazy(() => import('../../Pages/Dashboard')); // Route to be changed.
-const MessageUsersPage = lazy(() => import('../../Pages/Dashboard')); // Route to be changed.
+const UsersAnalysisPage = lazy(() => import('../../Pages/CaregiverPages/UsersAnalysisPage')); // Route to be changed.
+const UsersSchedulePage = lazy(() => import('../../Pages/CaregiverPages/UsersSchedulePage')); // Route to be changed.
+const MessageUsersPage = lazy(() => import('../../Pages/CaregiverPages/MessageUsersPage')); // Route to be changed.
 // Patient Views/Pages
-const MainDashboard = lazy(() => import('../../Pages/Dashboard'));
-const ContactDoctorPage = lazy(() => import('../../Pages/ContactDoctor'));
-const PillsPage = lazy(() => import('../../Pages/Pills'));
-const SchedulePage = lazy(() => import('../../Pages/Schedule'));
-const SensorPage = lazy(() => import('../../Pages/Developer/Sensor'));
+const MainDashboard = lazy(() => import('../../Pages/PatientPages/Dashboard'));
+const ContactDoctorPage = lazy(() => import('../../Pages/PatientPages/ContactDoctor'));
+const PillsPage = lazy(() => import('../../Pages/PatientPages/Pills'));
+const SchedulePage = lazy(() => import('../../Pages/PatientPages/Schedule'));
+// Developer Views/Pages
+const SensorPage = lazy(() => import('../../Pages/DeveloperPages/Sensor'));
 
 
-//These are all examples.
+// These are all examples.
 const Dashboards = lazy(() => import('../../ExamplePages/Dashboards'));
 const Widgets = lazy(() => import('../../ExamplePages/Widgets'));
 const Elements = lazy(() => import('../../ExamplePages/Elements'));

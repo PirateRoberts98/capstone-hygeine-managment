@@ -1,11 +1,11 @@
 import React, {Fragment} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import PageTitle from '../../Layout/AppMain/PageTitle';
 
 // Layout
-import AppHeader from '../../Layout/AppHeader';
-import AppSidebar from '../../Layout/AppSidebar';
-import AppFooter from '../../Layout/AppFooter';
+import PageTitle from '../../../Layout/AppMain/PageTitle';
+import AppHeader from '../../../Layout/AppHeader';
+import AppSidebar from '../../../Layout/AppSidebar';
+import AppFooter from '../../../Layout/AppFooter';
 
 //Charts
 import WaterUsageChart from './Charts/WaterUsageChart';
