@@ -6,6 +6,11 @@ import {
 } from 'react-toastify';
 
 //These will be used for the Health Monitoring System.
+// Caregiver Views/Pages
+const UsersAnalysisPage = lazy(() => import('../../Pages/Dashboard')); // Route to be changed.
+const UsersSchedulePage = lazy(() => import('../../Pages/Dashboard')); // Route to be changed.
+const MessageUsersPage = lazy(() => import('../../Pages/Dashboard')); // Route to be changed.
+// Patient Views/Pages
 const MainDashboard = lazy(() => import('../../Pages/Dashboard'));
 const ContactDoctorPage = lazy(() => import('../../Pages/ContactDoctor'));
 const PillsPage = lazy(() => import('../../Pages/Pills'));
@@ -28,6 +33,50 @@ const AppMain = () => {
         <Fragment>
             {/* Health Monitoring System Routes */}
 
+            {/* Caregiver View Routes */}
+            {/* Users Analysis */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/usersanalysis" component={UsersAnalysisPage}/>
+            </Suspense>
+
+            {/* Users Schedule */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/usersschedule" component={UsersSchedulePage}/>
+            </Suspense>
+
+            {/* Message Users */}
+            <Suspense fallback={
+                <div className="loader-container">
+                    <div className="loader-container-inner">
+                        <h6 className="mt-5">
+                            Please wait while we load...
+                            <small>Please Wait...</small>
+                        </h6>
+                    </div>
+                </div>
+            }>
+                <Route path="/messageusers" component={MessageUsersPage}/>
+            </Suspense>
+
+            {/* Patient View Routes */}
             {/* Dashboard */}
             <Suspense fallback={
                 <div className="loader-container">
