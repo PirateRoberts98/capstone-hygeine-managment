@@ -124,6 +124,29 @@ class SignUp extends React.Component {
         })
     }
 
+    handleSignUpBackend = (email,password1,password2,fname,lname, doctor) => {
+        let data= {
+            email: email,
+            password1: password1,
+            fname: fname,
+            lname: lname,
+            doctor: doctor,
+        }
+        var request = new Request('http://localhost:3001/api/register', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type' : 'application/json' }),
+            body: JSON.stringify(data)
+        });
+
+        fetch(request).then(function(response) {
+            response.json().then(function(data){
+                console.log(data);
+            })
+        }).catch(function(err){
+            console.log(err)
+        });
+    }
+
     handleGenderChange = event => {
         this.setState({
             selectedGender: event.target.value,
@@ -131,7 +154,6 @@ class SignUp extends React.Component {
       };
 
     handleDateChange = event => {
-        console.log(event.target.value);
         this.setState({
             selectedDate: event.target.value,
         })
@@ -270,7 +292,7 @@ class SignUp extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={()=>this.handleSignUp(
+                        onClick={()=>this.handleSignUpBackend(
                             document.getElementById('email').value,
                             document.getElementById('password1').value,
                             document.getElementById('password2').value,
