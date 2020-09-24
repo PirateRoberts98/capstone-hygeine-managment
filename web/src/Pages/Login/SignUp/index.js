@@ -95,6 +95,11 @@ class SignUp extends React.Component {
     }
 
     handleSignUp = (email,password1,password2,fname,lname, doctor) => {
+        this.handleSignUpFirebase(email,password1,password2,fname,lname, doctor);
+        this.handleSignUpBackend(email,password1,password2,fname,lname, doctor);
+    }
+
+    handleSignUpFirebase = (email,password1,password2,fname,lname, doctor) => {
         firebase.auth().createUserWithEmailAndPassword(email, password1)
         .then(()=>{
             firebase.database().ref('users/'+ firebase.auth().currentUser.uid).set({
@@ -125,12 +130,16 @@ class SignUp extends React.Component {
     }
 
     handleSignUpBackend = (email,password1,password2,fname,lname, doctor) => {
+        var that = this;
         let data= {
             email: email,
             password1: password1,
             fname: fname,
             lname: lname,
+            bday: this.state.selectedDate,
+            gender: this.state.selectedGender,
             doctor: doctor,
+            isCaregiver: this.state.caregiverCheckbox,
         }
         var request = new Request('http://localhost:3001/api/register', {
             method: 'POST',
@@ -140,7 +149,9 @@ class SignUp extends React.Component {
 
         fetch(request).then(function(response) {
             response.json().then(function(data){
-                console.log(data);
+                if(data.value){
+                    that.props.handleLogin();
+                }
             })
         }).catch(function(err){
             console.log(err)

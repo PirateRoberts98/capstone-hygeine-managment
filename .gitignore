@@ -4,8 +4,7 @@
 web/.idea
 
 # dependencies
-web/node_modules
-web/server/node_modules
+node_modules/
 
 # testing
 web/coverage
