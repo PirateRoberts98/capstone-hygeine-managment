@@ -95,6 +95,11 @@ class SignUp extends React.Component {
     }
 
     handleSignUp = (email,password1,password2,fname,lname, doctor) => {
+        this.handleSignUpFirebase(email,password1,password2,fname,lname, doctor);
+        this.handleSignUpBackend(email,password1,password2,fname,lname, doctor);
+    }
+
+    handleSignUpFirebase = (email,password1,password2,fname,lname, doctor) => {
         firebase.auth().createUserWithEmailAndPassword(email, password1)
         .then(()=>{
             firebase.database().ref('users/'+ firebase.auth().currentUser.uid).set({
@@ -124,6 +129,35 @@ class SignUp extends React.Component {
         })
     }
 
+    handleSignUpBackend = (email,password1,password2,fname,lname, doctor) => {
+        var that = this;
+        let data= {
+            email: email,
+            password1: password1,
+            fname: fname,
+            lname: lname,
+            bday: this.state.selectedDate,
+            gender: this.state.selectedGender,
+            doctor: doctor,
+            isCaregiver: this.state.caregiverCheckbox,
+        }
+        var request = new Request('http://localhost:3001/api/register', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type' : 'application/json' }),
+            body: JSON.stringify(data)
+        });
+
+        fetch(request).then(function(response) {
+            response.json().then(function(data){
+                if(data.value){
+                    that.props.handleLogin();
+                }
+            })
+        }).catch(function(err){
+            console.log(err)
+        });
+    }
+
     handleGenderChange = event => {
         this.setState({
             selectedGender: event.target.value,
@@ -131,7 +165,6 @@ class SignUp extends React.Component {
       };
 
     handleDateChange = event => {
-        console.log(event.target.value);
         this.setState({
             selectedDate: event.target.value,
         })
@@ -270,7 +303,7 @@ class SignUp extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={()=>this.handleSignUp(
+                        onClick={()=>this.handleSignUpBackend(
                             document.getElementById('email').value,
                             document.getElementById('password1').value,
                             document.getElementById('password2').value,
