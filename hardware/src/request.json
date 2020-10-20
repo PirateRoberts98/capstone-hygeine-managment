@@ -1,0 +1,17 @@
+// POST Sensor Data
+{
+    "device_id": "string",
+    "timestamp": "string",
+    "user":{
+        "id":-1 ,
+        "name": "lorem"
+    },
+    "sensor":{
+        "id":-1,
+        "type": "temp"
+    },
+    "data":{
+        "timestamp": "<ISO time>",
+        "value": 420
+    }
+}
