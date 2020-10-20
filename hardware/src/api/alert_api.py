@@ -49,7 +49,7 @@ class AlertHandler(APIHandler):
             message = ""
         data = {
             "severity":severity , 
-            "warining_message":message
+            "warning_message":message
         }
         if self.offline:
             print( "Sending Data :%s" % data)
