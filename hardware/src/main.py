@@ -3,10 +3,13 @@
 #Local Imports
 import api
 
+import temp_humidity_sensor
+import pressure_sensor
+import RPi.GPIO as GPIO
 
 # External Imports 
-import time , argparse , yaml ,logging , sys
-
+import time , argparse , yaml ,logging , sys ,  pytz 
+from datetime import datetime
 
 def create_arguments():
     text = '''
@@ -38,21 +41,43 @@ def main():
     config = parse_config()
     args = create_arguments()  
     setup_logging()
-    logging.debug('This message should go to the log file')
-    logging.info('So should this')
-    logging.warning('And this, too')
-    logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
     base_url= args.base_url if args.base_url else config["base_url"]
     mock = True if args.mock else config["mock"] 
     offline = True if args.offline else config["offline"]
+    # TODO Log the config state to debug 
+    user_info = api.User("John Doe") #TODO log user create to debug 
+    sensor_info = api.Sensor("Temperature")  #TODO log user create to debug 
+    web_api = api.WebAPI(base_url=base_url,offline=offline)
+    logging.info("TODO: This is a test") # TODO: Log info on Web API 
+    temp_humidity_sensor = TempAndHumiditySensor()
+    pressure_sensor = PressureSensor()
+    try:
+        while True:
+            time.sleep(3)
+            if mock:
+                logging.info("Logging a mock sensor output")
+                web_api.send_data(user_info,sensor_info,'{{"timestamp":{},"value":{}}}'.format(
+                        datetime.now(pytz.timezone("Canada/Eastern")),420
+                    ))
+            else:
+                if temp_humidity_sensor.read_from_sensor():
+                    logging.debug("Tempature:{} , Humidity:{}".format(\
+                        temp_humidity_sensor.tempVal,temp_humidity_sensor.humidityVal))
+                    web_api.send_data(user_info,sensor_info,"{{\"timestamp\":{},\"value\":{}}}".format(
+                        datetime.now(pytz.timezone("Canada/Eastern")),temp_humidity_sensor.tempVal
+                    ))
+                else:
+                    logging.warning("Status Error, please ensure deivce is working correctly")
 
-    user_info = api.User("foo")
-    sensor_info = api.Sensor("Humidity")
-    web_api = api.WebAPI(offline=True)
-    web_api.send_data(user_info,sensor_info,"{value:Init}")
-    while True:
-        time.sleep(5)
-        web_api.send_data(user_info,sensor_info,"{Test:True}")
+                web_api.send_data(user_info,sensor_info,"{{\"timestamp\":{},\"value\":{}}}".format(
+                        datetime.now(pytz.timezone("Canada/Eastern")),pressure_sensor.read_from_sensor()
+                    ))
+    except KeyboardInterrupt:
+        #Leave system as expected
+        pass
+    finally:
+        GPIO.cleanup()    
+
 
 
 

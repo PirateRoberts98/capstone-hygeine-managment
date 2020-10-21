@@ -31,8 +31,8 @@ class WebAPI:
             print("Sending Data => {{\"user\":{},\"sensor\":{},\"data\":{}}}".format(user.to_json(),sensor.to_json(),data))
         else:
             try:
-                r2 = requests.post(self.base_url + "/sensor/temperature",
-                json="Sending Data => {{\"user\":{},\"sensor\":{},\"data\":{}}}".format(user.to_json(),sensor.to_json(),data),
+                r2 = requests.post(self.base_url,
+                json="{{\"user\":{},\"sensor\":{},\"data\":{}}}".format(user.to_json(),sensor.to_json(),data),
                 timeout=10)
                 print(r2.status_code)
             except Timeout:

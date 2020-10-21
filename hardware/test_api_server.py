@@ -1,6 +1,13 @@
 from flask import Flask, request ,  json
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[
+            logging.FileHandler("server_Test.log"),
+            logging.StreamHandler()
+        ]
+    )  
 
 
 companies = [{"id": 1, "name": "Company One"}, {"id": 2, "name": "Company Two"}]
@@ -12,7 +19,7 @@ def get_sensor():
     print(request.data, flush=True)
     return json.dumps(companies)
 
-@api.route('/sensor', methods=['POST'])
+@api.route('/sensor/', methods=['POST'])
 def post_sensor():
     print(request.data, flush=True)
     return json.dumps({"success": True}), 201
