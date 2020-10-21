@@ -28,11 +28,50 @@ def register():
 
     conn.commit()
     cur.close()
-
-    print(isCaregiver)
     
 
     return {"value": True}
+
+#insert sensor data api
+@app.route("/api/postSensorData", methods=['POST'])
+def insertSensorData():
+    #sensorId = -1
+    #userId = -1
+    #deviceId = "test"
+    #sensorType = "temp"
+    #timestamp = "03-01-2019"
+    #value = 420
+
+    sensorId = request.get_json()['sensor']["id"]
+    userId = request.get_json()["user"]["id"]
+    deviceId = request.get_json()['device_id']
+    sensorType = request.get_json()['sensor']["type"]
+    timestamp = request.get_json()["data"]["timestamp"]
+    value = request.get_json()['data']["value"]
+
+    cur = conn.cursor()
+    cur.execute("INSERT INTO sensorData(sensorId, userId, deviceId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s, %s)", (sensorId, userId, deviceId, sensorType, timestamp, value))
+
+    conn.commit()
+
+    cur.close()
+
+    return {"value": True}
+
+#get sensor data api
+@app.route("/api/getSensorData", methods=['POST'])
+def getSensorData():
+    #sensorType = 'temp'
+    sensorType = request.get_json()['type']
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM sensorData WHERE sensortype = %s", (sensorType,))
+
+    rows = cur.fetchall()
+
+    cur.close()
+
+    return {"value": rows}
 
 if __name__ == '__main__':
     app.debug = True
