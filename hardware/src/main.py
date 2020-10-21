@@ -5,8 +5,7 @@ import api
 
 
 # External Imports 
-import time
-import argparse , yaml 
+import time , argparse , yaml ,logging , sys
 
 
 def create_arguments():
@@ -25,10 +24,24 @@ def parse_config():
     with open('config.yaml') as f:
         return yaml.load(f, Loader=yaml.FullLoader)
 
+def setup_logging(flag = logging.INFO , log_file ="debug.log" , sys_out=sys.stdout ):
+    logging.basicConfig(
+        level=flag,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler(sys_out)
+        ]
+    )   
 
 def main():
     config = parse_config()
     args = create_arguments()  
+    setup_logging()
+    logging.debug('This message should go to the log file')
+    logging.info('So should this')
+    logging.warning('And this, too')
+    logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
     base_url= args.base_url if args.base_url else config["base_url"]
     mock = True if args.mock else config["mock"] 
     offline = True if args.offline else config["offline"]
