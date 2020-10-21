@@ -19,7 +19,7 @@ def get_sensor():
     print(request.data, flush=True)
     return json.dumps(companies)
 
-@api.route('/sensor/', methods=['POST'])
+@api.route('/api/postSensorData', methods=['POST'])
 def post_sensor():
     print(request.data, flush=True)
     return json.dumps({"success": True}), 201

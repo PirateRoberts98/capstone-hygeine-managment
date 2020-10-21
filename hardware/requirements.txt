@@ -4,6 +4,7 @@ pyyaml
 requests
 datetime
 pytz
+flask
 # json
 # logging
-RPI.GPIO
+# RPI.GPIO
