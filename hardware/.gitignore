@@ -1,3 +1,5 @@
 # Comes with setup.py install
 hardware/dist 
 hardware/capstone_hygeine_tracker_team2.egg-info
+hrdware/src/__pycache__
+*.log

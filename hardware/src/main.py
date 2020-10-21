@@ -1,89 +1,91 @@
 #!/usr/local/bin/python3
 
+#Local Imports
+import api
+
+import temp_humidity_sensor
+import pressure_sensor
+import RPi.GPIO as GPIO
+
 # External Imports 
-import time
+import time , argparse , yaml ,logging , sys ,  pytz 
+from datetime import datetime
 
-
-import sensors.pressure_sensor as pressure
-import sensors.tempature_sensor as temp 
-def init_sensors(test_mode):
-    if not test_mode:
-        pressure.initialize_sensor_platform()
-    p_sensor = pressure.PressureSensor(test_mode)
-    t_sensor = temp.TempatureSensor(test_mode)
-    return {"pressure":p_sensor,"tempature":t_sensor}
-
-def cleanup_sensors(test_mode):
-    if not test_mode:
-        pressure.cleanup_sensor_platform() 
-    return 
-
-import modules.alert_module as alert 
-import modules.validation_module as valid
-def init_modules(api, buffer_size=20):
-    a_module = alert.AlertModule(buffer_size,api)
-    s_module = valid.SystemValidate(api)
-    return {"alert":a_module,"validate":s_module}
-
-import api.alert_api as a_api
-import api.pressure_api as p_api
-import api.tempature_api as t_api
-def init_api(base_uri, offline_mode):
-    alert_handler = a_api.AlertHandler(base_uri,offline=offline_mode)
-    pressure_handler = p_api.PressureHandler(base_uri,offline=offline_mode)
-    tempature_handler = t_api.TempatureHandler(base_uri,offline=offline_mode)
-    return {"alert":alert_handler,"pressure":pressure_handler,"tempature":tempature_handler}
-
-import argparse
 def create_arguments():
     text = '''
-    This application is the middleware application for the CEG4912 Group 2 Capstone Project
+    This application is the middleware application for the CEG4912/3 Group 2 Capstone Project
 
     For more information, email rconr060@uottawa.ca 
     '''
     parser = argparse.ArgumentParser(description=text)
     parser.add_argument("--base_url", "-u", help="set the value of the base_url to a different value (default https://localhost:8080)")
-    parser.add_argument("--local_buffer", "-b", help="set the local bugger that modules use for data analysis without GET requests")
     parser.add_argument("-M", "--mock", help="Run the application using mock sensor data ", action="store_true")
     parser.add_argument("-O", "--offline", help="Run the system offline (API Calls print to sysout)", action="store_true")
     return parser.parse_args()
 
+def parse_config():
+    with open('config.yaml') as f:
+        return yaml.load(f, Loader=yaml.FullLoader)
+
+def setup_logging(flag = logging.INFO , log_file ="debug.log" , sys_out=sys.stdout ):
+    logging.basicConfig(
+        level=flag,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler(sys_out)
+        ]
+    )   
 
 def main():
-
+    config = parse_config()
     args = create_arguments()  
-    base_url= args.base_url if args.base_url else "https://localhost:8080"
-    local_buffer = args.local_buffer if args.local_buffer else 20
-    test_mode = True if args.mock else False #Hardcode bool to remove object
-    offline_mode = True if args.offline else False
+    setup_logging()
+    base_url= args.base_url if args.base_url else config["base_url"]
+    mock = True if args.mock else config["mock"] 
+    offline = True if args.offline else config["offline"]
+    # TODO Log the config state to debug 
+    user_info = api.User("John Doe") #TODO log user create to debug 
+    temp_sensor_info = api.Sensor("Temperature")  #TODO log user create to debug
+    humidity_sensor_info = api.Sensor("Humidity")
+    pressure_sensor_info = api.Sensor("Pressure")
+    
+    web_api = api.WebAPI(base_url=base_url,offline=offline)
+    logging.info("TODO: This is a test") # TODO: Log info on Web API 
+    temp_humidity = temp_humidity_sensor.TempAndHumiditySensor()
+    pressure = pressure_sensor.PressureSensor()
     try:
+        while True:
+            time.sleep(3)
+            if mock:
+                logging.info("Logging a mock sensor output")
+                web_api.send_data(user_info,temp_sensor_info,'{{"timestamp":{},"value":{}}}'.format(
+                        datetime.now(pytz.timezone("Canada/Eastern")),420
+                    ))
+            else:
+                if temp_humidity.read_from_sensor():
+                    logging.debug("Tempature:{} , Humidity:{}".format(\
+                        temp_humidity.tempVal,temp_humidity.humidityVal))
+                    web_api.send_data(user_info,temp_sensor_info,"{{\"timestamp\":{},\"value\":{}}}".format(
+                        datetime.now(pytz.timezone("Canada/Eastern")),temp_humidity.tempVal
+                    ))
+                    web_api.send_data(user_info,humidity_sensor_info,"{{\"timestamp\":{},\"value\":{}}}".format(
+                        datetime.now(pytz.timezone("Canada/Eastern")),temp_humidity.humidityVal
+                    ))
+                else:
+                    logging.warning("Status Error, please ensure deivce is working correctly")
 
-        # Initialize the handlers for alert and sensor
-        apis = init_api(base_url, offline_mode)
-        modules = init_modules(apis["alert"])
-        sensors = init_sensors(test_mode)
-        initialize_cycle(
-            sensors["pressure"],sensors["tempature"],
-            modules["alert"], modules["validate"],
-            apis["alert"],apis["pressure"],apis["tempature"]
-            )
+                web_api.send_data(user_info,pressure_sensor_info,"{{\"timestamp\":{},\"value\":{}}}".format(
+                        datetime.now(pytz.timezone("Canada/Eastern")),pressure.read_from_sensor()
+                    ))
     except KeyboardInterrupt:
-        cleanup_sensors(test_mode)
+        #Leave system as expected
+        pass
+    finally:
+        GPIO.cleanup()    
 
 
-def initialize_cycle(p_sensor, t_sensor , a_module , v_module , api_alert, api_pressure, api_tempature):
-    i = 1
-    while True:
-        print("Running loop %i",i)
-        i += 1
-        p_data = p_sensor.read_from_sensor()
-        a_module.check_data_value(p_data)
-        v_module.validate_pressure(p_data)
-        t_data = t_sensor.read_sensor()
-        v_module.validate_tempature(t_data)
-        api_pressure.add_sensor_data(p_data)
-        api_tempature.add_sensor_data(t_data)
-        time.sleep(5)
+
 
 if __name__ == "__main__":
-    main()
+    main() 
