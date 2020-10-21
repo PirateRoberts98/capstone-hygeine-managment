@@ -1,0 +1,6 @@
+setuptools
+argparse
+pyyaml
+requests
+datetime
+json
