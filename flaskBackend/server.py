@@ -59,11 +59,10 @@ def insertSensorData():
     return {"value": True}
 
 #get sensor data api
-@app.route("/api/getSensorData", methods=['GET'])
+@app.route("/api/getSensorData", methods=['POST'])
 def getSensorData():
-    sensorType = 'temp'
-    print(sensorType)
-    #sensorType = request.get_json()['type']
+    #sensorType = 'temp'
+    sensorType = request.get_json()['type']
 
     cur = conn.cursor()
     cur.execute("SELECT * FROM sensorData WHERE sensortype = %s", (sensorType,))
