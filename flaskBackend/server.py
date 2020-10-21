@@ -59,10 +59,11 @@ def insertSensorData():
     return {"value": True}
 
 #get sensor data api
-@app.route("/api/getSensorData", methods=['POST'])
+@app.route("/api/getSensorData", methods=['GET'])
 def getSensorData():
-    #sensorType = 'temp'
-    sensorType = request.get_json()['type']
+    sensorType = 'temp'
+    print(sensorType)
+    #sensorType = request.get_json()['type']
 
     cur = conn.cursor()
     cur.execute("SELECT * FROM sensorData WHERE sensortype = %s", (sensorType,))
@@ -71,7 +72,14 @@ def getSensorData():
 
     cur.close()
 
-    return {"value": rows}
+    return {
+        "sensorId": rows[0][0],
+        "userId": rows[0][1],
+        "deviceId": rows[0][2],
+        "sensorType": rows[0][3],
+        "timestamp": rows[0][4],
+        "value": rows[0][5]
+    }
 
 if __name__ == '__main__':
     app.debug = True
