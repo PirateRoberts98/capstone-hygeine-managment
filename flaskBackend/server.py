@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 
@@ -71,14 +71,19 @@ def getSensorData():
 
     cur.close()
 
-    return {
-        "sensorId": rows[0][0],
-        "userId": rows[0][1],
-        "deviceId": rows[0][2],
-        "sensorType": rows[0][3],
-        "timestamp": rows[0][4],
-        "value": rows[0][5]
-    }
+    output = [] #new array to store our formatted data
+    if rows:
+        for i in range(len(rows)):
+            output.append({
+                "sensorId": rows[i][0],
+                "userId": rows[i][1],
+                "deviceId": rows[i][2],
+                "sensorType": rows[i][3],
+                "timestamp": rows[i][4],
+                "value": rows[i][5]
+            })
+
+    return jsonify(output)
 
 if __name__ == '__main__':
     app.debug = True
