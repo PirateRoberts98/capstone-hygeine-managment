@@ -14,3 +14,14 @@ CREATE TABLE users (
     isCaregiver BOOLEAN,
     PRIMARY KEY (userID)
 );
+
+/*Create table SensorPressure*/
+CREATE TABLE sensorData (
+    sensorId INT NOT NULL,
+    userId INT NOT NULL,
+    deviceId VARCHAR(255) NOT NULL,
+    sensorType VARCHAR(255) NOT NULL,
+    tStamp DATE,
+    val INT,
+    PRIMARY KEY (sensorID)
+);
