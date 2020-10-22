@@ -54,11 +54,11 @@ def main():
             time.sleep(3)
             logging.info("Logging a mock sensor output")
             web_api.send_data(user_info,temp_sensor_info,'{{"timestamp":{},"value":{}}}'.format(
-                    time.mktime(datetime.now(pytz.timezone("Canada/Eastern")).timetuple()),19.0
+                    time.time(),19.0
                 ))
             time.sleep(3)
             web_api.send_data(user_info,humidity_sensor_info,'{{"timestamp":{},"value":{}}}'.format(
-                    time.mktime(datetime.now(pytz.timezone("Canada/Eastern")).timetuple()),0
+                    time.time(),0
                 ))
 
     except KeyboardInterrupt:
