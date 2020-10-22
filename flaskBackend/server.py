@@ -11,6 +11,7 @@ CORS(app)
 
 #Configure db
 conn = psycopg2.connect(user = "postgres", port="5432", host="database-1.cfa0og2dawpl.ca-central-1.rds.amazonaws.com", password = "capstone")
+#conn = psycopg2.connect(dbname="capstone", port="5432")
 
 #register register api
 @app.route("/api/register", methods=['POST'])
@@ -37,6 +38,7 @@ def register():
 @app.route("/api/postSensorData", methods=['POST'])
 def insertSensorData():
     jsonf = json.loads(request.get_json())
+    print(jsonf)
 
     sensorId = 1
     userId = jsonf["user"]["id"]
@@ -46,7 +48,7 @@ def insertSensorData():
 
     cur = conn.cursor()
 
-    cur.execute("INSERT INTO sensordata(sensorId, userId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s)", (sensorId, userId, sensorType, timestamp, value))
+    cur.execute("INSERT INTO dataSensor(sensorId, userId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s)", (sensorId, userId, sensorType, timestamp, value))
 
     conn.commit()
 
