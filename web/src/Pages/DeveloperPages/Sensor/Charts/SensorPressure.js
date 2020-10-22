@@ -20,10 +20,8 @@ class SensorPressureChart extends React.Component {
         var data = {
             type: "Pressure"
         };
-        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getsensordata', {
-            method: 'POST',
-            headers: new Headers({ 'Content-Type' : 'application/json' }),
-            body: JSON.stringify(data)
+        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataPressure', {
+            method: 'GET',
         });
         fetch(request).then(function(response) {
             response.json()
