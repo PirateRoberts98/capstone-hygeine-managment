@@ -1,46 +1,33 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
-// Firebase Imports
-import * as firebase from "firebase/app";
-import "firebase/database";
-var database = firebase.database();
+import {Line} from 'react-chartjs-2';
 
-class SensorPressureChart extends React.Component {
-    constructor(props) {
+class SensorHumidityChart extends React.Component {
+    constructor(props){
         super(props);
         this.state = {
             sensorData:'',
             sensorTimes:'',
-            sensorValues:'', 
+            sensorValues:'',
+            dbIsEmpty:false
         }
     }
 
     componentDidMount(){
+      this.retrieveData();
+      setInterval(() => {
         this.retrieveData();
-        let i = 0;
-        let interval = setInterval(() => {
-        if (i>=0) {
-            this.retrieveData();
-            i++;
-            console.log("waiting for the next call for pressure.");
-        }
-        else {
-            clearInterval(interval)
-        }
-
-        }, 5000);
+      }, 5000);
     }
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataPressure', {
+        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataHumidity', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
             response.json()
                 .then(function(data){
                     if(data){
-                        //console.log(data);
                         let sensorDataObjects = data;
                         let sensorTimes = [];
                         let sensorValues = [];
@@ -84,31 +71,35 @@ class SensorPressureChart extends React.Component {
             labels: this.state.sensorTimes,
             datasets: [
                 {
-                    label: 'Activated = 1',
+                    label: 'Humidity (Percentage)',
+                    fill: false,
+                    lineTension: 0.1,
                     backgroundColor: 'rgba(75,192,192,0.4)',
                     borderColor: 'rgba(75,192,192,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(75,192,192,1)',
-                    hoverBorderColor: 'rgba(220,220,220,1)',
                     borderCapStyle: 'round',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(220,220,220,1)',
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 10,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
                     data: this.state.sensorValues
                 }
             ]
         };
-        console.log(data);
+
         return (
             <div>
-                <Bar
-                    data={data}
-                    width={100}
-                    height={50}
-                    options={{
-                        maintainAspectRatio: true
-                    }}
-                />
+                <Line data={data} />
             </div>
         )
     }
 }
 
-export default SensorPressureChart;
+export default SensorHumidityChart;

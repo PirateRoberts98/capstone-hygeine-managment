@@ -9,6 +9,7 @@ import AppSidebar from '../../../Layout/AppSidebar';
 // Charts
 import SensorTemperatureChart from './Charts/SensorTemperature';
 import SensorPressureChart from './Charts/SensorPressure';
+import SensorHumidityChart from './Charts/SensorHumidity';
 
 //Alert
 import Alert from './Alert';
@@ -56,6 +57,16 @@ const SensorPage = ({match}) => (
                                         <CardBody>
                                             <CardTitle>Sensor Pressure</CardTitle>
                                             <SensorPressureChart/>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Row form>
+                                <Col md={6}>
+                                    <Card className="main-card mb-3">
+                                        <CardBody>
+                                            <CardTitle>Sensor Humidity</CardTitle>
+                                            <SensorHumidityChart/>
                                         </CardBody>
                                     </Card>
                                 </Col>

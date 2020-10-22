@@ -16,6 +16,7 @@ class SensorTemperatureChart extends React.Component {
     }
 
     componentDidMount(){
+        this.retrieveData();
         let i = 0;
         let interval = setInterval(() => {
         if (i>=0) {
