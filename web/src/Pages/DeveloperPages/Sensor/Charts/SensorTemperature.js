@@ -20,7 +20,7 @@ class SensorTemperatureChart extends React.Component {
         var data = {
             type: "Temperature"
         };
-        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/postsensordata', {
+        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getsensordata', {
             method: 'POST',
             headers: new Headers({ 'Content-Type' : 'application/json' }),
             body: JSON.stringify(data)
