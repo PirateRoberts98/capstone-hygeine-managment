@@ -2,6 +2,7 @@
 import requests
 import datetime
 import json
+import logging
 from requests.exceptions import Timeout
 
 class User:
@@ -34,6 +35,6 @@ class WebAPI:
                 r2 = requests.post(self.base_url,
                 json="{{\"user\":{},\"sensor\":{},\"data\":{}}}".format(user.to_json(),sensor.to_json(),data),
                 timeout=10)
-                print(r2.status_code)
+                logging.info("status code: {}".format(r2.status_code))
             except Timeout:
                 return None
