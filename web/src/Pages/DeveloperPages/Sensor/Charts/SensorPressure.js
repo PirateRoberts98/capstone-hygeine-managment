@@ -16,44 +16,55 @@ class SensorPressureChart extends React.Component {
     }
 
     componentDidMount(){
-        database.ref('server/sensorPressure').on('value', (snapshot)=>{
-            if(this.state.sensorData != snapshot.val() && snapshot.val() != null){
-                let sensorDataObjects = snapshot.val();
-                let sensorDataArray = [];
-                let sensorTimes = [];
-                let sensorValues = [];
-                let key;
-                for(let i=0; i < Object.keys(sensorDataObjects).length; i++){
-                    key = Object.keys(sensorDataObjects)[i];
-                    sensorDataArray.push(sensorDataObjects[key]);
-                }
-                sensorDataArray.map(item => {
-                    if(item != undefined) {
-                        // Parse timestamp
-                        let date = new Date(item.senPressure.timestamp);
-                        let newDate = date.toString();
-                        date = new Date(newDate);
-                        let day = date.getDate();
-                        let month = date.getMonth()+1;
-                        let year = date.getFullYear();
-                        let hour = date.getHours()-3;
-                        let minutes = date.getMinutes();
-                        let newTimestamp = day.toString() + "-" + month.toString() + "-" + year.toString() + "/" + hour.toString() +":"+ minutes.toString();
-                        sensorTimes.push(newTimestamp);
-                        if(item.senPressure.value == true) {
-                            sensorValues.push(1);
-                        } else {
-                            sensorValues.push(0);
-                        }
-                        
+        var tht = this;
+        var data = {
+            type: "Pressure"
+        };
+        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/postsensordata', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type' : 'application/json' }),
+            body: JSON.stringify(data)
+        });
+        fetch(request).then(function(response) {
+            response.json()
+                .then(function(data){
+                    if(data){
+                        //console.log(data);
+                        let sensorDataObjects = data;
+                        let sensorTimes = [];
+                        let sensorValues = [];
+                        let sensorDataFulfilled = []
+                        sensorDataObjects.map(item => {
+                            if(item != undefined) {
+                                // Parse timestamp
+                                /*let date = new Date(item.timestamp);
+                                let newDate = date.toString();
+                                date = new Date(newDate);
+                                let day = date.getDate();
+                                let month = date.getMonth()+1;
+                                let year = date.getFullYear();
+                                let hour = date.getHours()-3;
+                                let minutes = date.getMinutes();
+                                let newTimestamp = day.toString() + "-" + month.toString() + "-" + year.toString() + "/" + hour.toString() +":"+ minutes.toString();*/
+                                sensorTimes.push((item.timestamp).toString());
+                                sensorValues.push(item.value);
+                            }
+                        })
+                        let temp = [sensorTimes,sensorValues]
+                        sensorDataFulfilled.push(temp);
+                        return sensorDataFulfilled;
                     }
                 })
-                this.setState({
-                    sensorData: sensorDataObjects,
-                    sensorTimes: sensorTimes,
-                    sensorValues: sensorValues
+                .then((sensorDataFulfilled)=>{
+                    console.log(sensorDataFulfilled)
+                    tht.setState({
+                        sensorTimes: sensorDataFulfilled[0][0],
+                        sensorValues: sensorDataFulfilled[0][1]
+                    });
+                })
+                .catch(function(err){
+                    console.log(err)
                 });
-            }
         });
     }
 
@@ -73,7 +84,7 @@ class SensorPressureChart extends React.Component {
                 }
             ]
         };
-
+        console.log(data);
         return (
             <div>
                 <Bar

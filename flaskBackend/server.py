@@ -64,7 +64,7 @@ def getSensorData():
     sensorType = request.get_json()['type']
 
     cur = conn.cursor()
-    cur.execute("SELECT * FROM sensorData WHERE sensortype = %s", (sensorType,))
+    cur.execute("SELECT * FROM datasensor WHERE sensortype = %s", (sensorType,))
 
     rows = cur.fetchall()
 
@@ -76,10 +76,9 @@ def getSensorData():
             output.append({
                 "sensorId": rows[i][0],
                 "userId": rows[i][1],
-                "deviceId": rows[i][2],
-                "sensorType": rows[i][3],
-                "timestamp": rows[i][4],
-                "value": rows[i][5]
+                "sensorType": rows[i][2],
+                "timestamp": rows[i][3],
+                "value": rows[i][4]
             })
 
     return jsonify(output)
