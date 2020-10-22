@@ -16,10 +16,22 @@ class SensorPressureChart extends React.Component {
     }
 
     componentDidMount(){
+        let i = 0;
+        let interval = setInterval(() => {
+        if (i>=0) {
+            this.retrieveData();
+            i++;
+            console.log("waiting for the next call for pressure.");
+        }
+        else {
+            clearInterval(interval)
+        }
+
+        }, 5000);
+    }
+
+    retrieveData = () => {
         var tht = this;
-        var data = {
-            type: "Pressure"
-        };
         var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataPressure', {
             method: 'GET',
         });
