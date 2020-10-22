@@ -58,11 +58,38 @@ def insertSensorData():
 
 #get sensor data api
 @app.route("/api/getSensorDataTemperature", methods=['GET'])
-def getSensorData():
+def getSensorDataTemperature():
         #sensorType = 'temp'
 
         cur = conn.cursor()
         cur.execute("SELECT * FROM datasensor WHERE sensortype = 'Temperature'")
+
+        rows = cur.fetchall()
+
+        cur.close()
+
+        output = [] #new array to store our formatted data
+        if rows:
+            for i in range(len(rows)):
+                output.append({
+                    "sensorId": rows[i][0],
+                    "userId": rows[i][1],
+                    "sensorType": rows[i][2],
+                    "timestamp": rows[i][3],
+                    "value": rows[i][4]
+                })
+
+        response = jsonify(output)
+
+        return response
+
+#get sensor data api
+@app.route("/api/getSensorDataHumidity", methods=['GET'])
+def getSensorDataHumidity():
+        #sensorType = 'temp'
+
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM datasensor WHERE sensortype = 'Humidity'")
 
         rows = cur.fetchall()
 
