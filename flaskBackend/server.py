@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import json
@@ -57,30 +57,70 @@ def insertSensorData():
     return {"value": True}
 
 #get sensor data api
-@app.route("/api/getSensorData", methods=['POST'])
+@app.route("/api/getSensorDataTemperature", methods=['GET'])
 def getSensorData():
-    #sensorType = 'temp'
-    sensorType = request.get_json()['type']
+        #sensorType = 'temp'
 
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM datasensor WHERE sensortype = %s", (sensorType,))
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM datasensor WHERE sensortype = 'Temperature'")
 
-    rows = cur.fetchall()
+        rows = cur.fetchall()
 
-    cur.close()
+        cur.close()
 
-    output = [] #new array to store our formatted data
-    if rows:
-        for i in range(len(rows)):
-            output.append({
-                "sensorId": rows[i][0],
-                "userId": rows[i][1],
-                "sensorType": rows[i][2],
-                "timestamp": rows[i][3],
-                "value": rows[i][4]
-            })
+        output = [] #new array to store our formatted data
+        if rows:
+            for i in range(len(rows)):
+                output.append({
+                    "sensorId": rows[i][0],
+                    "userId": rows[i][1],
+                    "sensorType": rows[i][2],
+                    "timestamp": rows[i][3],
+                    "value": rows[i][4]
+                })
 
-    return jsonify(output)
+        response = jsonify(output)
+
+        return response
+
+#get sensor data api
+@app.route("/api/getSensorDataPressure", methods=['GET'])
+def getSensorDataPressure():
+    #if request.method == "OPTIONS":
+    #    print("Hello Preflight")
+    #    return _build_cors_preflight_response()
+    #elif request.method == "GET":
+    #    print("Hello Actual Response")
+
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM datasensor WHERE sensortype = 'Pressure'")
+
+        rows = cur.fetchall()
+
+        cur.close()
+
+        output = [] #new array to store our formatted data
+        if rows:
+            for i in range(len(rows)):
+                output.append({
+                    "sensorId": rows[i][0],
+                    "userId": rows[i][1],
+                    "sensorType": rows[i][2],
+                    "timestamp": rows[i][3],
+                    "value": rows[i][4]
+                })
+
+        response = jsonify(output)
+    #    response.headers.add("Access-Control-Allow-Origin", "*")
+
+        return response
+
+#def _build_cors_preflight_response():
+#    response = make_response()
+#    response.headers.add("Access-Control-Allow-Origin", "*")
+#    response.headers.add('Access-Control-Allow-Headers', "*")
+#    response.headers.add('Access-Control-Allow-Methods', "*")
+#    return response
 
 if __name__ == '__main__':
     app.debug = True
