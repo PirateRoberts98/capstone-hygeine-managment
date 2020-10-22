@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
+import json
 
 import psycopg2
 
@@ -35,26 +36,24 @@ def register():
 #insert sensor data api
 @app.route("/api/postSensorData", methods=['POST'])
 def insertSensorData():
-    #sensorId = -1
-    #userId = -1
-    #deviceId = "test"
-    #sensorType = "temp"
-    #timestamp = "03-01-2019"
-    #value = 420
+    try:
+        jsonf = json.loads(request.get_json())
 
-    sensorId = request.get_json()['sensor']["id"]
-    userId = request.get_json()["user"]["id"]
-    deviceId = request.get_json()['device_id']
-    sensorType = request.get_json()['sensor']["type"]
-    timestamp = request.get_json()["data"]["timestamp"]
-    value = request.get_json()['data']["value"]
+        sensorId = jsonf['sensor']["id"]
+        userId = jsonf["user"]["id"]
+        deviceId = jsonf['device_id']
+        sensorType = jsonf['sensor']["type"]
+        timestamp = jsonf["data"]["timestamp"]
+        value = jsonf['data']["value"]
 
-    cur = conn.cursor()
-    cur.execute("INSERT INTO sensorData(sensorId, userId, deviceId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s, %s)", (sensorId, userId, deviceId, sensorType, timestamp, value))
+        cur = conn.cursor()
+        cur.execute("INSERT INTO sensorData(sensorId, userId, deviceId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s, %s)", (sensorId, userId, deviceId, sensorType, timestamp, value))
 
-    conn.commit()
+        conn.commit()
 
-    cur.close()
+        cur.close()
+    except:
+        print("already exist")
 
     return {"value": True}
 
