@@ -36,24 +36,21 @@ def register():
 #insert sensor data api
 @app.route("/api/postSensorData", methods=['POST'])
 def insertSensorData():
-    try:
-        jsonf = json.loads(request.get_json())
+    jsonf = json.loads(request.get_json())
 
-        sensorId = jsonf['sensor']["id"]
-        userId = jsonf["user"]["id"]
-        deviceId = jsonf['device_id']
-        sensorType = jsonf['sensor']["type"]
-        timestamp = jsonf["data"]["timestamp"]
-        value = jsonf['data']["value"]
+    sensorId = 1
+    userId = jsonf["user"]["id"]
+    sensorType = jsonf['sensor']["type"]
+    timestamp = jsonf["data"]["timestamp"]
+    value = jsonf['data']["value"]
 
-        cur = conn.cursor()
-        cur.execute("INSERT INTO sensorData(sensorId, userId, deviceId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s, %s)", (sensorId, userId, deviceId, sensorType, timestamp, value))
+    cur = conn.cursor()
 
-        conn.commit()
+    cur.execute("INSERT INTO sensordata(sensorId, userId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s)", (sensorId, userId, sensorType, timestamp, value))
 
-        cur.close()
-    except:
-        print("already exist")
+    conn.commit()
+
+    cur.close()
 
     return {"value": True}
 
