@@ -16,12 +16,10 @@ CREATE TABLE users (
 );
 
 /*Create table SensorPressure*/
-CREATE TABLE sensorData (
+CREATE TABLE dataSensor (
     sensorId INT NOT NULL,
     userId INT NOT NULL,
-    deviceId VARCHAR(255) NOT NULL,
     sensorType VARCHAR(255) NOT NULL,
-    tStamp DATE,
-    val INT,
-    PRIMARY KEY (sensorID)
+    tStamp INT NOT NULL,
+    val INT NOT NULL
 );
