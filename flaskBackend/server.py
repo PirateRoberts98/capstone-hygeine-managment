@@ -62,7 +62,7 @@ def insertSensorData():
 
 #get sensor data api
 @app.route("/api/getSensorDataTemperature", methods=['GET'])
-def getSensorData():
+def getSensorDataTemperature():
     try:
         #sensorType = 'temp'
 
