@@ -1,3 +1,13 @@
+#### Running Local Web Application
+Please follow Installation section before running the local web application.
+Open Terminal and go to root directory of web.
+
+Perform the following in command line.
+
+    npm start
+
+This will have the web application run locally on your machine on localhost:3000.
+
 #### Mike Diep 8334439
 Bootstrap reference:
     ArchitectUI Bootstrap 4 ReactJS Theme FREE
