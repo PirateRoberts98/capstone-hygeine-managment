@@ -18,7 +18,7 @@ CREATE TABLE users (
 /*Create table SensorPressure*/
 CREATE TABLE dataSensor (
     sensorId INT NOT NULL,
-    userId INT NOT NULL,
+    userId VARCHAR(255) NOT NULL,
     sensorType VARCHAR(255) NOT NULL,
     tStamp INT NOT NULL,
     val INT NOT NULL
