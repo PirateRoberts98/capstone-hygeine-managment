@@ -10,55 +10,64 @@ bcrpyt = Bcrypt(app)
 CORS(app)
 
 #Configure db
-conn = psycopg2.connect(user = "postgres", port="5432", host="database-1.cfa0og2dawpl.ca-central-1.rds.amazonaws.com", password = "capstone")
-#conn = psycopg2.connect(dbname="capstone", port="5432")
+#AWS
+#conn = psycopg2.connect(user = "postgres", port="5432", host="database-1.cfa0og2dawpl.ca-central-1.rds.amazonaws.com", password = "capstone")
+#localhost
+conn = psycopg2.connect(dbname="capstone", port="5432")
+#docker
+#conn = psycopg2.connect(user="postgres", port="5432", host="localhost", password = "capstone", dbname = "capstone")
 
 #register register api
 @app.route("/api/register", methods=['POST'])
 def register():
-    email = request.get_json()['email']
-    password = bcrpyt.generate_password_hash(request.get_json()['password1']).decode('utf-8') #encrypted
-    fname = request.get_json()['fname']
-    lname = request.get_json()['lname']
-    bday = request.get_json()['bday']
-    gender = request.get_json()['gender']
-    doctor = request.get_json()['doctor']
-    isCaregiver = request.get_json()['isCaregiver']
+    try:
+        email = request.get_json()['email']
+        password = bcrpyt.generate_password_hash(request.get_json()['password1']).decode('utf-8') #encrypted
+        fname = request.get_json()['fname']
+        lname = request.get_json()['lname']
+        bday = request.get_json()['bday']
+        gender = request.get_json()['gender']
+        doctor = request.get_json()['doctor']
+        isCaregiver = request.get_json()['isCaregiver']
 
-    cur = conn.cursor()
-    cur.execute("INSERT INTO Users(fname, lname, email, doctor, bday, gender, pw, iscaregiver) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (fname, lname, email, doctor, bday, gender, password, isCaregiver))
+        cur = conn.cursor()
+        cur.execute("INSERT INTO Users(fname, lname, email, doctor, bday, gender, pw, iscaregiver) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (fname, lname, email, doctor, bday, gender, password, isCaregiver))
 
-    conn.commit()
-    cur.close()
-    
+        conn.commit()
+        cur.close()
 
-    return {"value": True}
+        return {"value": True}
+    except:
+        raise Exception('ERROR POST SensorData')
 
 #insert sensor data api
 @app.route("/api/postSensorData", methods=['POST'])
 def insertSensorData():
-    jsonf = json.loads(request.get_json())
-    print(jsonf)
+    try:
+        jsonf = json.loads(request.get_json())
 
-    sensorId = 1
-    userId = jsonf["user"]["id"]
-    sensorType = jsonf['sensor']["type"]
-    timestamp = jsonf["data"]["timestamp"]
-    value = jsonf['data']["value"]
+        sensorId = 1
+        userId = jsonf["user"]["id"]
+        sensorType = jsonf['sensor']["type"]
+        timestamp = jsonf["data"]["timestamp"]
+        value = jsonf['data']["value"]
 
-    cur = conn.cursor()
+        cur = conn.cursor()
 
-    cur.execute("INSERT INTO dataSensor(sensorId, userId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s)", (sensorId, userId, sensorType, timestamp, value))
+        cur.execute("INSERT INTO dataSensor(sensorId, userId, sensorType, tStamp, val) VALUES (%s, %s, %s, %s, %s)", (sensorId, userId, sensorType, timestamp, value))
 
-    conn.commit()
+        conn.commit()
 
-    cur.close()
+        cur.close()
+        return {"value": True}
 
-    return {"value": True}
+    except:
+        raise Exception('ERROR POST SensorData')
 
 #get sensor data api
 @app.route("/api/getSensorDataTemperature", methods=['GET'])
 def getSensorDataTemperature():
+    try:
         #sensorType = 'temp'
 
         cur = conn.cursor()
@@ -109,6 +118,8 @@ def getSensorDataHumidity():
         response = jsonify(output)
 
         return response
+    except:
+        raise Exception('ERROR GET SensorDataTemperature')
 
 #get sensor data api
 @app.route("/api/getSensorDataPressure", methods=['GET'])
@@ -118,7 +129,7 @@ def getSensorDataPressure():
     #    return _build_cors_preflight_response()
     #elif request.method == "GET":
     #    print("Hello Actual Response")
-
+    try:
         cur = conn.cursor()
         cur.execute("SELECT * FROM datasensor WHERE sensortype = 'Pressure'")
 
@@ -141,6 +152,8 @@ def getSensorDataPressure():
     #    response.headers.add("Access-Control-Allow-Origin", "*")
 
         return response
+    except:
+        raise Exception('Error GET sensorDataPressure')
 
 #def _build_cors_preflight_response():
 #    response = make_response()
