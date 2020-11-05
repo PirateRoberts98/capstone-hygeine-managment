@@ -92,9 +92,13 @@ def getSensorDataTemperature():
 
         return response
 
+    except:
+        raise Exception('ERROR POST SensorData')
+
 #get sensor data api
 @app.route("/api/getSensorDataHumidity", methods=['GET'])
 def getSensorDataHumidity():
+    try:
         #sensorType = 'temp'
 
         cur = conn.cursor()
