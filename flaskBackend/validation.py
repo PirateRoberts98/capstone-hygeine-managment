@@ -20,7 +20,7 @@ def validate_data(obj):
 
         #validating time stemp
         if 'timestamp' in obj:
-            if type(obj['timestamp']) is int:
+            if type(obj['timestamp']) is str:
                 output['msg'] =  'Validated'
             else:
                 output['status'] = 404
