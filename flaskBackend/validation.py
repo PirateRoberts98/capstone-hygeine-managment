@@ -9,12 +9,12 @@ class ValidClass:
         try:
            # self.obj = json.loads(val.stream.read())
             self.obj = json.loads(val.read())
-            print 'Value is validated'
+            print ('Data recieved')
             return True
 
-        except ValueError, e:
+        except ValueError:
             self.obj = {}
-            print 'Fail vaildation'
+            print('Fail reading data')
             return False
 
     def validate_data(self, req, resp):
@@ -51,14 +51,14 @@ class ValidClass:
 
             #validating user
             if 'user' in self.obj:
-                if 'id' in self.obj and 'name' in self.obj:
-                   if type(self.obj['name']) is str:
-                       temp = int(self.obj['id'])
-                       if temp > 0:
-                            output['msg'] =  'Validated'
+                if 'id' in self.obj['user'] and 'name' in self.obj['user']:
+                    if type(self.obj['user']['name']) is str:
+                        temp = int(self.obj['user']['id'])
+                        if temp > 0:
+                            output['msg'] = 'Validated'
                         else:
                             output['status'] = 404
-                            output['msg'] = 'Fail vaildation'
+                            output['msg'] = 'Fail vaildation'  
                     else:
                         output['status'] = 404
                         output['msg'] = 'Fail vaildation'
@@ -72,17 +72,17 @@ class ValidClass:
             
             #validating sensor
             if 'sensor' in self.obj:
-                if 'id' in self.obj and 'type' in self.obj:
-                    if type(self.obj['type']) is str:
-                       temp = int(self.obj['id'])
-                       if temp > 0:
-                            output['msg'] =  'Validated'
+                if 'id' in self.obj['sensor'] and 'type' in self.obj['sensor']: 
+                    if type(self.obj['sensor']['type']) is str: 
+                        temp = int(self.obj['sensor']['id'])
+                        if temp > 0:
+                            output['msg'] = 'Validated'
                         else:
                             output['status'] = 404
-                            output['msg'] = 'Fail vaildation'
+                            output['msg'] = 'Fail vaildation'  
                     else:
-                            output['status'] = 404
-                            output['msg'] = 'Fail vaildation'
+                        output['status'] = 404
+                        output['msg'] = 'Fail vaildation'
                 else:
                     output['status'] = 404
                     output['msg'] = 'Fail vaildation'
@@ -92,17 +92,33 @@ class ValidClass:
 
             #validating data
             if 'data' in self.obj:
-                if 'timestamp' in self.obj and 'value' in self.obj:
-                   if type(self.obj['timestamp']) is str:
-                       temp = int(self.obj['value'])
-                       if temp >= 0:
-                            output['msg'] =  'Validated'
+                if 'timestamp' in self.obj['data'] and 'value' in self.obj['data']:
+                    if type(self.obj['data']['timestamp']) is str:
+                        if self.obj['sensor']['type'] == 'Humidity':
+                            temp = int(self.obj['data']['value'])
+                            if temp > 0:
+                                output['msg'] = 'Validated'
+                            else:
+                                output['status'] = 404
+                                output['msg'] = 'Fail vaildation' 
+                        elif self.obj['sensor']['type'] == 'Temperature':  
+                            if temp > 0:
+                                output['msg'] = 'Validated'
+                            else:
+                                output['status'] = 404
+                                output['msg'] = 'Fail vaildation' 
+                        elif self.obj['sensor']['type'] == 'Pressure':  
+                            if self.obj['data']['value'] is 'true' or self.obj['data']['value'] is 'false':
+                                output['msg'] = 'Validated'
+                            else:
+                                output['status'] = 404
+                                output['msg'] = 'Fail vaildation' 
                         else:
                             output['status'] = 404
                             output['msg'] = 'Fail vaildation'
                     else:
-                            output['status'] = 404
-                            output['msg'] = 'Fail vaildation'
+                        output['status'] = 404
+                        output['msg'] = 'Fail vaildation'
                 else:
                     output['status'] = 404
                     output['msg'] = 'Fail vaildation'
@@ -116,9 +132,5 @@ class ValidClass:
 
         resp = json.dumps(output)
 
-#for testing
-#respons={}
-#f= open('C:\Users\HP_\Desktop\Fall 2020\TESThardware\data.json') 
-#a = ValidClass()
-#a.validate_data(f,respons)
+
 
