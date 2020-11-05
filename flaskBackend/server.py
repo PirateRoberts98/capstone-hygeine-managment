@@ -12,13 +12,13 @@ CORS(app)
 
 #Configure db
 #AWS
-#conn = psycopg2.connect(user = "postgres", port="5432", host="database-1.cfa0og2dawpl.ca-central-1.rds.amazonaws.com", password = "capstone")
+conn = psycopg2.connect(user = "postgres", port="5432", host="database-1.cfa0og2dawpl.ca-central-1.rds.amazonaws.com", password = "capstone")
 #localhost
-conn = psycopg2.connect(dbname="capstone", port="5432")
+#conn = psycopg2.connect(dbname="capstone", port="5432")
 #docker
 #conn = psycopg2.connect(user="postgres", port="5432", host="localhost", password = "capstone", dbname = "capstone")
 
-#register register api
+register register api
 @app.route("/api/register", methods=['POST'])
 def register():
     try:
