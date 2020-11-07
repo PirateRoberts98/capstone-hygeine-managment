@@ -81,14 +81,15 @@ def validate_data(obj):
                     elif obj['sensor']['type'] == 'Temperature':  
                         temp = int(obj['data']['value'])
                         if temp > 0:
-                            output['msg'] = 'Validated'
+                            if output['status'] == 201:
+                                output['msg'] = 'Validated'
                         else:
                             output['status'] = 404
                             output['msg'] = 'Fail vaildation' 
                     elif obj['sensor']['type'] == 'Pressure': 
                         if obj['data']['value'] is True or obj['data']['value'] is False:
-                            print('is')
-                            output['msg'] = 'Validated'
+                            if output['status'] == 201:
+                                output['msg'] = 'Validated'
                         else:
                             output['status'] = 404
                             output['msg'] = 'Fail vaildation' 
