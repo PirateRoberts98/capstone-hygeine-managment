@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import json
+from validation import validate_data
 
 import psycopg2
 import logging
@@ -52,6 +53,8 @@ def register():
 def insertSensorData():
     try:
         jsonf = json.loads(request.get_json())
+        isValid = validate_data(jsonf)
+        print(isValid)
 
         sensorId = 1
         userId = jsonf["user"]["id"]
@@ -96,6 +99,8 @@ def getSensorDataTemperature():
                 })
 
         response = jsonify(output)
+    except:
+        raise Exception('ERROR POST SensorData')
 
         return response
 
