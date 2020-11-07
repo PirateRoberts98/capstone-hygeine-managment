@@ -18,7 +18,7 @@ conn = psycopg2.connect(user = "postgres", port="5432", host="database-1.cfa0og2
 #docker
 #conn = psycopg2.connect(user="postgres", port="5432", host="localhost", password = "capstone", dbname = "capstone")
 
-register register api
+#register register api
 @app.route("/api/register", methods=['POST'])
 def register():
     try:
