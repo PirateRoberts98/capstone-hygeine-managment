@@ -7,11 +7,13 @@ def validate_data(obj):
             'status' : 201,
             'msg' : None
         }
+        print(output['status'])
 
         #validating device id
         #if 'device_id' in self.obj:
         #    if type(self.obj['device_id']) is str:
-        #        output['msg'] =  'Validated'
+            #    if output['status'] == 201:
+        #           output['msg'] =  'Validated'
         #    else:
         #        output['status'] = 404
         #        output['msg'] = 'Fail vaildation'      
@@ -20,17 +22,18 @@ def validate_data(obj):
         #    output['msg'] = 'Fail vaildation'
 
         #validating time stemp
-        if 'timestamp' in obj:
-            print('timestamp')
-            if type(obj['timestamp']) is str:
-                print('type')
-                output['msg'] =  'Validated'
-            else:
-                output['status'] = 404
-                output['msg'] = 'Fail vaildation'   
-        else:
-            output['status'] = 404
-            output['msg'] = 'Fail vaildation'
+       # if 'timestamp' in obj:
+       #     print('timestamp')
+       #     if type(obj['timestamp']) is str:
+       #         print('type')
+               # if output['status'] == 201:
+       #            output['msg'] =  'Validated'
+       #     else:
+       #         output['status'] = 404
+       #         output['msg'] = 'Fail vaildation'   
+       # else:
+        #    output['status'] = 404
+        #    output['msg'] = 'Fail vaildation'
 
         #validating user
         if 'user' in obj:
@@ -39,7 +42,8 @@ def validate_data(obj):
                 print('in')
                 if type(obj['user']['id']) is str:
                     print('type')
-                    output['msg'] = 'Validated'
+                    if output['status'] == 201:
+                        output['msg'] = 'Validated'
                 else:
                     output['status'] = 404
                     output['msg'] = 'Fail vaildation'
@@ -58,7 +62,8 @@ def validate_data(obj):
                 print('in')
                 if type(obj['sensor']['type']) is str: 
                     print('type')
-                    output['msg'] = 'Validated' 
+                    if output['status'] == 201:
+                        output['msg'] = 'Validated' 
                 else:
                     output['status'] = 404
                     output['msg'] = 'Fail vaildation'
@@ -74,14 +79,15 @@ def validate_data(obj):
             print('data')
             if 'timestamp' in obj['data'] and 'value' in obj['data']:
                 print('timestamp')
-                if type(obj['data']['timestamp']) is str:
+                if type(obj['data']['timestamp']) is float:
                     print('type')
                     if obj['sensor']['type'] == 'Humidity':
                         print('sensor type')
-                        temp = int(obj['data']['value'])
-                        if temp > 0:
+                        
+                        if obj['data']['value'] > 0:
                             print('>')
-                            output['msg'] = 'Validated'
+                            if output['status'] == 201:
+                                output['msg'] = 'Validated'
                         else:
                             output['status'] = 404
                             output['msg'] = 'Fail vaildation' 
