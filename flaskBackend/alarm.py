@@ -3,7 +3,7 @@ import time
 
 #http://localhost:3001/api/getSensorDataTemperature
 
-#variables for alarn fuctions
+#variables for alarm fuctions
 
 humidity = {
             'highest_value' : 75,
@@ -27,8 +27,8 @@ timerH = None
 
 #output
 output = {
-            'status' : None,
-            'messege' : None
+            'status' : False,
+            'message' : None
         }
 #def get():
 
@@ -65,45 +65,60 @@ def counter(data,t):
 
 
 
-#function checks
+#function checks temperature limit
 def waterTemperature(data):
-    global temperature, timerM
+    global temperature, timerM, output
     if data['data']['value'] > temperature['highest_value']:
         f = counter(data,'m')
         if f == True:
-            print('ALARM: water temperature is above limit for more than a min')
+            output['message'] = 'ALARM: water temperature is above limit for more than a min'
+            output['status'] = True
+            return json.dumps(output)
     elif data['data']['value'] < temperature['lowest_value']:
         f = counter(data,'m')
         if f == True:
-            print('ALARM: water temperature is below limit for more than a min')
+            output['message'] = 'ALARM: water temperature is below limit for more than a min'
+            output['status'] = True
+            return json.dumps(output)
     else:
         timerM = 0
 
 #function checks how many times pecient enered washroom
 def timesEntered(data):
-    global counterE, entrLimit
+    global counterE, entrLimit, output
     flag = counter(data,'h')
     if data['data']['value'] == True:
         counterE = counterE + 1
     if flag == True and counterE < entrLimit:
-        print('ALARM: for past day person entered washroom:', counterE/2,'times')
+        output['message'] = 'ALARM: for past day person used tap required number of times'
+        output['status'] = True
+        return json.dumps(output)
+       
 
 #function checks if humidity level doesn't go beyond safe limits
 def humidityLevel(data):
-    global humidity
+    global humidity, output
     if data['data']['value'] > humidity['highest_value']:
-        print('ALARM: himidity is too high')
+        output['message'] = 'ALARM: himidity is too high'
+        output['status'] = True
+        return json.dumps(output)
     elif data['data']['value'] < humidity['lowest_value']:
-        print('ALARM: himidity is too low')
+        output['message'] = 'ALARM: himidity is too low'
+        output['status'] = True
+        return json.dumps(output)
 
 #function checks how many times pecient used tab, shower, etc.
 def timesUsed(data):
-    global counterU, useLimit
+    global counterU, useLimit, output
     flag = counter(data,'h')
     if data['data']['value'] == True:
         counterU = counterU + 1
     if flag == True and counterU < useLimit:
-        print('ALARM: for past day person entered washroom: ',counterU)
+        output['message'] = 'ALARM: for past day person used tap required number of times'
+        output['status'] = True
+        return json.dumps(output)
+
+
 
 
 
