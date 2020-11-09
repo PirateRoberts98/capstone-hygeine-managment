@@ -15,7 +15,7 @@ temperature = {
         }
 
 minLimit = 1 
-hourLimit = 8
+hourLimit = 24
 entrLimit = 6
 useLimit = 2
 
@@ -34,21 +34,23 @@ output = {
 
 
 def convertHours(time):
-    hours=((time)/(1000000*60*60))%24
+    #hours=((time)/(1000000*60*60))%24
+    hours = round(time/(3.6e+9))
     return hours
 
 def convertMin(time):
-    minutes=(time/(1000000*60))%60
+    #minutes=(time/(1000000*60))%60
+    minutes = round(time/(6e+7))
     return minutes
 
 #messures one intervals between two timestamps
 def counter(data,t):
-    global timerH, timerM
+    global timerH, timerM, minLimit, hourLimit
     if t == 'm':
         if timerM == None:
             timerM = convertMin(data['data']['timestamp'])
             return False
-        elif ( convertMin(data['data']['timestamp']) - timerM) >= 1:
+        elif ( convertMin(data['data']['timestamp']) - timerM) >= minLimit:
             return True
         else:
             return False
@@ -56,7 +58,7 @@ def counter(data,t):
         if timerH == None:
             timerH = convertHours(data['data']['timestamp'])
             return False
-        elif ( convertHours(data['data']['timestamp']) - timerH) <= 24:
+        elif ( convertHours(data['data']['timestamp']) - timerH) >= hourLimit:
             return True
         else:
             return False
@@ -65,7 +67,7 @@ def counter(data,t):
 
 #function checks
 def waterTemperature(data):
-    global temperature
+    global temperature, timerM
     if data['data']['value'] > temperature['highest_value']:
         f = counter(data,'m')
         if f == True:
@@ -78,12 +80,13 @@ def waterTemperature(data):
         timerM = 0
 
 #function checks how many times pecient enered washroom
-def timesEntered(data, b):
+def timesEntered(data):
     global counterE, entrLimit
+    flag = counter(data,'h')
     if data['data']['value'] == True:
         counterE = counterE + 1
-    if b == True and counterE < entrLimit:
-        print('ALARM: for past day person entered washroom: ',counterE)
+    if flag == True and counterE < entrLimit:
+        print('ALARM: for past day person entered washroom:', counterE/2,'times')
 
 #function checks if humidity level doesn't go beyond safe limits
 def humidityLevel(data):
@@ -94,12 +97,14 @@ def humidityLevel(data):
         print('ALARM: himidity is too low')
 
 #function checks how many times pecient used tab, shower, etc.
-def timesUsed(data, b):
+def timesUsed(data):
     global counterU, useLimit
+    flag = counter(data,'h')
     if data['data']['value'] == True:
         counterU = counterU + 1
-    if b == True and counterU < useLimit:
+    if flag == True and counterU < useLimit:
         print('ALARM: for past day person entered washroom: ',counterU)
+
 
 
 
