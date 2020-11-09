@@ -36,19 +36,19 @@ def convertMin(time):
 
 #messures one intervals between two timestamps
 def counter(data,t):
-    if t == 'm'
+    if t == 'm':
         if timerM == 0:
             timerM = convertMin(data['value']['timestamp'])
             return False
-        elif (h - timerM) >= 1:
+        elif (timerH - timerM) >= 1:
             return True
         else:
             return False
-    elif t == 'h'
+    elif t == 'h':
         if timerH == 0:
             timerH = convertHours(data['value']['timestamp'])
             return False
-        elif (h - timerM) >= 24:
+        elif (timerM - timerM) <= 24:
             return True
         else:
             return False
@@ -93,6 +93,7 @@ def main():
     
     try:
         while True:
+            data = {}
             flag = counter(data,'h')
             humidityLevel(data)
             timesUsed(dat, flag)
