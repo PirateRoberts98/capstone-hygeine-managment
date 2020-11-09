@@ -1,28 +1,35 @@
 import json
 import time
 
+#http://localhost:3001/api/getSensorDataTemperature
 
 #variables for alarn fuctions
+
 humidity = {
             'highest_value' : 75,
-            'lowest value' : 35
+            'lowest_value' : 35
         }
 temperature = {
             'highest_value' : 26,
-            'lowest value' : 16
+            'lowest_value' : 16
         }
 
 minLimit = 1 
 hourLimit = 8
-entranceLimit = 6
+entrLimit = 6
 useLimit = 2
 
 #counters
 counterU = 0 
 counterE = 0
-timerM = 0
-timerH =0
+timerM = None
+timerH = None
 
+#output
+output = {
+            'status' : None,
+            'messege' : None
+        }
 #def get():
 
 
@@ -31,24 +38,25 @@ def convertHours(time):
     return hours
 
 def convertMin(time):
-    minutes=(milli/(1000000*60))%60
+    minutes=(time/(1000000*60))%60
     return minutes
 
 #messures one intervals between two timestamps
 def counter(data,t):
+    global timerH, timerM
     if t == 'm':
-        if timerM == 0:
-            timerM = convertMin(data['value']['timestamp'])
+        if timerM == None:
+            timerM = convertMin(data['data']['timestamp'])
             return False
-        elif (timerH - timerM) >= 1:
+        elif ( convertMin(data['data']['timestamp']) - timerM) >= 1:
             return True
         else:
             return False
     elif t == 'h':
-        if timerH == 0:
-            timerH = convertHours(data['value']['timestamp'])
+        if timerH == None:
+            timerH = convertHours(data['data']['timestamp'])
             return False
-        elif (timerM - timerM) <= 24:
+        elif ( convertHours(data['data']['timestamp']) - timerH) <= 24:
             return True
         else:
             return False
@@ -57,11 +65,12 @@ def counter(data,t):
 
 #function checks
 def waterTemperature(data):
-    if data['data']['value'] > humidity['highest_value']:
+    global temperature
+    if data['data']['value'] > temperature['highest_value']:
         f = counter(data,'m')
         if f == True:
             print('ALARM: water temperature is above limit for more than a min')
-    elif data['data']['value'] < humidity['smallest_value']:
+    elif data['data']['value'] < temperature['lowest_value']:
         f = counter(data,'m')
         if f == True:
             print('ALARM: water temperature is below limit for more than a min')
@@ -70,40 +79,31 @@ def waterTemperature(data):
 
 #function checks how many times pecient enered washroom
 def timesEntered(data, b):
-    if data['data']['value'] == true:
+    global counterE, entrLimit
+    if data['data']['value'] == True:
         counterE = counterE + 1
-    if b == True and counterE < entranceLimit:
+    if b == True and counterE < entrLimit:
         print('ALARM: for past day person entered washroom: ',counterE)
 
 #function checks if humidity level doesn't go beyond safe limits
 def humidityLevel(data):
+    global humidity
     if data['data']['value'] > humidity['highest_value']:
         print('ALARM: himidity is too high')
-    elif data < humidity['smallest_value']:
+    elif data['data']['value'] < humidity['lowest_value']:
         print('ALARM: himidity is too low')
 
 #function checks how many times pecient used tab, shower, etc.
 def timesUsed(data, b):
-    if data['data']['value'] == true:
+    global counterU, useLimit
+    if data['data']['value'] == True:
         counterU = counterU + 1
-    if b == True and counterU < entranceLimit:
+    if b == True and counterU < useLimit:
         print('ALARM: for past day person entered washroom: ',counterU)
-def main():
-    
-    
-    try:
-        while True:
-            data = {}
-            flag = counter(data,'h')
-            humidityLevel(data)
-            timesUsed(dat, flag)
-            waterTemperature(data)
-            timesUsed(data,flag)
-    except KeyboardInterrupt:
-        pass 
 
 
-if __name__ == "__main__":
-    main()   
+
+  
+
      
 
