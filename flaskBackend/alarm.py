@@ -44,21 +44,21 @@ def convertMin(time):
     return minutes
 
 #messures one intervals between two timestamps
-def counter(data,t):
+def counter(timestampInput,t):
     global timerH, timerM, minLimit, hourLimit
     if t == 'm':
         if timerM == None:
-            timerM = convertMin(data['data']['timestamp'])
+            timerM = convertMin(timestampInput)
             return False
-        elif ( convertMin(data['data']['timestamp']) - timerM) >= minLimit:
+        elif ( convertMin(timestampInput) - timerM) >= minLimit:
             return True
         else:
             return False
     elif t == 'h':
         if timerH == None:
-            timerH = convertHours(data['data']['timestamp'])
+            timerH = convertHours(timestampInput)
             return False
-        elif ( convertHours(data['data']['timestamp']) - timerH) >= hourLimit:
+        elif ( convertHours(timestampInput) - timerH) >= hourLimit:
             return True
         else:
             return False
@@ -66,28 +66,28 @@ def counter(data,t):
 
 
 #function checks temperature limit
-def waterTemperature(data):
+def waterTemperature(tempValue, timestampInput):
     global temperature, timerM, output
-    if data['data']['value'] > temperature['highest_value']:
-        f = counter(data,'m')
+    if tempValue > temperature['highest_value']:
+        f = counter(timestampInput,'m')
         if f == True:
             output['message'] = 'ALARM: water temperature is above limit for more than a min'
             output['status'] = True
-            return json.dumps(output)
-    elif data['data']['value'] < temperature['lowest_value']:
-        f = counter(data,'m')
+            return (output)
+    elif tempValue < temperature['lowest_value']:
+        f = counter(timestampInput,'m')
         if f == True:
             output['message'] = 'ALARM: water temperature is below limit for more than a min'
             output['status'] = True
-            return json.dumps(output)
+            return (output)
     else:
         timerM = 0
 
 #function checks how many times pecient enered washroom
-def timesEntered(data):
+def timesEntered(pressureValue, timestampInput):
     global counterE, entrLimit, output
-    flag = counter(data,'h')
-    if data['data']['value'] == True:
+    flag = counter(timestampInput,'h')
+    if pressureValue == True:
         counterE = counterE + 1
     if flag == True and counterE < entrLimit:
         output['message'] = 'ALARM: for past day person used tap required number of times'
@@ -96,22 +96,23 @@ def timesEntered(data):
        
 
 #function checks if humidity level doesn't go beyond safe limits
-def humidityLevel(data):
+def humidityLevel(humidityValue):
     global humidity, output
-    if data['data']['value'] > humidity['highest_value']:
-        output['message'] = 'ALARM: himidity is too high'
+    if humidityValue> humidity['highest_value']:
+        output['message'] = 'ALARM: humidity is too high'
         output['status'] = True
-        return json.dumps(output)
-    elif data['data']['value'] < humidity['lowest_value']:
-        output['message'] = 'ALARM: himidity is too low'
+        return output
+    elif humidityValue < humidity['lowest_value']:
+        output['message'] = 'ALARM: humidity is too low'
         output['status'] = True
-        return json.dumps(output)
+        return output
 
+#!!!NOT IMPLEMENTED TO MAIN ATM. DETACHED FUNCTION
 #function checks how many times pecient used tab, shower, etc.
-def timesUsed(data):
+def timesUsed(pressureValue, timestampInput):
     global counterU, useLimit, output
-    flag = counter(data,'h')
-    if data['data']['value'] == True:
+    flag = counter(timestampInput,'h')
+    if pressureValue == True:
         counterU = counterU + 1
     if flag == True and counterU < useLimit:
         output['message'] = 'ALARM: for past day person used tap required number of times'

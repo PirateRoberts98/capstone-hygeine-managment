@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import json
 from validation import validate_data
+from alarm import waterTemperature, humidityLevel, timesEntered
 
 import psycopg2
 import logging
@@ -54,7 +55,6 @@ def insertSensorData():
     try:
         jsonf = json.loads(request.get_json())
         isValid = validate_data(jsonf)
-        print(isValid)
 
         sensorId = 1
         userId = jsonf["user"]["id"]
@@ -90,17 +90,23 @@ def getSensorDataTemperature():
         output = [] #new array to store our formatted data
         if rows:
             for i in range(len(rows)):
+                alarmOutput = waterTemperature(rows[i][4], rows[i][3])
+                status = False
+                message = None
+                if alarmOutput:
+                    status = alarmOutput["status"]
+                    message = alarmOutput["message"]
                 output.append({
                     "sensorId": rows[i][0],
                     "userId": rows[i][1],
                     "sensorType": rows[i][2],
                     "timestamp": rows[i][3],
-                    "value": rows[i][4]
+                    "value": rows[i][4],
+                    "status": status,
+                    "message": message
                 })
 
         response = jsonify(output)
-    except:
-        raise Exception('ERROR POST SensorData')
 
         return response
 
@@ -123,12 +129,20 @@ def getSensorDataHumidity():
         output = [] #new array to store our formatted data
         if rows:
             for i in range(len(rows)):
+                alarmOutput = humidityLevel(rows[i][4])
+                status = False
+                message = None
+                if alarmOutput:
+                    status = alarmOutput["status"]
+                    message = alarmOutput["message"]
                 output.append({
                     "sensorId": rows[i][0],
                     "userId": rows[i][1],
                     "sensorType": rows[i][2],
                     "timestamp": rows[i][3],
-                    "value": rows[i][4]
+                    "value": rows[i][4],
+                    "status": status,
+                    "message": message
                 })
 
         response = jsonify(output)
@@ -140,11 +154,6 @@ def getSensorDataHumidity():
 #get sensor data api
 @app.route("/api/getSensorDataPressure", methods=['GET'])
 def getSensorDataPressure():
-    #if request.method == "OPTIONS":
-    #    print("Hello Preflight")
-    #    return _build_cors_preflight_response()
-    #elif request.method == "GET":
-    #    print("Hello Actual Response")
     try:
         cur = conn.cursor()
         cur.execute("SELECT * FROM datasensor WHERE sensortype = 'Pressure'")
@@ -156,12 +165,20 @@ def getSensorDataPressure():
         output = [] #new array to store our formatted data
         if rows:
             for i in range(len(rows)):
+                alarmOutput = timesEntered(rows[i][4], rows[i][3])
+                status = False
+                message = None
+                if alarmOutput:
+                    status = alarmOutput["status"]
+                    message = alarmOutput["message"]
                 output.append({
                     "sensorId": rows[i][0],
                     "userId": rows[i][1],
                     "sensorType": rows[i][2],
                     "timestamp": rows[i][3],
-                    "value": rows[i][4]
+                    "value": rows[i][4],
+                    "status": status,
+                    "message": message
                 })
 
         response = jsonify(output)
