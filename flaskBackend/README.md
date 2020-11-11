@@ -27,3 +27,29 @@ Server hosted on `port: 3001`
 `/api/getSensorDataTemperature` - retrieve sensor data filtered by "temperature" ['GET']
 
 `/api/getSensorDataPressure` - retrieve sensor data filtered by "pressure" ['GET']
+
+### Template example:
+
+```
+[
+    {
+        "message": null, 
+        "sensorId": 1, 
+        "sensorType": "Temperature", 
+        "status": false, 
+        "timestamp": 1603340408, 
+        "userId": "John Doe", 
+        "value": 19
+    }, 
+    {
+        "message": "ALARM: water temperature is below limit for more than a min", 
+        "sensorId": 1, 
+        "sensorType": "Temperature", 
+        "status": true, 
+        "timestamp": 1603340535, 
+        "userId": "John Doe", 
+        "value": 9
+    }
+    ...
+]
+```
