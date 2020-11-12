@@ -6,6 +6,11 @@ import PageTitle from '../../../Layout/AppMain/PageTitle';
 import AppHeader from '../../../Layout/AppHeader';
 import AppSidebar from '../../../Layout/AppSidebar';
 
+// Charts
+import SensorHumidityChart from './Charts/SensorHumidity';
+import SensorPressureChart from './Charts/SensorPressure';
+import SensorTemperatureChart from './Charts/SensorTemperature';
+
 const ContactDoctor = ({match}) => (
     <Fragment>
         <AppHeader/>
@@ -28,6 +33,9 @@ const ContactDoctor = ({match}) => (
                                     icon="pe-7s-user icon-gradient bg-mean-fruit"
                                 />
                             </div>
+                            <SensorHumidityChart/>
+                            <SensorPressureChart/>
+                            <SensorTemperatureChart/>
                         </ReactCSSTransitionGroup>
                     </Fragment>
                 </div>
