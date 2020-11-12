@@ -33,8 +33,8 @@ const ContactDoctor = ({match}) => (
                             transitionLeave={false}>
                             <div>
                                 <PageTitle
-                                    heading="Contact Doctor"
-                                    subheading="Contact a general physcian or your doctor below."
+                                    heading="Charts And Alerts for patient - xxxxxxxxx"
+                                    subheading="Latest update on - xx/xx/xxxx."
                                     icon="pe-7s-user icon-gradient bg-mean-fruit"
                                 />
                             </div>
