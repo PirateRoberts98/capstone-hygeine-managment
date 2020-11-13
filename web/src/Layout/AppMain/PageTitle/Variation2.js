@@ -38,6 +38,7 @@ export default class TitleComponent2 extends Component {
     render() {
         return (
             <Fragment>
+                {/*
                 <Button className="btn-shadow mr-3" onClick={this.notify22} color="dark"
                         id="Tooltip-123">
                     <FontAwesomeIcon icon={faStar}/>
@@ -45,12 +46,13 @@ export default class TitleComponent2 extends Component {
                 <UncontrolledTooltip placement="left" target={'Tooltip-123'}>
                     Show a Toastify notification example!
                 </UncontrolledTooltip>
+                */}
                 <UncontrolledDropdown className="d-inline-block">
                     <DropdownToggle color="info" className="btn-shadow" caret>
                         <span className="btn-icon-wrapper pr-2 opacity-7">
                             <FontAwesomeIcon icon={faBusinessTime}/>
                         </span>
-                        Buttons
+                        Patients
                     </DropdownToggle>
                     <DropdownMenu right>
                         <Nav vertical>

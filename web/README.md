@@ -1,3 +1,6 @@
+### Account Logins
+developer.healthcaremonitor@gmail.com - password123
+
 #### Running Local Web Application
 Please follow Installation section before running the local web application.
 Open Terminal and go to root directory of web.

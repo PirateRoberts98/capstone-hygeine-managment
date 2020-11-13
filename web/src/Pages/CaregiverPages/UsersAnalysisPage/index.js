@@ -1,10 +1,20 @@
 import React, {Fragment} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+// Other Components
+import Alerts from './Alert';
 
 // Layout
 import PageTitle from '../../../Layout/AppMain/PageTitle';
 import AppHeader from '../../../Layout/AppHeader';
 import AppSidebar from '../../../Layout/AppSidebar';
+
+// Charts
+import SensorHumidityChart from './Charts/SensorHumidity';
+import SensorPressureChart from './Charts/SensorPressure';
+import SensorTemperatureChart from './Charts/SensorTemperature';
+
+// MaterialUI
+import Typography from '@material-ui/core/Typography';
 
 const ContactDoctor = ({match}) => (
     <Fragment>
@@ -23,11 +33,27 @@ const ContactDoctor = ({match}) => (
                             transitionLeave={false}>
                             <div>
                                 <PageTitle
-                                    heading="Contact Doctor"
-                                    subheading="Contact a general physcian or your doctor below."
+                                    heading="Charts And Alerts for patient - xxxxxxxxx"
+                                    subheading="Latest update on - xx/xx/xxxx."
                                     icon="pe-7s-user icon-gradient bg-mean-fruit"
                                 />
                             </div>
+                            <Typography variant="h2" gutterBottom>
+                                Humidity Chart
+                            </Typography>
+                            <SensorHumidityChart/>
+                            <Typography variant="h2" gutterBottom>
+                                Sensor Chart
+                            </Typography>
+                            <SensorPressureChart/>
+                            <Typography variant="h2" gutterBottom>
+                                Temperature Chart
+                            </Typography>
+                            <SensorTemperatureChart/>
+                            <Typography variant="h2" gutterBottom>
+                                Alerts
+                            </Typography>
+                            <Alerts />
                         </ReactCSSTransitionGroup>
                     </Fragment>
                 </div>
