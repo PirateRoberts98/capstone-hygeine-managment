@@ -60,7 +60,7 @@ def counter(timestampInput,t):
         if timerH == None:
             timerH = convertHours(timestampInput)
         elif ( convertHours(timestampInput) - timerH) >= hourLimit:
-            endDayU = True
+            #endDayU = True
             endDayE = True
         
 
@@ -104,8 +104,10 @@ def timesEntered(pressureValue, timestampInput):
     elif endDayE == True and counterE >= enterLimit:
         endDayE = False
         counterE = 0
-        if endDayU == False:
-            timerH = None
+        timerH = None
+
+        #if endDayU == False:
+            #timerH = None
        
 
 #function checks if humidity level doesn't go beyond safe limits
