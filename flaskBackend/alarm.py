@@ -1,7 +1,6 @@
 import json
 import time
 
-#http://localhost:3001/api/getSensorDataTemperature
 
 #constraint variables for alarm fuctions
 humidity = {
@@ -96,8 +95,9 @@ def timesEntered(pressureValue, timestampInput):
     if endDayE == True and counterE < enterLimit:
         endDayE = False
         counterE = 0
-        if endDayU == False:
-            timerH = None
+        timerH = None
+       # if endDayU == False:
+            #timerH = None
         output['message'] = 'ALARM: for past day person used tap required number of times'
         output['status'] = True
         return json.dumps(output)
