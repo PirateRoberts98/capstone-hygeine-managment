@@ -49,6 +49,29 @@ def register():
     except:
         raise Exception('ERROR POST SensorData')
 
+#login api
+@app.route("/api/login", methods=['POST'])
+def login():
+    try:
+        email = request.get_json()['email']
+        request.get_json()['password']
+
+        cur = conn.cursor()
+        cur.execute("SELECT userId, pw FROM Users WHERE email = %s", (email,))
+
+        row = conn.cursor()
+        conn.commit()
+        cur.close()
+
+        data = {
+            'userId': row[0],
+            'passwordValid': bcrypt.check_password_hash(row[1], password)
+        }
+
+        return data
+    except:
+        raise Exception('ERROR POST SensorData')
+
 #insert sensor data api
 @app.route("/api/postSensorData", methods=['POST'])
 def insertSensorData():
