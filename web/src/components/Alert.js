@@ -1,18 +1,15 @@
 import React from 'react';
+
 //ReactStrap
 import {Row, Card, CardBody} from 'reactstrap';
 
-// Firebase Imports
-//import * as firebase from "firebase/app";
-//import "firebase/database";
-//var database = firebase.database();
+const awsConnection = require('../config/config.json');
 
 class Alert extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            alerts: '',
-            alertArray: [],
+            sensorMessages: []
         }
     }
 
@@ -63,34 +60,35 @@ class Alert extends React.Component {
                 .then(function(data){
                     if(data){
                         let sensorDataObjects = data;
-                        let sensorTimes = [];
-                        let sensorValues = [];
-                        let sensorDataFulfilled = [];
+
+                        // Initialize Arrays to store separate attributes of the Sensor Data Object.
+                        let sensorTimesArray = [];
+                        let sensorMessagesArray = [];
+
+                        // Map the Sensor Data Object to appropriate arrays.
                         sensorDataObjects.map(item => {
                             if(item != undefined) {
-                                // Parse timestamp
-                                /*let date = new Date(item.timestamp);
-                                let newDate = date.toString();
-                                date = new Date(newDate);
-                                let day = date.getDate();
-                                let month = date.getMonth()+1;
-                                let year = date.getFullYear();
-                                let hour = date.getHours()-3;
-                                let minutes = date.getMinutes();
-                                let newTimestamp = day.toString() + "-" + month.toString() + "-" + year.toString() + "/" + hour.toString() +":"+ minutes.toString();*/
-                                sensorTimes.push((item.timestamp).toString());
-                                sensorValues.push(item.value);
+                                sensorTimesArray.push((item.timestamp).toString());
+                                sensorMessagesArray.push(item.message);
                             }
                         });
-                        let temp = [sensorTimes,sensorValues]
-                        sensorDataFulfilled.push(temp);
-                        return sensorDataFulfilled;
+
+                        // Remove duplicate messages
+                        sensorMessagesArray = sensorMessagesArray.filter((value,index) => sensorMessagesArray.indexOf(value) === index);
+
+                        // Format into JSX
+                        let msgArray = []
+                        for(let j=sensorMessagesArray.length-1; j > -1; j--) {
+                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>Alert with severity: null. The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
+                            msgArray.push(msg);
+                        }
+
+                        return msgArray;
                     }
                 })
-                .then((sensorDataFulfilled)=>{
+                .then((msgArray)=>{
                     tht.setState({
-                        sensorTimes: sensorDataFulfilled[0][0],
-                        sensorValues: sensorDataFulfilled[0][1]
+                        sensorMessages: msgArray
                     });
                 })
                 .catch(function(err){
@@ -102,7 +100,7 @@ class Alert extends React.Component {
     render() {
         return (
             <div>
-                {this.state.alertArray}
+                {this.state.sensorMessages}
             </div>
         )
     }
