@@ -1,9 +1,5 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-// Firebase Imports
-import * as firebase from "firebase/app";
-import "firebase/database";
-var database = firebase.database();
 
 class SensorPressureChart extends React.Component {
     constructor(props) {
@@ -17,17 +13,8 @@ class SensorPressureChart extends React.Component {
 
     componentDidMount(){
         this.retrieveData();
-        let i = 0;
-        let interval = setInterval(() => {
-        if (i>=0) {
+        setInterval(() => {
             this.retrieveData();
-            i++;
-            console.log("waiting for the next call for pressure.");
-        }
-        else {
-            clearInterval(interval)
-        }
-
         }, 5000);
     }
 
@@ -40,7 +27,6 @@ class SensorPressureChart extends React.Component {
             response.json()
                 .then(function(data){
                     if(data){
-                        //console.log(data);
                         let sensorDataObjects = data;
                         let sensorTimes = [];
                         let sensorValues = [];
@@ -67,7 +53,6 @@ class SensorPressureChart extends React.Component {
                     }
                 })
                 .then((sensorDataFulfilled)=>{
-                    console.log(sensorDataFulfilled)
                     tht.setState({
                         sensorTimes: sensorDataFulfilled[0][0],
                         sensorValues: sensorDataFulfilled[0][1]
@@ -95,7 +80,6 @@ class SensorPressureChart extends React.Component {
                 }
             ]
         };
-        console.log(data);
         return (
             <div>
                 <Bar

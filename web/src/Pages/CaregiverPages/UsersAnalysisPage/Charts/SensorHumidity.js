@@ -31,7 +31,7 @@ class SensorHumidityChart extends React.Component {
                         let sensorDataObjects = data;
                         let sensorTimes = [];
                         let sensorValues = [];
-                        let sensorDataFulfilled = []
+                        let sensorDataFulfilled = [];
                         sensorDataObjects.map(item => {
                             if(item != undefined) {
                                 // Parse timestamp
@@ -47,14 +47,13 @@ class SensorHumidityChart extends React.Component {
                                 sensorTimes.push((item.timestamp).toString());
                                 sensorValues.push(item.value);
                             }
-                        })
+                        });
                         let temp = [sensorTimes,sensorValues]
                         sensorDataFulfilled.push(temp);
                         return sensorDataFulfilled;
                     }
                 })
                 .then((sensorDataFulfilled)=>{
-                    console.log(sensorDataFulfilled)
                     tht.setState({
                         sensorTimes: sensorDataFulfilled[0][0],
                         sensorValues: sensorDataFulfilled[0][1]

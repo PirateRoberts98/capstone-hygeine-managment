@@ -1,9 +1,5 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
-// Firebase Imports
-import * as firebase from "firebase/app";
-import "firebase/database";
-var database = firebase.database();
 
 class SensorTemperatureChart extends React.Component {
     constructor(props){
@@ -17,17 +13,8 @@ class SensorTemperatureChart extends React.Component {
 
     componentDidMount(){
         this.retrieveData();
-        let i = 0;
-        let interval = setInterval(() => {
-        if (i>=0) {
+        setInterval(() => {
             this.retrieveData();
-            i++;
-            console.log("waiting for the next call for temperature.");
-        }
-        else {
-            clearInterval(interval)
-        }
-
         }, 5000);
     }
 
