@@ -1,5 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
+const awsConnection = require('../../../../config/config.json');
 
 class SensorPressureChart extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class SensorPressureChart extends React.Component {
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataPressure', {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataPressure', {
             method: 'GET',
         });
         fetch(request).then(function(response) {

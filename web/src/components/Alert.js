@@ -1,14 +1,18 @@
 import React from 'react';
-import {Line} from 'react-chartjs-2';
-const awsConnection = require('../../../../config/config.json');
+//ReactStrap
+import {Row, Card, CardBody} from 'reactstrap';
 
-class SensorTemperatureChart extends React.Component {
+// Firebase Imports
+//import * as firebase from "firebase/app";
+//import "firebase/database";
+//var database = firebase.database();
+
+class Alert extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            sensorData:'',
-            sensorTimes:'',
-            sensorValues:'',
+            alerts: '',
+            alertArray: [],
         }
     }
 
@@ -16,12 +20,42 @@ class SensorTemperatureChart extends React.Component {
         this.retrieveData();
         setInterval(() => {
             this.retrieveData();
-      }, 5000);
+        }, 5000);
+
+        /*database.ref('server/alert').on('value', (snapshot) => {
+            if(this.state.alerts != snapshot.val() && snapshot.val() != null){
+                let alertDataObjects = snapshot.val();
+                let alertDataArray = [];
+                let alertSeverityArray = [];
+                let alertWarningMessage = [];
+                let key;
+                for(let i=0; i < Object.keys(alertDataObjects).length; i++){
+                    key = Object.keys(alertDataObjects)[i];
+                    alertDataArray.push(alertDataObjects[key]);
+                }
+                alertDataArray.map(item => {
+                    if(item != undefined) {
+                        alertSeverityArray.push(item.alert.severity);
+                        alertWarningMessage.push(item.alert.warning_message);
+                    }
+                });
+                // Format into JSX
+                let msgArray = []
+                for(let j=alertWarningMessage.length-1; j > -1; j--) {
+                    let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>Alert with severity: {alertSeverityArray[j]}. The warning message: {alertWarningMessage[j]}.</Row></CardBody></Card>;
+                    msgArray.push(msg);
+                }
+                this.setState({
+                    alerts: alertDataObjects,
+                    alertArray: msgArray,
+                });
+            }
+        });*/
     }
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataTemperature', {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataHumidity', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
@@ -31,7 +65,7 @@ class SensorTemperatureChart extends React.Component {
                         let sensorDataObjects = data;
                         let sensorTimes = [];
                         let sensorValues = [];
-                        let sensorDataFulfilled = []
+                        let sensorDataFulfilled = [];
                         sensorDataObjects.map(item => {
                             if(item != undefined) {
                                 // Parse timestamp
@@ -47,7 +81,7 @@ class SensorTemperatureChart extends React.Component {
                                 sensorTimes.push((item.timestamp).toString());
                                 sensorValues.push(item.value);
                             }
-                        })
+                        });
                         let temp = [sensorTimes,sensorValues]
                         sensorDataFulfilled.push(temp);
                         return sensorDataFulfilled;
@@ -66,39 +100,12 @@ class SensorTemperatureChart extends React.Component {
     }
 
     render() {
-        const data = {
-            labels: this.state.sensorTimes,
-            datasets: [
-                {
-                    label: 'Temperature (Celsius)',
-                    fill: false,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(75,192,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderCapStyle: 'round',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(220,220,220,1)',
-                    pointBackgroundColor: '#ffffff',
-                    pointBorderWidth: 2,
-                    pointHoverRadius: 10,
-                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: this.state.sensorValues
-                }
-            ]
-        };
-
         return (
             <div>
-                <Line data={data} />
+                {this.state.alertArray}
             </div>
         )
     }
 }
 
-export default SensorTemperatureChart;
+export default Alert;

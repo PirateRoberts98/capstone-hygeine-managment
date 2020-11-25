@@ -14,7 +14,7 @@ CORS(app)
 
 #Configure db
 #AWS
-conn = psycopg2.connect(user = "postgres", port="5432", host="database-1.cfa0og2dawpl.ca-central-1.rds.amazonaws.com", password = "capstone")
+conn = psycopg2.connect(user = "postgres", port="5432", host="capstone.cfa0og2dawpl.ca-central-1.rds.amazonaws.com", password = "capstone")
 #localhost
 #conn = psycopg2.connect(dbname="capstone", port="5432")
 #docker
@@ -46,6 +46,29 @@ def register():
         cur.close()
 
         return {"value": True}
+    except:
+        raise Exception('ERROR POST SensorData')
+
+#login api
+@app.route("/api/login", methods=['POST'])
+def login():
+    try:
+        email = request.get_json()['email']
+        request.get_json()['password']
+
+        cur = conn.cursor()
+        cur.execute("SELECT userId, pw FROM Users WHERE email = %s", (email,))
+
+        row = conn.cursor()
+        conn.commit()
+        cur.close()
+
+        data = {
+            'userId': row[0],
+            'passwordValid': bcrypt.check_password_hash(row[1], password)
+        }
+
+        return data
     except:
         raise Exception('ERROR POST SensorData')
 

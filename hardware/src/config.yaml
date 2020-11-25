@@ -1,3 +1,3 @@
-base_url: "http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/postSensorData"
+base_url: "ec2-35-182-126-135.ca-central-1.compute.amazonaws.com:3001/api/postSensorData"
 offline: False 
 mock: False
