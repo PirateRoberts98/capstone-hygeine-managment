@@ -9,15 +9,21 @@ class Alert extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            sensorMessages: []
+            sensorHumidityMessages: [],
+            sensorTemperatureMessages: [],
+            sensorPressureMessages: []
         }
     }
 
     componentDidMount(){
-        this.retrieveData();
+        this.retrieveDataHumdity();
+        this.retrieveDataPressure();
+        this.retrieveDataTemperature();
         setInterval(() => {
-            this.retrieveData();
-        }, 5000);
+            this.retrieveDataHumdity();
+            this.retrieveDataPressure();
+            this.retrieveDataTemperature();
+        }, 60000);
 
         /*database.ref('server/alert').on('value', (snapshot) => {
             if(this.state.alerts != snapshot.val() && snapshot.val() != null){
@@ -50,9 +56,56 @@ class Alert extends React.Component {
         });*/
     }
 
-    retrieveData = () => {
+    retrieveDataHumdity = () => {
         var tht = this;
         var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataHumidity', {
+            method: 'GET',
+        });
+        fetch(request).then(function(response) {
+            response.json()
+                .then(function(data){
+                    if(data){
+                        let sensorDataObjects = data;
+
+                        // Initialize Arrays to store separate attributes of the Sensor Data Object.
+                        let sensorTimesArray = [];
+                        let sensorMessagesArray = [];
+
+                        // Map the Sensor Data Object to appropriate arrays.
+                        sensorDataObjects.map(item => {
+                            if(item != undefined) {
+                                sensorTimesArray.push((item.timestamp).toString());
+                                sensorMessagesArray.push(item.message);
+                            }
+                        });
+
+                        // Remove duplicate messages
+                        sensorMessagesArray = sensorMessagesArray.filter((value,index) => sensorMessagesArray.indexOf(value) === index);
+
+                        // Format into JSX
+                        let msgArray = []
+                        for(let j=sensorMessagesArray.length-1; j > -1; j--) {
+                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>Alert with severity: null. The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
+                            msgArray.push(msg);
+                        }
+
+                        return msgArray;
+                    }
+                })
+                .then((msgArray)=>{
+                    tht.setState({
+                        sensorHumidityMessages: msgArray
+                    });
+                })
+                .catch(function(err){
+                    console.log(err)
+                });
+        });
+    }
+
+    retrieveDataTemperature = () => {
+        var tht = this;
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataTemperature', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
@@ -97,10 +150,59 @@ class Alert extends React.Component {
         });
     }
 
+    retrieveDataPressure = () => {
+        var tht = this;
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataPressure', {
+            method: 'GET',
+        });
+        fetch(request).then(function(response) {
+            response.json()
+                .then(function(data){
+                    if(data){
+                        let sensorDataObjects = data;
+
+                        // Initialize Arrays to store separate attributes of the Sensor Data Object.
+                        let sensorTimesArray = [];
+                        let sensorMessagesArray = [];
+
+                        // Map the Sensor Data Object to appropriate arrays.
+                        sensorDataObjects.map(item => {
+                            if(item != undefined) {
+                                sensorTimesArray.push((item.timestamp).toString());
+                                sensorMessagesArray.push(item.message);
+                            }
+                        });
+
+                        // Remove duplicate messages
+                        sensorMessagesArray = sensorMessagesArray.filter((value,index) => sensorMessagesArray.indexOf(value) === index);
+
+                        // Format into JSX
+                        let msgArray = []
+                        for(let j=sensorMessagesArray.length-1; j > -1; j--) {
+                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>Alert with severity: null. The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
+                            msgArray.push(msg);
+                        }
+
+                        return msgArray;
+                    }
+                })
+                .then((msgArray)=>{
+                    tht.setState({
+                        sensorPressureMessages: msgArray
+                    });
+                })
+                .catch(function(err){
+                    console.log(err)
+                });
+        });
+    }
+
     render() {
         return (
             <div>
-                {this.state.sensorMessages}
+                {this.state.sensorHumidityMessages}
+                {this.state.sensorPressureMessages}
+                {this.state.sensorTemperatureMessages}
             </div>
         )
     }
