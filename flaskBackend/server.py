@@ -9,7 +9,7 @@ import psycopg2
 import logging
 
 app = Flask(__name__)
-bcrpyt = Bcrypt(app)
+bcrypt = Bcrypt(app)
 CORS(app)
 
 #Configure db
@@ -30,8 +30,9 @@ logging.basicConfig(
 @app.route("/api/register", methods=['POST'])
 def register():
     try:
+        #parameters
         email = request.get_json()['email']
-        password = bcrpyt.generate_password_hash(request.get_json()['password1']).decode('utf-8') #encrypted
+        password = bcrypt.generate_password_hash(request.get_json()['password1']).decode('utf-8') #encrypted
         fname = request.get_json()['fname']
         lname = request.get_json()['lname']
         bday = request.get_json()['bday']
@@ -53,13 +54,14 @@ def register():
 @app.route("/api/login", methods=['POST'])
 def login():
     try:
+        #parameters
         email = request.get_json()['email']
-        request.get_json()['password']
+        password = request.get_json()['password']
 
         cur = conn.cursor()
         cur.execute("SELECT userId, pw FROM Users WHERE email = %s", (email,))
 
-        row = conn.cursor()
+        row = cur.fetchone()
         conn.commit()
         cur.close()
 
@@ -226,6 +228,32 @@ def postMessage():
         cur.close()
 
         return {"value": True}
+    except:
+        raise Exception('Error POST postMessage')
+
+#get message api
+@app.route("/api/getMessages/<receiverId>", methods=['GET'])
+def getMessages(receiverId):
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM messages WHERE receiverId = %s", (receiverId))
+
+        rows = cur.fetchall()
+        conn.commit()
+        cur.close()
+
+        output = [] #new array to store our formatted data
+        if rows:
+            for i in range(len(rows)):
+                output.append({
+                    "messageId": rows[i][0],
+                    "senderId": rows[i][1],
+                    "receiverId": rows[i][2],
+                    "message": rows[i][3]
+                })
+
+        response = jsonify(output)
+        return response
     except:
         raise Exception('Error POST postMessage')
 

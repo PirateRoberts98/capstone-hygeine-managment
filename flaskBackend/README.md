@@ -20,15 +20,24 @@ Server hosted on `port: 3001`
 `pip3 install psycopg2`
 
 ## API Calls
-`/api/register` - Register users [Post]
+`/api/register` - Register users ['POST']
 
-`/api/postSensorData` - Insert sensor Data [Post]
+`/api/login` - Login user ['POST']
+
+`/api/postSensorData` - Insert sensor Data ['POST']
 
 `/api/getSensorDataTemperature` - retrieve sensor data filtered by "temperature" ['GET']
 
 `/api/getSensorDataPressure` - retrieve sensor data filtered by "pressure" ['GET']
 
-### Template example:
+`/api/postMessage` - store message data that is sent to doctor or patient ['POST']
+
+`/api/getMessages/<receiverId>` - retrieve all messages by its userId ['GET']
+
+
+
+## Templates
+### SensorData Template example:
 
 ```
 [
@@ -51,5 +60,16 @@ Server hosted on `port: 3001`
         "value": 9
     }
     ...
+]
+```
+### Messages Template example:
+```
+[
+  {
+    "message": "ho",
+    "messageId": 1,
+    "receiverId": 2,
+    "senderId": 1
+  }
 ]
 ```
