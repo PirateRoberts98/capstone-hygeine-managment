@@ -81,7 +81,6 @@ class SensorPressureChart extends React.Component {
                 }
             ]
         };
-        console.log(data);
         return (
             <div>
                 <Bar

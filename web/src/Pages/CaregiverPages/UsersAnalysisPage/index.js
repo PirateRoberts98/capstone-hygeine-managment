@@ -15,6 +15,7 @@ import SensorTemperatureChart from './Charts/SensorTemperature';
 
 // MaterialUI
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const ContactDoctor = ({match}) => (
     <Fragment>
@@ -54,6 +55,18 @@ const ContactDoctor = ({match}) => (
                                 Alerts
                             </Typography>
                             <Alerts />
+                            <Typography variant="h2" gutterBottom>
+                                Sensor Control
+                            </Typography>
+                            <Button style={{ marginBottom:"15px", marginRight:"15px" }} variant="contained" color="primary">
+                                Poll Rate Up
+                            </Button>
+                            <Button style={{ marginBottom:"15px", marginRight:"15px" }} variant="contained" color="primary">
+                                Poll Rate Down
+                            </Button>
+                            <Button style={{ marginBottom:"15px", marginRight:"15px" }} variant="contained" color="primary">
+                                Stop Polling
+                            </Button>
                         </ReactCSSTransitionGroup>
                     </Fragment>
                 </div>
