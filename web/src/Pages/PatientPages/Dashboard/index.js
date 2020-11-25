@@ -10,6 +10,12 @@ import AppFooter from '../../../Layout/AppFooter';
 //Charts
 import WaterUsageChart from './Charts/WaterUsageChart';
 
+// Other Components
+import Alerts from './Alert';
+
+// Material UI
+import Typography from '@material-ui/core/Typography';
+
 import {
     Row, Col,
     Card, CardBody,
@@ -34,10 +40,21 @@ const MainDashboard = ({match}) => (
                             <div>
                                 <PageTitle
                                     heading="Dashboard"
-                                    subheading="This dashboard shows you information of the water usage based on the collection of sensor data."
+                                    subheading="Alerts and Recommended Actions"
                                     icon="pe-7s-user icon-gradient bg-mean-fruit"
                                 />
                             </div>
+                            <Typography variant="h2" gutterBottom>
+                                Alerts
+                            </Typography>
+                            <Alerts />
+                            <Typography variant="h2" gutterBottom>
+                                Messages
+                            </Typography>
+                            <Alerts />
+                            <Typography variant="h2" gutterBottom>
+                                Charts
+                            </Typography>
                             <Row form>
                                 <Col md={9}>
                                     <Card className="main-card mb-3">
