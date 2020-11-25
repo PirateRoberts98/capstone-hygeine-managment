@@ -74,17 +74,9 @@ export default function ContactDoctor() {
                                     />
                                 </div>
                                 <Typography variant="h2" gutterBottom>
-                                    Humidity Chart
+                                    Alerts
                                 </Typography>
-                                <SensorHumidityChart/>
-                                <Typography variant="h2" gutterBottom>
-                                    Sensor Chart
-                                </Typography>
-                                <SensorPressureChart/>
-                                <Typography variant="h2" gutterBottom>
-                                    Temperature Chart
-                                </Typography>
-                                <SensorTemperatureChart/>
+                                <Alerts />
                                 <Typography variant="h2" gutterBottom>
                                     Sensor Control
                                 </Typography>
@@ -98,9 +90,17 @@ export default function ContactDoctor() {
                                     Stop Polling
                                 </Button>
                                 <Typography variant="h2" gutterBottom>
-                                    Alerts
+                                    Humidity Chart
                                 </Typography>
-                                <Alerts />
+                                <SensorHumidityChart/>
+                                <Typography variant="h2" gutterBottom>
+                                    Sensor Chart
+                                </Typography>
+                                <SensorPressureChart/>
+                                <Typography variant="h2" gutterBottom>
+                                    Temperature Chart
+                                </Typography>
+                                <SensorTemperatureChart/>
                                 <Snackbar open={openPollSnackBar} autoHideDuration={6000} onClose={handlePollSnackBarClose}>
                                     <Alert onClose={handlePollSnackBarClose} severity="info">
                                         {pollSnackBarLabel}
