@@ -1,9 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-// Firebase Imports
-import * as firebase from "firebase/app";
-import "firebase/database";
-var database = firebase.database();
+const awsConnection = require('../../../../config/config.json');
 
 class SensorPressureChart extends React.Component {
     constructor(props) {
@@ -33,7 +30,7 @@ class SensorPressureChart extends React.Component {
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataPressure', {
+        var request = new Request('http://ec2-15-222-8-58.ca-central-1.compute.amazonaws.com:3000/api/getSensorDataPressure', {
             method: 'GET',
         });
         fetch(request).then(function(response) {

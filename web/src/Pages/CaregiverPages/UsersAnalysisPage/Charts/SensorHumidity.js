@@ -1,5 +1,6 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
+const awsConnection = require('../../../../config/config.json');
 
 class SensorHumidityChart extends React.Component {
     constructor(props){
@@ -20,8 +21,7 @@ class SensorHumidityChart extends React.Component {
     }
 
     retrieveData = () => {
-        var tht = this;
-        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataHumidity', {
+        var request = new Request('http://ec2-15-222-8-58.ca-central-1.compute.amazonaws.com:3000//api/getSensorDataHumidity', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
@@ -54,8 +54,7 @@ class SensorHumidityChart extends React.Component {
                     }
                 })
                 .then((sensorDataFulfilled)=>{
-                    console.log(sensorDataFulfilled)
-                    tht.setState({
+                    this.setState({
                         sensorTimes: sensorDataFulfilled[0][0],
                         sensorValues: sensorDataFulfilled[0][1]
                     });
