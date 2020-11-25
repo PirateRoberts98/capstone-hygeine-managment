@@ -23,3 +23,12 @@ CREATE TABLE dataSensor (
     tStamp INT NOT NULL,
     val INT NOT NULL
 );
+
+/*Create table Messages*/
+CREATE TABLE messages(
+    messageId SERIAL NOT NULL,
+    senderId INT NOT NULL,
+    receiverId INT NOT NULL,
+    messageValue VARCHAR(255) NOT NULL,
+    PRIMARY KEY (messageId)
+);

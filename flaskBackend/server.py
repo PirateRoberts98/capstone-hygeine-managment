@@ -211,6 +211,24 @@ def getSensorDataPressure():
     except:
         raise Exception('Error GET sensorDataPressure')
 
+#post message api
+@app.route("/api/postMessage", methods=['POST'])
+def postMessage():
+    try:
+        senderId = request.get_json()['senderId']
+        receiverId = request.get_json()['receiverId']
+        message = request.get_json()['message']
+
+        cur = conn.cursor()
+        cur.execute("INSERT INTO messages(senderId, receiverId, messageValue) VALUES (%s, %s, %s)", (senderId, receiverId, message))
+
+        conn.commit()
+        cur.close()
+
+        return {"value": True}
+    except:
+        raise Exception('Error POST postMessage')
+
 #def _build_cors_preflight_response():
 #    response = make_response()
 #    response.headers.add("Access-Control-Allow-Origin", "*")
