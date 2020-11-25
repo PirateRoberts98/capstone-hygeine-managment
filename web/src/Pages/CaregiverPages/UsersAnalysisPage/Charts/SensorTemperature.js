@@ -1,9 +1,6 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
-// Firebase Imports
-import * as firebase from "firebase/app";
-import "firebase/database";
-var database = firebase.database();
+const awsConnection = require('../../../../config/config.json');
 
 class SensorTemperatureChart extends React.Component {
     constructor(props){
@@ -17,30 +14,20 @@ class SensorTemperatureChart extends React.Component {
 
     componentDidMount(){
         this.retrieveData();
-        let i = 0;
-        let interval = setInterval(() => {
-        if (i>=0) {
+        setInterval(() => {
             this.retrieveData();
-            i++;
-            console.log("waiting for the next call for temperature.");
-        }
-        else {
-            clearInterval(interval)
-        }
-
-        }, 5000);
+      }, 5000);
     }
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataTemperature', {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataTemperature', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
             response.json()
                 .then(function(data){
                     if(data){
-                        //console.log(data);
                         let sensorDataObjects = data;
                         let sensorTimes = [];
                         let sensorValues = [];
@@ -67,7 +54,6 @@ class SensorTemperatureChart extends React.Component {
                     }
                 })
                 .then((sensorDataFulfilled)=>{
-                    console.log(sensorDataFulfilled)
                     tht.setState({
                         sensorTimes: sensorDataFulfilled[0][0],
                         sensorValues: sensorDataFulfilled[0][1]
