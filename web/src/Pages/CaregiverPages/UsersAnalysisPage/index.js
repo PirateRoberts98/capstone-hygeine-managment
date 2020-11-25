@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 // Other Components
-import Alerts from './Alert';
+import Alerts from '../../../components/Alert';
 
 // Layout
 import PageTitle from '../../../Layout/AppMain/PageTitle';
