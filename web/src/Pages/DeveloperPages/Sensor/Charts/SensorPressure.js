@@ -1,9 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-// Firebase Imports
-import * as firebase from "firebase/app";
-import "firebase/database";
-var database = firebase.database();
+const awsConnection = require('../../../../config/config.json');
 
 class SensorPressureChart extends React.Component {
     constructor(props) {
@@ -17,30 +14,20 @@ class SensorPressureChart extends React.Component {
 
     componentDidMount(){
         this.retrieveData();
-        let i = 0;
-        let interval = setInterval(() => {
-        if (i>=0) {
-            this.retrieveData();
-            i++;
-            console.log("waiting for the next call for pressure.");
-        }
-        else {
-            clearInterval(interval)
-        }
-
+        setInterval(() => {
+          this.retrieveData();
         }, 5000);
-    }
+      }
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request('http://ec2-35-182-173-184.ca-central-1.compute.amazonaws.com:3001/api/getSensorDataPressure', {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataPressure', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
             response.json()
                 .then(function(data){
                     if(data){
-                        //console.log(data);
                         let sensorDataObjects = data;
                         let sensorTimes = [];
                         let sensorValues = [];
@@ -67,7 +54,6 @@ class SensorPressureChart extends React.Component {
                     }
                 })
                 .then((sensorDataFulfilled)=>{
-                    console.log(sensorDataFulfilled)
                     tht.setState({
                         sensorTimes: sensorDataFulfilled[0][0],
                         sensorValues: sensorDataFulfilled[0][1]

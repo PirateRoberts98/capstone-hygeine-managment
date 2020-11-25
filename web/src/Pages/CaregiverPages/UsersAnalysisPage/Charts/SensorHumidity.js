@@ -21,7 +21,8 @@ class SensorHumidityChart extends React.Component {
     }
 
     retrieveData = () => {
-        var request = new Request('http://ec2-15-222-8-58.ca-central-1.compute.amazonaws.com:3000//api/getSensorDataHumidity', {
+        var tht = this;
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataHumidity', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
@@ -54,7 +55,7 @@ class SensorHumidityChart extends React.Component {
                     }
                 })
                 .then((sensorDataFulfilled)=>{
-                    this.setState({
+                    tht.setState({
                         sensorTimes: sensorDataFulfilled[0][0],
                         sensorValues: sensorDataFulfilled[0][1]
                     });

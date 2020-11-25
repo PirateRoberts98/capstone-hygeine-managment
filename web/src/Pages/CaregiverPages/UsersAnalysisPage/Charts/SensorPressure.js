@@ -14,30 +14,20 @@ class SensorPressureChart extends React.Component {
 
     componentDidMount(){
         this.retrieveData();
-        let i = 0;
-        let interval = setInterval(() => {
-        if (i>=0) {
+        setInterval(() => {
             this.retrieveData();
-            i++;
-            console.log("waiting for the next call for pressure.");
-        }
-        else {
-            clearInterval(interval)
-        }
-
         }, 5000);
     }
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request('http://ec2-15-222-8-58.ca-central-1.compute.amazonaws.com:3000/api/getSensorDataPressure', {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataPressure', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
             response.json()
                 .then(function(data){
                     if(data){
-                        //console.log(data);
                         let sensorDataObjects = data;
                         let sensorTimes = [];
                         let sensorValues = [];
@@ -64,7 +54,6 @@ class SensorPressureChart extends React.Component {
                     }
                 })
                 .then((sensorDataFulfilled)=>{
-                    console.log(sensorDataFulfilled)
                     tht.setState({
                         sensorTimes: sensorDataFulfilled[0][0],
                         sensorValues: sensorDataFulfilled[0][1]
