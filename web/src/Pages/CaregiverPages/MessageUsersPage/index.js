@@ -30,23 +30,18 @@ export default function MessageUser() {
             "receiverId": 1,
             "message": messageFormContent
         }
-
         var request = new Request(awsConnection.awsEC2Connection+'/api/postMessage', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: messageJson
-        });
-        fetch(request).then(function(response) {
-            console.log(response);
-        })
-        .then(()=>{
-            setMessageFormContent('')
-        })
-        .catch(function(err) {
+            headers: new Headers({ 'Content-Type' : 'application/json', 'Accept': 'application/json' }),
+            body: JSON.stringify(messageJson)
+          });
+          fetch(request).then((response) => {
+            response.json().then((data) => {
+                console.log(data);
+            });
+          }).catch(function(err){
             console.log(err);
-        })
+        });
     }
 
     return (
