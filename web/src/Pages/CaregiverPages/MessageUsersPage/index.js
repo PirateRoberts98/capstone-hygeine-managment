@@ -25,8 +25,18 @@ export default function MessageUser() {
     }
 
     const onSendRequestClick = () => {
+        let messageJson = {
+            "senderId": 0,
+            "receiverId": 1,
+            "message": messageFormContent
+        }
+
         var request = new Request(awsConnection.awsEC2Connection+'/api/postMessage', {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: messageJson
         });
         fetch(request).then(function(response) {
             console.log(response);
