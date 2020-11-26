@@ -15,64 +15,90 @@ import SendIcon from '@material-ui/icons/Send';
 // Other Components
 import MessagesComponent from '../../../components/MessagesComponent'
 
-const ContactDoctor = ({match}) => (
-    <Fragment>
-        <AppHeader/>
-        <div className="app-main">
-            <AppSidebar/>
-            <div className="app-main__outer">
-                <div className="app-main__inner">
-                    <Fragment>
-                        <ReactCSSTransitionGroup
-                            component="div"
-                            transitionName="TabsAnimation"
-                            transitionAppear={true}
-                            transitionAppearTimeout={0}
-                            transitionEnter={false}
-                            transitionLeave={false}>
-                            <div>
-                                <PageTitle
-                                    heading="Message Patient - xxxxxxxxxx"
-                                    subheading="Contact the patient below."
-                                    icon="pe-7s-user icon-gradient bg-mean-fruit"
-                                />
-                            </div>
-                            <Typography variant="h2" gutterBottom>
-                                Contact Patient - xxxx
-                            </Typography>
-                            <form>
-                                <div style={{ marginBottom:'15px' }}>
-                                    <TextField
-                                        style={{ width:'50%' }}
-                                        id="outlined-multiline-static"
-                                        label="Message"
-                                        multiline
-                                        rows={4}
-                                        defaultValue=""
-                                        variant="outlined"
+const awsConnection = require('../../../config/config.json');
+
+export default function MessageUser() {
+    const [messageFormContent, setMessageFormContent] = React.useState('');
+
+    const onMessageFormChange = (event) => {
+        setMessageFormContent(event.target.value);
+    }
+
+    const onSendRequestClick = () => {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/postMessage', {
+            method: 'POST'
+        });
+        fetch(request).then(function(response) {
+            console.log(response);
+        })
+        .then(()=>{
+            setMessageFormContent('')
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+
+    return (
+        <Fragment>
+            <AppHeader/>
+            <div className="app-main">
+                <AppSidebar/>
+                <div className="app-main__outer">
+                    <div className="app-main__inner">
+                        <Fragment>
+                            <ReactCSSTransitionGroup
+                                component="div"
+                                transitionName="TabsAnimation"
+                                transitionAppear={true}
+                                transitionAppearTimeout={0}
+                                transitionEnter={false}
+                                transitionLeave={false}>
+                                <div>
+                                    <PageTitle
+                                        heading="Message Patient - xxxxxxxxxx"
+                                        subheading="Contact the patient below."
+                                        icon="pe-7s-user icon-gradient bg-mean-fruit"
                                     />
                                 </div>
-                                <div>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        //className={classes.button}
-                                        endIcon={<SendIcon/>}
-                                    >
-                                        Send
-                                    </Button>
-                                </div>
-                            </form>
-                            <Typography variant="h2" gutterBottom>
-                                Messages
-                            </Typography>
-                            <MessagesComponent />
-                        </ReactCSSTransitionGroup>
-                    </Fragment>
+                                <Typography variant="h2" gutterBottom>
+                                    Contact Patient - xxxx
+                                </Typography>
+                                <form>
+                                    <div style={{ marginBottom:'15px' }}>
+                                        <TextField
+                                            style={{ width:'50%' }}
+                                            id="outlined-multiline-static"
+                                            label="Message"
+                                            multiline
+                                            rows={4}
+                                            defaultValue=""
+                                            variant="outlined"
+                                            onChange={(event)=>onMessageFormChange(event)}
+                                            value={messageFormContent}
+                                        />
+                                    </div>
+                                    <div>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            //className={classes.button}
+                                            endIcon={<SendIcon/>}
+                                            onClick={()=>onSendRequestClick()}
+                                        >
+                                            Send
+                                        </Button>
+                                    </div>
+                                </form>
+                                <Typography variant="h2" gutterBottom>
+                                    Messages
+                                </Typography>
+                                <MessagesComponent />
+                            </ReactCSSTransitionGroup>
+                        </Fragment>
+                    </div>
                 </div>
             </div>
-        </div>
-    </Fragment>
-);
-
-export default ContactDoctor;
+        </Fragment>
+    );
+}
