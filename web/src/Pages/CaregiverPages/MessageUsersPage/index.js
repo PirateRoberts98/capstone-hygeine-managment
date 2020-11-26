@@ -11,14 +11,23 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Other Components
 import MessagesComponent from '../../../components/MessagesComponent'
 
 const awsConnection = require('../../../config/config.json');
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default function MessageUser() {
     const [messageFormContent, setMessageFormContent] = React.useState('');
+    const [snackbarMessage, setSnackbarMessage] = React.useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = React.useState('info');
+    const [isSnackbarOpen, setSnackbarView] = React.useState(false);
 
     const onMessageFormChange = (event) => {
         setMessageFormContent(event.target.value);
@@ -37,11 +46,24 @@ export default function MessageUser() {
           });
           fetch(request).then((response) => {
             response.json().then((data) => {
-                console.log(data);
+                setMessageFormContent('');
+                setSnackbarMessage('Your message was sent!');
+                setSnackbarSeverity('success')
+                setSnackbarView(true);
             });
           }).catch(function(err){
-            console.log(err);
+            setSnackbarMessage('There was an error with your message - ' + err);
+            setSnackbarSeverity('error');
+            setSnackbarView(true);
         });
+    }
+
+    const handlePollSnackBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbarView(false);
     }
 
     return (
@@ -99,6 +121,11 @@ export default function MessageUser() {
                                     Messages
                                 </Typography>
                                 <MessagesComponent />
+                                <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handlePollSnackBarClose}>
+                                    <Alert onClose={handlePollSnackBarClose} severity={snackbarSeverity}>
+                                        {snackbarMessage}
+                                    </Alert>
+                                </Snackbar>
                             </ReactCSSTransitionGroup>
                         </Fragment>
                     </div>
