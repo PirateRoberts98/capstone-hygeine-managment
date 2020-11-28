@@ -56,7 +56,6 @@ def main():
             web_api.send_data(user_info,temp_sensor_info,'{{"timestamp":{},"value":{}}}'.format(
                     time.time(),19.0
                 ))
-            time.sleep(3)
             web_api.send_data(user_info,humidity_sensor_info,'{{"timestamp":{},"value":{}}}'.format(
                     time.time(),0
                 ))

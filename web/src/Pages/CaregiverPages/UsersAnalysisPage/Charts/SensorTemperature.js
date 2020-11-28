@@ -1,27 +1,27 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 const awsConnection = require('../../../../config/config.json');
 
-class SensorPressureChart extends React.Component {
-    constructor(props) {
+class SensorTemperatureChart extends React.Component {
+    constructor(props){
         super(props);
         this.state = {
             sensorData:'',
             sensorTimes:'',
-            sensorValues:'', 
+            sensorValues:'',
         }
     }
 
     componentDidMount(){
         this.retrieveData();
         setInterval(() => {
-          this.retrieveData();
-        }, 5000);
-      }
+            this.retrieveData();
+      }, 5000);
+    }
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataPressure', {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataTemperature', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
@@ -70,31 +70,35 @@ class SensorPressureChart extends React.Component {
             labels: this.state.sensorTimes,
             datasets: [
                 {
-                    label: 'Activated = 1',
+                    label: 'Temperature (Celsius)',
+                    fill: false,
+                    lineTension: 0.1,
                     backgroundColor: 'rgba(75,192,192,0.4)',
                     borderColor: 'rgba(75,192,192,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(75,192,192,1)',
-                    hoverBorderColor: 'rgba(220,220,220,1)',
                     borderCapStyle: 'round',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: 'rgba(220,220,220,1)',
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 10,
+                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
                     data: this.state.sensorValues
                 }
             ]
         };
-        console.log(data);
+
         return (
             <div>
-                <Bar
-                    data={data}
-                    width={100}
-                    height={50}
-                    options={{
-                        maintainAspectRatio: true
-                    }}
-                />
+                <Line data={data} />
             </div>
         )
     }
 }
 
-export default SensorPressureChart;
+export default SensorTemperatureChart;

@@ -15,9 +15,9 @@ class SensorPressureChart extends React.Component {
     componentDidMount(){
         this.retrieveData();
         setInterval(() => {
-          this.retrieveData();
+            this.retrieveData();
         }, 5000);
-      }
+    }
 
     retrieveData = () => {
         var tht = this;
@@ -81,7 +81,6 @@ class SensorPressureChart extends React.Component {
                 }
             ]
         };
-        console.log(data);
         return (
             <div>
                 <Bar
