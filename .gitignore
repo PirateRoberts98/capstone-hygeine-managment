@@ -24,4 +24,5 @@ web/npm-debug.log*
 web/yarn-debug.log*
 web/yarn-error.log*
 
+/hardware/src/__pycache__
 *.log
