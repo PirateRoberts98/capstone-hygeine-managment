@@ -1,32 +1,66 @@
 #!/usr/local/bin/python3
 
+import configuration as cf
+
 #Local Imports
 import api
 
 import temp_humidity_sensor
 import pressure_sensor
 import config
-import RPi.GPIO as GPIO
+
+
+
+
 
 # External Imports 
 import time , argparse , yaml ,logging , sys ,  pytz 
 from datetime import datetime
 
 
+config = None
+
+def init():
+    '''
+    Initialize data for system for outside usage, including logging, config files and arguments
+    '''
+    global config
+    cf.setup_logging()
+    config = cf.parse_config()
+    args = cf.create_arguments() 
+    # Update configurations if arguments are different 
+    config["base_url"]= args.base_url if args.base_url else config["base_url"]
+    config["mock"] = True if args.mock else config["mock"] 
+    config["offline"] = True if args.offline else config["offline"]
+
+    # None ideal but allows mockable sensors to run without issues.
+    if config["mock"]:
+        import mock_GPIO as GPIO # Warning: NOT FULL COVERAGE 
+        import mock_pressure as pressure
+        import mock_temp as tempature
+    else:
+        try:
+            import RPi.GPIO as GPIO
+        except ImportError:
+            pass # Not ideal but saves issues with building on none pi devices 
+        import pressure_sensor as pressure 
+        import temp_humidity_sensor as tempature
+
+def cleanup():
+    # TODO Add GPIO Cleanup if necessary 
+    logging.info("Closing System")
+    return NotImplementedError
+
 
 def main():
-    configuration = config.parse_config()
-    args = config.create_arguments()  
-    config.setup_logging()
-    base_url= args.base_url if args.base_url else configuration["base_url"]
-    mock = True if args.mock else configuration["mock"] 
-    offline = True if args.offline else configuration["offline"]
-    # TODO Log the config state to debug 
-    user_info = api.User("John Doe") #TODO log user create to debug 
+    '''
+
+    '''
+   user_info = api.User("John Doe") #TODO log user create to debug 
     temp_sensor_info = api.Sensor("Temperature")  #TODO log user create to debug
     humidity_sensor_info = api.Sensor("Humidity")
     pressure_sensor_info = api.Sensor("Pressure")
-    
+
     web_api = api.WebAPI(base_url=base_url,offline=offline)
     logging.info("TODO: This is a test") # TODO: Log info on Web API 
     temp_humidity = temp_humidity_sensor.TempAndHumiditySensor()
@@ -60,9 +94,12 @@ def main():
         pass
     finally:
         GPIO.cleanup()    
-
+    return NotImplementedError
+    
 
 
 
 if __name__ == "__main__":
-    main() 
+    init()
+    # main()
+    # cleanup()
