@@ -14,9 +14,9 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 // Firebase imports
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
+//import * as firebase from "firebase/app";
+//import "firebase/auth";
+//import "firebase/database";
 
 function Copyright() {
   return (
@@ -67,7 +67,7 @@ class SignIn extends React.Component {
     }
 
     handleSignIn() {
-        let email = document.getElementById("email").value;
+        /*let email = document.getElementById("email").value;
         let password = document.getElementById("password").value;
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(()=>{
@@ -84,11 +84,11 @@ class SignIn extends React.Component {
             var errorMessage = error.message;
             console.log(errorCode);
             console.log(errorMessage);
-        });
+        });*/
     }
 
     handleDeveloperButton() {
-        this.props.handleLogin()
+        this.props.handleLoginDeveloper();
     }
 
     render() {

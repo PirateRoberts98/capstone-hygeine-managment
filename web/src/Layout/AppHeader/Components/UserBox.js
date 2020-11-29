@@ -23,9 +23,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import avatar1 from '../../../assets/utils/images/avatars/2.jpg';
 
 // Firebase Imports
-import * as firebase from "firebase/app";
+/*import * as firebase from "firebase/app";
 import "firebase/database";
-import "firebase/auth";
+import "firebase/auth";*/
 import { Redirect } from 'react-router-dom';
 class UserBox extends React.Component {
     constructor(props) {
@@ -39,7 +39,7 @@ class UserBox extends React.Component {
     }
 
     componentDidMount(){
-        if(firebase.auth().currentUser) {
+        /*if(firebase.auth().currentUser) {
             var userId = firebase.auth().currentUser.uid;
             firebase.database().ref('/users/'+userId).once('value')
             .then(snapshot => {
@@ -53,16 +53,16 @@ class UserBox extends React.Component {
             .catch(err => {
                 console.log(err);
             })
-        }
+        }*/
     }
 
-    handleLogout = () => {
+    handleLogout = () => {/*
         firebase.auth().signOut()
         .then(() => {
             this.setState({
                 active:false,
             })
-        });
+        });*/
     }
 
     notify2 = () => this.toastId = toast("You don't have any new items in your calendar for today! Go out and play!", {

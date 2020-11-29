@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
-import React, {Suspense, lazy, Fragment} from 'react';
+import React, {Suspense, lazy, Fragment, useState, useEffect} from 'react';
 
 import {
     ToastContainer,
@@ -28,7 +28,39 @@ const Charts = lazy(() => import('../../ExamplePages/Charts'));
 const Forms = lazy(() => import('../../ExamplePages/Forms'));
 const Tables = lazy(() => import('../../ExamplePages/Tables'));
 
-const AppMain = () => {
+const awsConnection = require('../../config/config.json');
+
+// An Example of a user
+const exampleUserObject = {
+    "userId": 0,
+    "fname": "James",
+    "lname": "Lee",
+    "bday": "whatUp",
+    "gender": "female",
+    "isCaregiver": null,
+    "isDeveloper": true,
+}
+
+export default function AppMain(props) {
+    const [userData, setUserData] = React.useState(null);
+
+    useEffect(()=>{
+        // Fetch user information with userId.
+        let userIdJSON = {"userId": props.userId}
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getUserData', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type' : 'application/json', 'Accept' : 'application/json' }),
+            body: JSON.stringify(userIdJSON)
+        });
+        fetch(request).then((response) => {
+            response.json().then((data) => {
+                setUserData(data);
+            });
+        }).catch(function(err){
+            setUserData(exampleUserObject);
+            console.log(err);
+        });
+    });
 
     return (
         <Fragment>
@@ -46,7 +78,11 @@ const AppMain = () => {
                     </div>
                 </div>
             }>
-                <Route path="/usersanalysis" component={UsersAnalysisPage}/>
+                <Route path="/usersanalysis" render={(props)=>
+                    <UsersAnalysisPage 
+                        userData={userData}
+                    />
+                }/>
             </Suspense>
 
             {/* Users Schedule */}
@@ -89,7 +125,11 @@ const AppMain = () => {
                     </div>
                 </div>
             }>
-                <Route path="/maindashboard" component={MainDashboard}/>
+                <Route path="/maindashboard" render={(props) =>
+                    <MainDashboard 
+                        userData={userData}
+                    />
+                }/>
             </Suspense>
 
             {/* Contact Doctor */}
@@ -271,5 +311,3 @@ const AppMain = () => {
         </Fragment>
     )
 };
-
-export default AppMain;

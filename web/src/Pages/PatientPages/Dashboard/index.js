@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // Layout
@@ -22,11 +22,18 @@ import {
     CardTitle
 } from 'reactstrap';
 
-const MainDashboard = ({match}) => (
-    <Fragment>
+export default function MainDashboard(props) {
+    const [userData, setUserData] = React.useState(props.userData);
+
+    useEffect(()=>{
+        setUserData(props.userData);
+    })
+
+    return (
+        <Fragment>
         <AppHeader/>
         <div className="app-main">
-            <AppSidebar/>
+            <AppSidebar userData={userData} />
             <div className="app-main__outer">
                 <div className="app-main__inner">
                     <Fragment>
@@ -72,6 +79,5 @@ const MainDashboard = ({match}) => (
             </div>
         </div>
     </Fragment>
-);
-
-export default MainDashboard;
+    );
+}

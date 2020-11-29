@@ -22,8 +22,8 @@ import {
     KeyboardDatePicker,
   } from '@material-ui/pickers';
 // Firebase imports
-import * as firebase from "firebase/app";
-import "firebase/auth";
+//import * as firebase from "firebase/app";
+//import "firebase/auth";
 // Get a reference to the database service
 var database = firebase.database();
 
@@ -95,11 +95,11 @@ class SignUp extends React.Component {
     }
 
     handleSignUp = (email,password1,password2,fname,lname, doctor) => {
-        this.handleSignUpFirebase(email,password1,password2,fname,lname, doctor);
+        //this.handleSignUpFirebase(email,password1,password2,fname,lname, doctor);
         this.handleSignUpBackend(email,password1,password2,fname,lname, doctor);
     }
 
-    handleSignUpFirebase = (email,password1,password2,fname,lname, doctor) => {
+    /*handleSignUpFirebase = (email,password1,password2,fname,lname, doctor) => {
         firebase.auth().createUserWithEmailAndPassword(email, password1)
         .then(()=>{
             firebase.database().ref('users/'+ firebase.auth().currentUser.uid).set({
@@ -127,7 +127,7 @@ class SignUp extends React.Component {
             console.log(errorCode);
             console.log(errorMessage);
         })
-    }
+    }*/
 
     handleSignUpBackend = (email,password1,password2,fname,lname, doctor) => {
         var that = this;

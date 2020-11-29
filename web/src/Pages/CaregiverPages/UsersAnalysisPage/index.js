@@ -23,9 +23,10 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function ContactDoctor() {
+export default function ContactDoctor(props) {
     const [openPollSnackBar, setPollSnackBarOpen] = React.useState(false);
     const [pollSnackBarLabel, setPollSnackBarLabel] = React.useState();
+    const [userData, setUserData] = React.useState(props.userData);
 
     const sensorPollRateControl = (buttonControlName) => {
         switch (buttonControlName) {
@@ -55,7 +56,7 @@ export default function ContactDoctor() {
         <Fragment>
             <AppHeader/>
             <div className="app-main">
-                <AppSidebar/>
+                <AppSidebar userData={userData} />
                 <div className="app-main__outer">
                     <div className="app-main__inner">
                         <Fragment>

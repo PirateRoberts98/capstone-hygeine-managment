@@ -2,7 +2,6 @@ import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import cx from 'classnames';
 import {withRouter, Redirect} from 'react-router-dom';
-
 import ResizeDetector from 'react-resize-detector';
 
 // Layouts
@@ -12,8 +11,8 @@ import AppMain from '../../Layout/AppMain';
 import LoginMain from '../Login';
 
 // Firebase Imports
-import * as firebase from "firebase/app";
-require("firebase/auth");
+//import * as firebase from "firebase/app";
+//require("firebase/auth");
 
 class Main extends React.Component {
     constructor(props) {
@@ -21,7 +20,8 @@ class Main extends React.Component {
         this.state = ({
             closedSmallerSidebar: false,
             isLoggedIn: false,
-            firebaseConfig :{
+            userIdNum: ""
+            /*firebaseConfig :{
                 apiKey: "AIzaSyB3pKW3ySHeWEI9bqrwwOLBXALrH1RBu4M",
                 authDomain: "ceg4912project.firebaseapp.com",
                 databaseURL: "https://ceg4912project.firebaseio.com",
@@ -30,10 +30,10 @@ class Main extends React.Component {
                 messagingSenderId: "1065298873625",
                 appId: "1:1065298873625:web:72647a9fc8c16b94764988",
                 measurementId: "G-3FQY5ZVMNC"
-              },
+              },*/
         });
         // Initialize Firebase
-        if(!firebase.apps.length) {
+        /*if(!firebase.apps.length) {
             firebase.initializeApp(this.state.firebaseConfig);
         }
         // See if user is logged in.
@@ -41,12 +41,23 @@ class Main extends React.Component {
             this.setState({
                 isLoggedIn: true,
             })
-        }
+        }*/
+        this.handleLogin=this.handleLogin.bind(this);
+        this.handleLoginDeveloper=this.handleLoginDeveloper.bind(this);
+    } 
+
+    handleLogin(userId){
+        this.setState({
+            isLoggedIn: true,
+            userIdNum: userId
+        });
     }
 
-    handleLogin(){
+    // Handle login of a developer.
+    handleLoginDeveloper(){
         this.setState({
-            isLoggedIn: true
+            isLoggedIn: true,
+            userIdNum: "Developer"
         });
     }
 
@@ -79,13 +90,16 @@ class Main extends React.Component {
                             {!this.state.isLoggedIn &&
                                 <div>
                                     <Redirect to="/login" />
-                                    <LoginMain handleLogin={()=>this.handleLogin()} />
+                                    <LoginMain 
+                                        handleLogin={()=>this.handleLogin()} 
+                                        handleLoginDeveloper={()=>this.handleLoginDeveloper()}
+                                    />
                                 </div>
                             }
                             {this.state.isLoggedIn &&
                                 <div>
                                     <Redirect to="/maindashboard" />
-                                    <AppMain />
+                                    <AppMain userId={this.state.userIdNum} />
                                 </div>
                             }
                         </div>
@@ -104,7 +118,6 @@ const mapStateToProp = state => ({
     enableFixedSidebar: state.ThemeOptions.enableFixedSidebar,
     enableClosedSidebar: state.ThemeOptions.enableClosedSidebar,
     enablePageTabsAlt: state.ThemeOptions.enablePageTabsAlt,
-
 });
 
 export default withRouter(connect(mapStateToProp)(Main));
