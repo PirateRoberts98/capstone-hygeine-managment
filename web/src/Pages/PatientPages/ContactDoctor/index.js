@@ -11,12 +11,58 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Other Components.
 import Alerts from './Alert';
+import MessagesComponent from '../../../components/MessagesComponent'
 
-const ContactDoctor = ({match}) => (
-    <Fragment>
+const awsConnection = require('../../../config/config.json');
+
+export default function ContactDoctor (){
+const [messageFormContent, setMessageFormContent] = React.useState('');
+    const [snackbarMessage, setSnackbarMessage] = React.useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = React.useState('info');
+    const [isSnackbarOpen, setSnackbarView] = React.useState(false);
+
+    const onMessageFormChange = (event) => {
+        setMessageFormContent(event.target.value);
+    }
+
+    const onSendRequestClick = () => {
+        let messageJson = {
+            "senderId": 0,
+            "receiverId": 1,
+            "message": messageFormContent
+        }
+        var request = new Request(awsConnection.awsEC2Connection+'/api/postMessage', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type' : 'application/json', 'Accept': 'application/json' }),
+            body: JSON.stringify(messageJson)
+        });
+        fetch(request).then((response) => {
+            response.json().then((data) => {
+                setMessageFormContent('');
+                setSnackbarMessage('Your message was sent!');
+                setSnackbarSeverity('success')
+                setSnackbarView(true);
+            });
+        }).catch(function(err){
+            setSnackbarMessage('There was an error with your message - ' + err);
+            setSnackbarSeverity('error');
+            setSnackbarView(true);
+        });
+    }
+    const handlePollSnackBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbarView(false);
+    }
+    return(
+        <Fragment>
         <ReactCSSTransitionGroup
             component="div"
             transitionName="TabsAnimation"
@@ -52,6 +98,7 @@ const ContactDoctor = ({match}) => (
                         color="primary"
                         //className={classes.button}
                         endIcon={<SendIcon/>}
+                        onClick={()=>onSendRequestClick()}
                     >
                         Send
                     </Button>
@@ -63,6 +110,5 @@ const ContactDoctor = ({match}) => (
             <Alerts />
         </ReactCSSTransitionGroup>
     </Fragment>
-);
-
-export default ContactDoctor;
+    )
+} 
