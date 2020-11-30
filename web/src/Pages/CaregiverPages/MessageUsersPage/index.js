@@ -68,69 +68,59 @@ export default function MessageUser() {
 
     return (
         <Fragment>
-            <AppHeader/>
-            <div className="app-main">
-                <AppSidebar/>
-                <div className="app-main__outer">
-                    <div className="app-main__inner">
-                        <Fragment>
-                            <ReactCSSTransitionGroup
-                                component="div"
-                                transitionName="TabsAnimation"
-                                transitionAppear={true}
-                                transitionAppearTimeout={0}
-                                transitionEnter={false}
-                                transitionLeave={false}>
-                                <div>
-                                    <PageTitle
-                                        heading="Message Patient - xxxxxxxxxx"
-                                        subheading="Contact the patient below."
-                                        icon="pe-7s-user icon-gradient bg-mean-fruit"
-                                    />
-                                </div>
-                                <Typography variant="h2" gutterBottom>
-                                    Contact Patient - xxxx
-                                </Typography>
-                                <form>
-                                    <div style={{ marginBottom:'15px' }}>
-                                        <TextField
-                                            style={{ width:'50%' }}
-                                            id="outlined-multiline-static"
-                                            label="Message"
-                                            multiline
-                                            rows={4}
-                                            defaultValue=""
-                                            variant="outlined"
-                                            onChange={(event)=>onMessageFormChange(event)}
-                                            value={messageFormContent}
-                                        />
-                                    </div>
-                                    <div>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            //className={classes.button}
-                                            endIcon={<SendIcon/>}
-                                            onClick={()=>onSendRequestClick()}
-                                        >
-                                            Send
-                                        </Button>
-                                    </div>
-                                </form>
-                                <Typography variant="h2" gutterBottom>
-                                    Messages
-                                </Typography>
-                                <MessagesComponent />
-                                <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handlePollSnackBarClose}>
-                                    <Alert onClose={handlePollSnackBarClose} severity={snackbarSeverity}>
-                                        {snackbarMessage}
-                                    </Alert>
-                                </Snackbar>
-                            </ReactCSSTransitionGroup>
-                        </Fragment>
-                    </div>
+            <ReactCSSTransitionGroup
+                component="div"
+                transitionName="TabsAnimation"
+                transitionAppear={true}
+                transitionAppearTimeout={0}
+                transitionEnter={false}
+                transitionLeave={false}>
+                <div>
+                    <PageTitle
+                        heading="Message Patient - xxxxxxxxxx"
+                        subheading="Contact the patient below."
+                        icon="pe-7s-user icon-gradient bg-mean-fruit"
+                    />
                 </div>
-            </div>
+                <Typography variant="h2" gutterBottom>
+                    Contact Patient - xxxx
+                </Typography>
+                <form>
+                    <div style={{ marginBottom:'15px' }}>
+                        <TextField
+                            style={{ width:'50%' }}
+                            id="outlined-multiline-static"
+                            label="Message"
+                            multiline
+                            rows={4}
+                            defaultValue=""
+                            variant="outlined"
+                            onChange={(event)=>onMessageFormChange(event)}
+                            value={messageFormContent}
+                        />
+                    </div>
+                    <div>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            //className={classes.button}
+                            endIcon={<SendIcon/>}
+                            onClick={()=>onSendRequestClick()}
+                        >
+                            Send
+                        </Button>
+                    </div>
+                </form>
+                <Typography variant="h2" gutterBottom>
+                    Messages
+                </Typography>
+                <MessagesComponent />
+                <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handlePollSnackBarClose}>
+                    <Alert onClose={handlePollSnackBarClose} severity={snackbarSeverity}>
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
+            </ReactCSSTransitionGroup>
         </Fragment>
     );
 }

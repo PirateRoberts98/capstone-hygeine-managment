@@ -2,9 +2,9 @@ import React from 'react';
 //ReactStrap
 import {Row, Card, CardBody} from 'reactstrap';
 // Firebase Imports
-import * as firebase from "firebase/app";
-import "firebase/database";
-var database = firebase.database();
+//import * as firebase from "firebase/app";
+//import "firebase/database";
+//var database = firebase.database();
 
 class Alert extends React.Component {
     constructor(props){
@@ -16,7 +16,7 @@ class Alert extends React.Component {
     }
 
     componentDidMount(){
-        database.ref('server/alert').on('value', (snapshot) => {
+        /*database.ref('server/alert').on('value', (snapshot) => {
             if(this.state.alerts != snapshot.val() && snapshot.val() != null){
                 let alertDataObjects = snapshot.val();
                 let alertDataArray = [];
@@ -44,7 +44,7 @@ class Alert extends React.Component {
                     alertArray: msgArray,
                 });
             }
-        });
+        });*/
     }
 
     render() {
