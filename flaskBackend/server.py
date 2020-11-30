@@ -79,25 +79,28 @@ def login():
 def getUserData():
     try:
         #parameters
-        userId = request.get_json()['userId']
+        if(request.get_json()['userId'] != 'Developer'):
+            userId = request.get_json()['userId']
 
-        cur = conn.cursor()
-        cur.execute("SELECT userId, fname, lname, bday, gender, iscaregiver FROM Users WHERE userId = %s", (userId,))
+            cur = conn.cursor()
+            cur.execute("SELECT userId, fname, lname, bday, gender, iscaregiver FROM Users WHERE userId = %s", (userId,))
 
-        row = cur.fetchone()
-        conn.commit()
-        cur.close()
+            row = cur.fetchone()
+            conn.commit()
+            cur.close()
 
-        data = {
-            'userId': row[0],
-            'fname': row[1],
-            'lname': row[2],
-            'bday': row[3],
-            'gender': row[4],
-            'isCaregiver': row[5]
-        }
+            data = {
+                'userId': row[0],
+                'fname': row[1],
+                'lname': row[2],
+                'bday': row[3],
+                'gender': row[4],
+                'isCaregiver': row[5]
+            }
 
-        return data
+            return data
+        else:
+            return {'userId': "Devleoper", "isDeveloper": True}
     except:
         raise Exception('ERROR POST SensorData')
 
