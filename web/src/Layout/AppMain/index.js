@@ -68,7 +68,7 @@ export default function AppMain(props) {
             setIsGatheringDataState(false);
             console.log(err);
         });
-    });
+    }, []);
 
     return (
         <Fragment>

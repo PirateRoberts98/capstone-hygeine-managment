@@ -17,6 +17,7 @@ import { Link as RouterLink } from 'react-router-dom';
 //import * as firebase from "firebase/app";
 //import "firebase/auth";
 //import "firebase/database";
+const awsConnection = require('../../../config/config.json');
 
 function Copyright() {
   return (
@@ -66,25 +67,27 @@ class SignIn extends React.Component {
         super(props);
     }
 
-    handleSignIn() {
-        /*let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(()=>{
-            // Existing and future Auth states are now persisted in the current
-            // session only. Closing the window would clear any existing state even
-            // if a user forgets to sign out.
-            // ...
-            // New sign-in will be persisted with session persistence.
-            return firebase.auth().signInWithEmailAndPassword(email, password).then(() => this.props.handleLogin());
-        })
-        .catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode);
-            console.log(errorMessage);
-        });*/
+    handleSignIn = (email,password) => {
+        var that = this;
+        let data= {
+            email: email,
+            password: password
+        }
+        var request = new Request(awsConnection.awsEC2Connection+'/api/login', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type' : 'application/json' }),
+            body: JSON.stringify(data)
+        });
+
+        fetch(request).then(function(response) {
+            response.json().then(function(data){
+                if(data.userId){
+                    that.props.handleLogin(data.userId);
+                }
+            })
+        }).catch(function(err){
+            console.log(err)
+        });
     }
 
     handleDeveloperButton() {
@@ -138,6 +141,10 @@ class SignIn extends React.Component {
                         color="primary"
                         className={classes.submit}
                         onClick={()=>this.handleSignIn()}
+                        onClick={()=>this.handleSignIn(
+                            document.getElementById('email').value,
+                            document.getElementById('password').value,
+                        )}
                     >
                         Sign In
                     </Button>

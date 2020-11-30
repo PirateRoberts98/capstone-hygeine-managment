@@ -91,7 +91,7 @@ class Main extends React.Component {
                                 <div>
                                     <Redirect to="/login" />
                                     <LoginMain 
-                                        handleLogin={()=>this.handleLogin()} 
+                                        handleLogin={this.handleLogin} 
                                         handleLoginDeveloper={()=>this.handleLoginDeveloper()}
                                     />
                                 </div>

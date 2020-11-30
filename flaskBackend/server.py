@@ -79,10 +79,10 @@ def login():
 def getUserData():
     try:
         #parameters
-        email = request.get_json()['email']
+        userId = request.get_json()['userId']
 
         cur = conn.cursor()
-        cur.execute("SELECT userId, fname, lname, bday, gender, iscaregiver WHERE email = %s", (email))
+        cur.execute("SELECT userId, fname, lname, bday, gender, iscaregiver FROM Users WHERE userId = %s", (userId,))
 
         row = cur.fetchone()
         conn.commit()
