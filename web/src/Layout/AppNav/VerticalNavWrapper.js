@@ -70,7 +70,6 @@ class Nav extends Component {
     render() {
         return (
             <Fragment>
-                <h5 className="app-sidebar__heading">Health Monitoring System</h5>
                 {/* Cargiver View */}
                 {this.state.isCaregiver &&
                 <div>

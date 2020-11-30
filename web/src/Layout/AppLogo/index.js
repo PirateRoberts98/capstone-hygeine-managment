@@ -1,10 +1,8 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
-
 import Hamburger from 'react-hamburgers';
-
 import AppMobileMenu from '../AppMobileMenu';
-
+import Typography from '@material-ui/core/Typography';
 import {
     setEnableClosedSidebar,
     setEnableMobileMenu,
@@ -17,7 +15,8 @@ class HeaderLogo extends React.Component {
         this.state = {
             active: false,
             mobile: false,
-            activeSecondaryMenuMobile: false
+            activeSecondaryMenuMobile: false,
+            isHideTitle: false
         };
 
     }
@@ -47,13 +46,13 @@ class HeaderLogo extends React.Component {
         return (
             <Fragment>
                 <div className="app-header__logo">
-                    <div className="logo-src"/>
+                    {this.state.isHideTitle && <h4 className="app-sidebar__heading">Health Monitoring System</h4>}
                     <div className="header__pane ml-auto">
                         <div onClick={this.toggleEnableClosedSidebar}>
                             <Hamburger
                                 active={enableClosedSidebar}
                                 type="elastic"
-                                onClick={() => this.setState({active: !this.state.active})}
+                                onClick={() => this.setState({active: !this.state.active, isHideTitle: !this.state.isHideTitle})}
                             />
                         </div>
                     </div>
