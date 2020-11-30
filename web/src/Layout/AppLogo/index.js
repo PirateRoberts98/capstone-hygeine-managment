@@ -15,7 +15,7 @@ class HeaderLogo extends React.Component {
             active: false,
             mobile: false,
             activeSecondaryMenuMobile: false,
-            isHideTitle: false
+            isTitleVisibile: true
         };
 
     }
@@ -45,13 +45,13 @@ class HeaderLogo extends React.Component {
         return (
             <Fragment>
                 <div className="app-header__logo">
-                    {this.state.isHideTitle && <h4 className="app-sidebar__heading">Health Monitoring System</h4>}
+                    {this.state.isTitleVisibile && <h4 className="app-sidebar__heading">Health Monitoring System</h4>}
                     <div className="header__pane ml-auto">
                         <div onClick={this.toggleEnableClosedSidebar}>
                             <Hamburger
                                 active={enableClosedSidebar}
                                 type="elastic"
-                                onClick={() => this.setState({active: !this.state.active, isHideTitle: !this.state.isHideTitle})}
+                                onClick={() => this.setState({active: !this.state.active, isTitleVisibile: !this.state.isTitleVisibile})}
                             />
                         </div>
                     </div>
