@@ -42,7 +42,7 @@ const exampleUserObject = {
     "gender": "female",
     "doctor": "James Chui",
     "isPatient": false,
-    "isCaregiver": null,
+    "isCaregiver": false,
     "isDeveloper": true,
 }
 
