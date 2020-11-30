@@ -11,6 +11,27 @@ import SearchBox from './Components/SearchBox';
 import UserBox from './Components/UserBox';
 
 class Header extends React.Component {
+    constructor(props){
+        super(props)
+        this.state=({
+            userData: {
+                "fname": "Loading...",
+                "lname": "Loading...",
+                "doctor": "Loading..."
+            }
+        });
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps !== this.props) {
+            if(this.props.userData) {
+                this.setState({
+                    userData: this.props.userData
+                });
+            }
+        }
+    }
+
     render() {
         let {
             headerBackgroundColor,
@@ -38,7 +59,7 @@ class Header extends React.Component {
                             <SearchBox/>
                         </div>
                         <div className="app-header-right">
-                            <UserBox/>
+                            <UserBox fname={this.state.userData.fname} lname={this.state.userData.lname} doctor={this.state.userData.doctor} />
                         </div>
                     </div>
                 </ReactCSSTransitionGroup>

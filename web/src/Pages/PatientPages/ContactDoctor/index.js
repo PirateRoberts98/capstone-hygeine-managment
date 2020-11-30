@@ -17,61 +17,51 @@ import Alerts from './Alert';
 
 const ContactDoctor = ({match}) => (
     <Fragment>
-        <AppHeader/>
-        <div className="app-main">
-            <AppSidebar/>
-            <div className="app-main__outer">
-                <div className="app-main__inner">
-                    <Fragment>
-                        <ReactCSSTransitionGroup
-                            component="div"
-                            transitionName="TabsAnimation"
-                            transitionAppear={true}
-                            transitionAppearTimeout={0}
-                            transitionEnter={false}
-                            transitionLeave={false}>
-                            <div>
-                                <PageTitle
-                                    heading="Contact Caregiver"
-                                    subheading="Contact your caregiver or your doctor below."
-                                    icon="pe-7s-user icon-gradient bg-mean-fruit"
-                                />
-                            </div>
-                            <Typography variant="h2" gutterBottom>
-                                Contact Caregiver
-                            </Typography>
-                            <form>
-                                <div style={{ marginBottom:'15px' }}>
-                                    <TextField
-                                        style={{ width:'50%' }}
-                                        id="outlined-multiline-static"
-                                        label="Message"
-                                        multiline
-                                        rows={4}
-                                        defaultValue=""
-                                        variant="outlined"
-                                    />
-                                </div>
-                                <div>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        //className={classes.button}
-                                        endIcon={<SendIcon/>}
-                                    >
-                                        Send
-                                    </Button>
-                                </div>
-                            </form>
-                            <Typography variant="h2" gutterBottom>
-                                Messages
-                            </Typography>
-                            <Alerts />
-                        </ReactCSSTransitionGroup>
-                    </Fragment>
-                </div>
+        <ReactCSSTransitionGroup
+            component="div"
+            transitionName="TabsAnimation"
+            transitionAppear={true}
+            transitionAppearTimeout={0}
+            transitionEnter={false}
+            transitionLeave={false}>
+            <div>
+                <PageTitle
+                    heading="Contact Caregiver"
+                    subheading="Contact your caregiver or your doctor below."
+                    icon="pe-7s-user icon-gradient bg-mean-fruit"
+                />
             </div>
-        </div>
+            <Typography variant="h2" gutterBottom>
+                Contact Caregiver
+            </Typography>
+            <form>
+                <div style={{ marginBottom:'15px' }}>
+                    <TextField
+                        style={{ width:'50%' }}
+                        id="outlined-multiline-static"
+                        label="Message"
+                        multiline
+                        rows={4}
+                        defaultValue=""
+                        variant="outlined"
+                    />
+                </div>
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        //className={classes.button}
+                        endIcon={<SendIcon/>}
+                    >
+                        Send
+                    </Button>
+                </div>
+            </form>
+            <Typography variant="h2" gutterBottom>
+                Messages
+            </Typography>
+            <Alerts />
+        </ReactCSSTransitionGroup>
     </Fragment>
 );
 

@@ -14,8 +14,26 @@ import {
 } from '../../reducers/ThemeOptions';
 
 class AppSidebar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = ({
+            userData: this.props.userData
+        })
+    }
 
-    state = {};
+    componentDidMount(){
+       this.setState({
+            userData: this.props.userData
+       });
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps !== this.props) {
+            this.setState({
+                userData: this.props.userData
+           });
+        }
+    }
 
     toggleMobileSidebar = () => {
         let {enableMobileMenu, setEnableMobileMenu} = this.props;
@@ -45,7 +63,7 @@ class AppSidebar extends Component {
                     <HeaderLogo/>
                     <PerfectScrollbar>
                         <div className="app-sidebar__inner">
-                            <Nav/>
+                            <Nav userData={this.state.userData} />
                         </div>
                     </PerfectScrollbar>
                     <div

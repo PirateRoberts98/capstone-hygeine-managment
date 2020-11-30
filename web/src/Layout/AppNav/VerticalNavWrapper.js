@@ -6,13 +6,14 @@ import MetisMenu from 'react-metismenu';
 import {MainNav, ComponentsNav, FormsNav, WidgetsNav, ChartsNav, ExampleMainNav,
 ContactDoctorNav, PillsNav, ScheduleNav, CheckUserAnalysisNav, SetUserScheduleNav, MessageUsersNav, SensorNav} from './NavItems';
 
-import * as firebase from "firebase/app";
-import "firebase/database";
+//import * as firebase from "firebase/app";
+//import "firebase/database";
 
 class Nav extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            userData: {},
             isDeveloper: false,
             isCaregiver: false,
             isPatient: false,
@@ -20,7 +21,10 @@ class Nav extends Component {
     }
 
     componentDidMount() {
-        if(firebase.auth().currentUser) {
+        this.setState({
+            userData: this.props.userData
+        });
+        /*if(firebase.auth().currentUser) {
             let userId = firebase.auth().currentUser.uid;
             firebase.database().ref('/users/'+userId).once('value')
             .then(snapshot => {
@@ -45,15 +49,27 @@ class Nav extends Component {
                 isPatient: false,
                 isCaregiver: false,
             })
-        }
+        }*/
     }
 
-    state = {};
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps !== this.props) {
+            this.setState({
+                userData: this.props.userData,
+           });
+            if(this.props.userData) {
+                this.setState({
+                    isCaregiver: this.props.userData.isCaregiver,
+                    isDeveloper: this.props.userData.isDeveloper,
+                    isPatient: this.props.userData.isPatient
+               });
+            }
+        }
+    }
 
     render() {
         return (
             <Fragment>
-                <h5 className="app-sidebar__heading">Health Monitoring System</h5>
                 {/* Cargiver View */}
                 {this.state.isCaregiver &&
                 <div>
