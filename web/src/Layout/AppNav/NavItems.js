@@ -1,7 +1,7 @@
 export const MainNav = [
     {
         id: 1,
-        icon: 'pe-7s-rocket',
+        icon: 'pe-7s-home',
         label: 'Dashboard',
         to: '#/maindashboard',
     },
@@ -9,7 +9,7 @@ export const MainNav = [
 export const ContactDoctorNav = [
     {
         id: 7,
-        icon: 'pe-7s-rocket',
+        icon: 'pe-7s-users',
         label: 'Contact Doctor',
         to: '#/contactdoctor',
     },
@@ -17,7 +17,7 @@ export const ContactDoctorNav = [
 export const PillsNav = [
     {
         id: 5,
-        icon: 'pe-7s-rocket',
+        icon: 'pe-7s-note2',
         label: 'Pills',
         to: '#/pills',
     },
@@ -25,7 +25,7 @@ export const PillsNav = [
 export const ScheduleNav = [
     {
         id: 6,
-        icon: 'pe-7s-rocket',
+        icon: 'pe-7s-bookmarks',
         label: 'Schedule',
         to: '#/schedule',
     },
@@ -33,7 +33,7 @@ export const ScheduleNav = [
 export const CheckUserAnalysisNav = [
     {
         id: 1,
-        icon: 'pe-7s-rocket',
+        icon: 'pe-7s-graph2',
         label: 'Users Analysis',
         to: '#/usersanalysis',
     },
@@ -41,7 +41,7 @@ export const CheckUserAnalysisNav = [
 export const SetUserScheduleNav = [
     {
         id: 3,
-        icon: 'pe-7s-rocket',
+        icon: 'pe-7s-bookmarks',
         label: 'Users Schedule',
         to: '#/usersschedule',
     },
@@ -49,7 +49,7 @@ export const SetUserScheduleNav = [
 export const MessageUsersNav = [
     {
         id: 4,
-        icon: 'pe-7s-rocket',
+        icon: 'pe-7s-users',
         label: 'Message Users',
         to: '#/messageusers',
     },
@@ -57,7 +57,7 @@ export const MessageUsersNav = [
 export const SensorNav = [
     {
         id: 8,
-        icon: 'pe-7s-rocket',
+        icon: 'pe-7s-graph1',
         label: 'Sensors \& Alerts',
         to: '#/sensors',
     },
