@@ -32,9 +32,9 @@ class UserBox extends React.Component {
         super(props);
         this.state = {
             active: true,
-            fname: 'Jane',
-            lname: 'Doe',
-            doctor: 'Dr. Phil'
+            fname: 'Loading...',
+            lname: '',
+            doctor: 'Loading...'
         };
     }
 
@@ -54,6 +54,16 @@ class UserBox extends React.Component {
                 console.log(err);
             })
         }*/
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps !== this.props) {
+            this.setState({
+                fname: this.props.fname,
+                lname: this.props.lname,
+                doctor: this.props.doctor
+            });
+        }
     }
 
     handleLogout = () => {/*
@@ -77,7 +87,7 @@ class UserBox extends React.Component {
         return (
             <Fragment>
                 {!this.state.active &&
-                <Redirect to="/login" />
+                    <Redirect to="/login" />
                 }
                 <div className="header-btn-lg pr-0">
                     <div className="widget-content p-0">

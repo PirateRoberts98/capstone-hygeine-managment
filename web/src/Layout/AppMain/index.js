@@ -40,6 +40,8 @@ const exampleUserObject = {
     "lname": "Lee",
     "bday": "whatUp",
     "gender": "female",
+    "doctor": "James Chui",
+    "isPatient": false,
     "isCaregiver": null,
     "isDeveloper": true,
 }
@@ -70,7 +72,7 @@ export default function AppMain(props) {
 
     return (
         <Fragment>
-        <AppHeader/>
+        <AppHeader userData={userData} />
         {isGatheringDataState && 
             <div className="loader-container">
                 <div className="loader-container-inner">
