@@ -2,7 +2,6 @@ import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import Hamburger from 'react-hamburgers';
 import AppMobileMenu from '../AppMobileMenu';
-import Typography from '@material-ui/core/Typography';
 import {
     setEnableClosedSidebar,
     setEnableMobileMenu,
