@@ -122,7 +122,11 @@ export default function AppMain(props) {
                                     </div>
                                 </div>
                             }>
-                                <Route path="/usersschedule" component={UsersSchedulePage}/>
+                                <Route path="/usersschedule" render={(props)=>
+                                    <UsersSchedulePage 
+                                        userData={userData}
+                                    />
+                                }/>
                             </Suspense>
 
                             {/* Message Users */}
@@ -136,7 +140,11 @@ export default function AppMain(props) {
                                     </div>
                                 </div>
                             }>
-                                <Route path="/messageusers" component={MessageUsersPage}/>
+                                <Route path="/messageusers" render={(props)=>
+                                    <MessageUsersPage 
+                                        userData={userData}
+                                    />
+                                }/>
                             </Suspense>
 
                             {/* Patient View Routes */}
@@ -169,7 +177,11 @@ export default function AppMain(props) {
                                     </div>
                                 </div>
                             }>
-                                <Route path="/contactdoctor" component={ContactDoctorPage}/>
+                                <Route path="/contactdoctor" render={(props)=>
+                                    <ContactDoctorPage 
+                                        userData={userData}
+                                    />
+                                }/>
                             </Suspense>
 
                             {/* Pills */}
@@ -183,7 +195,11 @@ export default function AppMain(props) {
                                     </div>
                                 </div>
                             }>
-                                <Route path="/pills" component={PillsPage}/>
+                                <Route path="/pills" render={(props)=>
+                                    <PillsPage 
+                                        userData={userData}
+                                    />
+                                }/>
                             </Suspense>
 
                             {/* Schedule */}
@@ -197,7 +213,11 @@ export default function AppMain(props) {
                                     </div>
                                 </div>
                             }>
-                                <Route path="/schedule" component={SchedulePage}/>
+                                <Route path="/schedule" render={(props)=>
+                                    <SchedulePage 
+                                        userData={userData}
+                                    />
+                                }/>
                             </Suspense>
 
                             {/* Sensor Page */}
@@ -211,7 +231,11 @@ export default function AppMain(props) {
                                     </div>
                                 </div>
                             }>
-                                <Route path="/sensors" component={SensorPage}/>
+                                <Route path="/sensors" render={(props)=>
+                                    <SensorPage 
+                                        userData={userData}
+                                    />
+                                }/>
                             </Suspense>
 
                             {/* Default Route */}
