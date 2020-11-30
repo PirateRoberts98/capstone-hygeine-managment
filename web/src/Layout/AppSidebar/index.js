@@ -17,8 +17,12 @@ class AppSidebar extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            userData: this.props.userData
+            userData: this.props.userData,
+            activeLinkId: 1,
+            isNavMenuItemClicked: false
         })
+
+        this.onMenuClick = this.onMenuClick.bind(this);
     }
 
     componentDidMount(){
@@ -38,6 +42,13 @@ class AppSidebar extends Component {
     toggleMobileSidebar = () => {
         let {enableMobileMenu, setEnableMobileMenu} = this.props;
         setEnableMobileMenu(!enableMobileMenu);
+    }
+
+    onMenuClick(linkId) {
+        this.setState({
+            activeLinkId: linkId,
+            isNavMenuItemClicked: !this.state.isNavMenuItemClicked
+        });
     }
 
     render() {
@@ -63,7 +74,12 @@ class AppSidebar extends Component {
                     <HeaderLogo/>
                     <PerfectScrollbar>
                         <div className="app-sidebar__inner">
-                            <Nav userData={this.state.userData} />
+                            {this.state.isNavMenuItemClicked && 
+                                <Nav userData={this.state.userData} onMenuClick={(linkId)=>this.onMenuClick(linkId)} activeLinkId={this.state.activeLinkId}/>
+                            }
+                            {!this.state.isNavMenuItemClicked && 
+                                <Nav userData={this.state.userData} onMenuClick={(linkId)=>this.onMenuClick(linkId)} activeLinkId={this.state.activeLinkId}/>
+                            }
                         </div>
                     </PerfectScrollbar>
                     <div

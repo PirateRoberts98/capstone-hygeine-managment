@@ -18,6 +18,8 @@ class Nav extends Component {
             isCaregiver: false,
             isPatient: false,
         }
+
+        this.onMenuClick = this.onMenuClick.bind(this);
     }
 
     componentDidMount() {
@@ -67,50 +69,58 @@ class Nav extends Component {
         }
     }
 
+    onMenuClick(linkId) {
+        this.setState({
+            activeLinkId: linkId
+        });
+        console.log("ChaningLinkIed");
+        console.log(this.props.activeLinkId);
+    }
+
     render() {
         return (
             <Fragment>
                 {/* Cargiver View */}
                 {this.state.isCaregiver &&
                 <div>
-                    <MetisMenu content={CheckUserAnalysisNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={SetUserScheduleNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={MessageUsersNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={CheckUserAnalysisNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={SetUserScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={MessageUsersNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                 </div>
                 }
                 {/* Patient View */}
                 {this.state.isPatient &&
                 <div>
-                    <MetisMenu content={MainNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={PillsNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={ScheduleNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={ContactDoctorNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={MainNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={PillsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={ScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={ContactDoctorNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                 </div>
                 }
                 {/* Developer View */}
                 {this.state.isDeveloper &&
                 <div>
                     <h5 className="app-sidebar__heading">Caregiver View</h5>
-                    <MetisMenu content={CheckUserAnalysisNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={SetUserScheduleNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={MessageUsersNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <div onClick={()=>this.props.onMenuClick(2)}><MetisMenu content={CheckUserAnalysisNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(3)}><MetisMenu content={SetUserScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(4)}><MetisMenu content={MessageUsersNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <h5 className="app-sidebar__heading">Patient View</h5>
-                    <MetisMenu content={MainNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={PillsNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={ScheduleNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={ContactDoctorNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <div onClick={()=>this.props.onMenuClick(1)}><MetisMenu content={MainNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(5)}><MetisMenu content={PillsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(6)}><MetisMenu content={ScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(7)}><MetisMenu content={ContactDoctorNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <h5 className="app-sidebar__heading">Developer View with Examples</h5>
-                    <MetisMenu content={SensorNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <div onClick={()=>this.props.onMenuClick(8)}><MetisMenu content={SensorNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <h5 className="app-sidebar__heading">Example Menu</h5>
-                    <MetisMenu content={ExampleMainNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={ExampleMainNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <h5 className="app-sidebar__heading">Example UI Components</h5>
-                    <MetisMenu content={ComponentsNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={ComponentsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <h5 className="app-sidebar__heading">Example Widgets</h5>
-                    <MetisMenu content={WidgetsNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={WidgetsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <h5 className="app-sidebar__heading">Example Forms</h5>
-                    <MetisMenu content={FormsNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={FormsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <h5 className="app-sidebar__heading">Example Charts</h5>
-                    <MetisMenu content={ChartsNav} activeLinkFromLocation className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={ChartsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                 </div>
                 }
             </Fragment>
