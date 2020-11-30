@@ -60,7 +60,7 @@ class Header extends React.Component {
                             <SearchBox/>
                         </div>
                         <div className="page-title-actions">
-                            <PatientDropDown/>
+                            <PatientDropDown isGatheringDataState={this.props.isGatheringDataState} />
                         </div>
                         <div className="app-header-right">
                             <UserBox fname={this.state.userData.fname} lname={this.state.userData.lname} doctor={this.state.userData.doctor} />

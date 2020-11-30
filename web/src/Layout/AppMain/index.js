@@ -74,7 +74,7 @@ export default function AppMain(props) {
 
     return (
         <Fragment>
-        <AppHeader userData={userData} />
+        <AppHeader userData={userData} isGatheringDataState={isGatheringDataState} />
         {isGatheringDataState && 
             <div className="loader-container">
                 <div className="loader-container-inner">

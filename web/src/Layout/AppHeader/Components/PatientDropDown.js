@@ -2,12 +2,9 @@ import React, {Component, Fragment} from 'react';
 
 import {
     UncontrolledDropdown, DropdownToggle, DropdownMenu, Nav, NavItem, NavLink,
-    Button,
-    UncontrolledTooltip
 } from 'reactstrap';
 
 import {
-    faStar,
     faBusinessTime
 
 } from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +17,27 @@ import {
 } from 'react-toastify';
 
 export default class PatientDropDown extends Component {
+    constructor(props) {
+        super(props);
+        this.setState({
+            patientArray: [],
+            navItemsArray: ['']
+        });
+
+    }
+
+    componentDidMount() {
+        let patientArray = ['Nikita', 'James','Mike','Robert','Alanna','Scott'];
+        let navItemsArray=[];
+        for(let patient in patientArray){
+            let navItem = <NavItem><NavLink><i className="nav-link-icon lnr-book"> </i><span>{patientArray[patient]}</span><div className="ml-auto badge badge-pill badge-danger">{Math.floor((Math.random() * 50) + 1)}</div></NavLink></NavItem>
+            navItemsArray.push(navItem);
+        }
+        this.setState({
+            navItemsArray: navItemsArray
+        })
+    }
+
     toggle(name) {
         this.setState({
             [name]: !this.state[name],
@@ -38,15 +56,6 @@ export default class PatientDropDown extends Component {
     render() {
         return (
             <Fragment>
-                {/*
-                <Button className="btn-shadow mr-3" onClick={this.notify22} color="dark"
-                        id="Tooltip-123">
-                    <FontAwesomeIcon icon={faStar}/>
-                </Button>
-                <UncontrolledTooltip placement="left" target={'Tooltip-123'}>
-                    Show a Toastify notification example!
-                </UncontrolledTooltip>
-                */}
                 <UncontrolledDropdown className="d-inline-block">
                     <DropdownToggle color="info" className="btn-shadow" caret>
                         <span className="btn-icon-wrapper pr-2 opacity-7">
@@ -56,33 +65,12 @@ export default class PatientDropDown extends Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                         <Nav vertical>
-                            <NavItem>
-                                <NavLink href="hello;">
-                                    <i className="nav-link-icon lnr-inbox"> </i>
-                                    <span>Inbox</span>
-                                    <div className="ml-auto badge badge-pill badge-secondary">86
-                                    </div>
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="hello;">
-                                    <i className="nav-link-icon lnr-book"> </i>
-                                    <span>Book</span>
-                                    <div className="ml-auto badge badge-pill badge-danger">5</div>
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="hello;">
-                                    <i className="nav-link-icon lnr-picture"> </i>
-                                    <span>Picture</span>
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink disabled href="hello;">
-                                    <i className="nav-link-icon lnr-file-empty"> </i>
-                                    <span>File Disabled</span>
-                                </NavLink>
-                            </NavItem>
+                            {this.props.isGatheringDataState &&
+                                <span>loading...</span>
+                            }
+                            {!this.props.isGatheringDataState &&
+                                this.state.navItemsArray
+                            }
                         </Nav>
                     </DropdownMenu>
                 </UncontrolledDropdown>
