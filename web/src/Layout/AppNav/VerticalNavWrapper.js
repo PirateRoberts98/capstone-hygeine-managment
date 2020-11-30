@@ -83,25 +83,25 @@ class Nav extends Component {
                 {/* Cargiver View */}
                 {this.state.isCaregiver &&
                 <div>
-                    <MetisMenu content={CheckUserAnalysisNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={SetUserScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={MessageUsersNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <div onClick={()=>this.props.onMenuClick(1)}><MetisMenu content={CheckUserAnalysisNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(3)}><MetisMenu content={SetUserScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(4)}><MetisMenu content={MessageUsersNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                 </div>
                 }
                 {/* Patient View */}
                 {this.state.isPatient &&
                 <div>
-                    <MetisMenu content={MainNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={PillsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={ScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
-                    <MetisMenu content={ContactDoctorNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <div onClick={()=>this.props.onMenuClick(1)}><MetisMenu content={MainNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(5)}><MetisMenu content={PillsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(6)}><MetisMenu content={ScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(7)}><MetisMenu content={ContactDoctorNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                 </div>
                 }
                 {/* Developer View */}
                 {this.state.isDeveloper &&
                 <div>
                     <h5 className="app-sidebar__heading">Caregiver View</h5>
-                    <div onClick={()=>this.props.onMenuClick(2)}><MetisMenu content={CheckUserAnalysisNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
+                    <div onClick={()=>this.props.onMenuClick(1)}><MetisMenu content={CheckUserAnalysisNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <div onClick={()=>this.props.onMenuClick(3)}><MetisMenu content={SetUserScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <div onClick={()=>this.props.onMenuClick(4)}><MetisMenu content={MessageUsersNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <h5 className="app-sidebar__heading">Patient View</h5>
