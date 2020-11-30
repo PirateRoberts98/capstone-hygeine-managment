@@ -109,9 +109,9 @@ class Nav extends Component {
                     <div onClick={()=>this.props.onMenuClick(5)}><MetisMenu content={PillsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <div onClick={()=>this.props.onMenuClick(6)}><MetisMenu content={ScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <div onClick={()=>this.props.onMenuClick(7)}><MetisMenu content={ContactDoctorNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
-                    <h5 className="app-sidebar__heading">Developer View with Examples</h5>
+                    <h5 className="app-sidebar__heading">Developer View</h5>
                     <div onClick={()=>this.props.onMenuClick(8)}><MetisMenu content={SensorNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
-                    <h5 className="app-sidebar__heading">Example Menu</h5>
+                    {/*<h5 className="app-sidebar__heading">Example Menu</h5>
                     <MetisMenu content={ExampleMainNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <h5 className="app-sidebar__heading">Example UI Components</h5>
                     <MetisMenu content={ComponentsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
@@ -120,7 +120,7 @@ class Nav extends Component {
                     <h5 className="app-sidebar__heading">Example Forms</h5>
                     <MetisMenu content={FormsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
                     <h5 className="app-sidebar__heading">Example Charts</h5>
-                    <MetisMenu content={ChartsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
+                    <MetisMenu content={ChartsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>*/}
                 </div>
                 }
             </Fragment>
