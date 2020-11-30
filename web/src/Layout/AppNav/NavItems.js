@@ -32,7 +32,7 @@ export const ScheduleNav = [
 ];
 export const CheckUserAnalysisNav = [
     {
-        id: 2,
+        id: 1,
         icon: 'pe-7s-rocket',
         label: 'Users Analysis',
         to: '#/usersanalysis',
