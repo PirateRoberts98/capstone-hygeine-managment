@@ -63,7 +63,7 @@ class Nav extends Component {
                 this.setState({
                     isCaregiver: this.props.userData.isCaregiver,
                     isDeveloper: this.props.userData.isDeveloper,
-                    isPatient: !this.props.userData.isCaregiver
+                    isPatient: this.props.userData.isPatient
                });
             }
         }
