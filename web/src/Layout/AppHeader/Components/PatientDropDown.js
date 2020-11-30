@@ -19,7 +19,7 @@ import {
     Slide
 } from 'react-toastify';
 
-export default class TitleComponent2 extends Component {
+export default class PatientDropDown extends Component {
     toggle(name) {
         this.setState({
             [name]: !this.state[name],

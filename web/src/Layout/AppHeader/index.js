@@ -9,7 +9,7 @@ import HeaderLogo from '../AppLogo';
 
 import SearchBox from './Components/SearchBox';
 import UserBox from './Components/UserBox';
-import TitleComponent2 from '../AppMain/PageTitle/Variation2';
+import PatientDropDown from './Components/PatientDropDown';
 
 class Header extends React.Component {
     constructor(props){
@@ -60,7 +60,7 @@ class Header extends React.Component {
                             <SearchBox/>
                         </div>
                         <div className="page-title-actions">
-                            <TitleComponent2/>
+                            <PatientDropDown/>
                         </div>
                         <div className="app-header-right">
                             <UserBox fname={this.state.userData.fname} lname={this.state.userData.lname} doctor={this.state.userData.doctor} />
