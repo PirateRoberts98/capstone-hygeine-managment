@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import {
     DropdownToggle, DropdownMenu,
     Nav, Button, NavItem, NavLink,
@@ -22,7 +22,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import avatar1 from '../../../assets/utils/images/avatars/2.jpg';
 
-import { Redirect } from 'react-router-dom';
 class UserBox extends React.Component {
     constructor(props) {
         super(props);
@@ -45,7 +44,7 @@ class UserBox extends React.Component {
     }
 
     handleLogout = () => {
-        return null;
+        this.props.setUserData('')
     }
 
     notify2 = () => this.toastId = toast("You don't have any new items in your calendar for today! Go out and play!", {
@@ -73,40 +72,19 @@ class UserBox extends React.Component {
                                     </DropdownToggle>
                                     <DropdownMenu right className="rm-pointers dropdown-menu-lg">
                                         <Nav vertical>
-                                            <NavItem className="nav-item-header">
-                                                Activity
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink href="hello">
-                                                    Chat
-                                                    <div className="ml-auto badge badge-pill badge-info">8</div>
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink href="hello">Recover Password</NavLink>
-                                            </NavItem>
-                                            <NavItem className="nav-item-header">
-                                                My Account
-                                            </NavItem>
                                             <NavItem>
                                                 <NavLink href="hello">
                                                     Settings
-                                                    <div className="ml-auto badge badge-success">New</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
                                                 <NavLink href="hello">
                                                     Messages
-                                                    <div className="ml-auto badge badge-warning">512</div>
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink href="hello">
-                                                    Logs
+                                                    <div className="ml-auto badge badge-warning">4</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem onClick={()=>this.handleLogout()}>
-                                                <NavLink href="#">
+                                                <NavLink href="/login">
                                                     Logout
                                                 </NavLink>
                                             </NavItem>

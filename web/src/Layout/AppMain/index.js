@@ -80,6 +80,7 @@ export default function AppMain(props) {
                 userData={userData} 
                 isGatheringDataState={isGatheringDataState} 
                 setSelectedPatient={setSelectedPatient}
+                setUserData={setUserData}
             />
             {isGatheringDataState && 
                 <div className="loader-container">

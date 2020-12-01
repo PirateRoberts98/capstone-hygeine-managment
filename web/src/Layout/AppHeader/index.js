@@ -77,7 +77,12 @@ class Header extends React.Component {
                             />
                         }
                         <div className="app-header-right">
-                            <UserBox fname={this.state.userData.fname} lname={this.state.userData.lname} doctor={this.state.userData.doctor} />
+                            <UserBox 
+                                fname={this.state.userData.fname} 
+                                lname={this.state.userData.lname} 
+                                doctor={this.state.userData.doctor} 
+                                setUserData={this.props.setUserData}
+                            />
                         </div>
                     </div>
                 </ReactCSSTransitionGroup>
