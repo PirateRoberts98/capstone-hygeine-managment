@@ -2,7 +2,7 @@ import  time
 import  random
 import  math
 
-class MockTempAndHumiditySensor:
+class TempAndHumiditySensor:
     humidityVal = 50
     tempVal = 21
     randCount = 0
@@ -86,7 +86,7 @@ class MockTempAndHumiditySensor:
     
     
 def main():
-    sensor = MockTempAndHumiditySensor(3)
+    sensor = TempAndHumiditySensor(3)
     try:
         while True:
             time.sleep(1)
