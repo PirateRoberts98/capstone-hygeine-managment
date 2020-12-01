@@ -70,13 +70,6 @@ class Header extends React.Component {
                                 />
                             </div>
                         }
-                        {/* This is to have a Caregiver Dropdown component later...*/}
-                        {this.state.userData.isPatient &&
-                            <PatientDropDown 
-                                isGatheringDataState={this.props.isGatheringDataState} 
-                                setSelectedPatient={this.props.setSelectedPatient}
-                            />
-                        }
                         {this.state.userData.isDeveloper &&
                             <PatientDropDown 
                                 isGatheringDataState={this.props.isGatheringDataState} 

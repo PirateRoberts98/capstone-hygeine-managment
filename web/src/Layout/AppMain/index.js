@@ -115,6 +115,7 @@ export default function AppMain(props) {
                                 <Route path="/usersanalysis" render={(props)=>
                                     <UsersAnalysisPage 
                                         userData={userData}
+                                        patientData={selectedPatient}
                                     />
                                 }/>
                             </Suspense>
@@ -133,6 +134,7 @@ export default function AppMain(props) {
                                 <Route path="/usersschedule" render={(props)=>
                                     <UsersSchedulePage 
                                         userData={userData}
+                                        patientData={selectedPatient}
                                     />
                                 }/>
                             </Suspense>
@@ -151,6 +153,7 @@ export default function AppMain(props) {
                                 <Route path="/messageusers" render={(props)=>
                                     <MessageUsersPage 
                                         userData={userData}
+                                        patientData={selectedPatient}
                                     />
                                 }/>
                             </Suspense>
