@@ -6,7 +6,8 @@ class MockPressureSensor:
     mode = 0
     randCount = 0
     randPeriod = 25
-    def __init__(self, mode, randPeriod):
+    def __init__(self,api_info, mode=3, randPeriod=1):
+        self.api_info = api_info
         self.mode = mode
         self.randPeriod = randPeriod
         self.read_from_sensor()

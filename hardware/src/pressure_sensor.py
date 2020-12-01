@@ -4,7 +4,8 @@ import RPi.GPIO as GPIO
 class PressureSensor:
     GPIO_PIN = 4
     underPressure = 0
-    def __init__(self):
+    def __init__(self,api_info):
+        self.api_info = api_info
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(PressureSensor.GPIO_PIN, GPIO.IN)
         self.underPressure = self.read_from_sensor()

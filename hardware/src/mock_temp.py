@@ -10,7 +10,9 @@ class MockTempAndHumiditySensor:
     transitionCount = 0
     transitionState = 0
     sinCount = 0
-    def __init__(self, mode):
+    def __init__(self,temp_api_info,hum_api_info, mode=0):
+        self.temp_api_info = temp_api_info
+        self.hum_api_info = hum_api_info
         self.mode = mode
         self.read_from_sensor()
     

@@ -7,14 +7,36 @@ import api
 
 import temp_humidity_sensor
 import pressure_sensor
-import config
 
 
+def pressure_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
+    logging.info("Running Sensor Data")
+    data = sensor.get_data()
+    api_queue.put({"sensor_info":sensor.api_info,"value":data})
+    if interpretor_queue != None:
+        for interpretor in interpretor_queue:
+            interpretor.put(data)
+    if config["stop"] == False: # Continue Thread if not stopped
+        threading.Timer(delay,next,args=[
+            next,delay,stop,sensor,api_queue,interpretor_queue]).start()
+    else:
+        logging.info("Stopping Pressure Thread")
+    return 
 
+def tempature_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
+    logging.info("Running Sensor Data")
+    threading.Timer(delay,next,args=[
+        next,delay,stop,sensor,api_queue,interpretor_queue]).start()
+    return 
 
+def humdity_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
+    logging.info("Running Sensor Data")
+    threading.Timer(delay,next,args=[
+        next,delay,stop,sensor,api_queue,interpretor_queue]).start()
+    return 
 
 # External Imports 
-import time , argparse , yaml ,logging , sys ,  pytz 
+import time , argparse , yaml ,logging , sys ,threading , queue
 from datetime import datetime
 
 
@@ -32,8 +54,17 @@ def init():
     config["base_url"]= args.base_url if args.base_url else config["base_url"]
     config["mock"] = True if args.mock else config["mock"] 
     config["offline"] = True if args.offline else config["offline"]
+    config["stop"] = False  
 
     # None ideal but allows mockable sensors to run without issues.
+
+
+
+
+def main():
+    '''
+
+    '''
     if config["mock"]:
         import mock_GPIO as GPIO # Warning: NOT FULL COVERAGE 
         import mock_pressure as pressure
@@ -46,60 +77,37 @@ def init():
         import pressure_sensor as pressure 
         import temp_humidity_sensor as tempature
 
-def cleanup():
-    # TODO Add GPIO Cleanup if necessary 
-    logging.info("Closing System")
-    return NotImplementedError
 
-
-def main():
-    '''
-
-    '''
-   user_info = api.User("John Doe") #TODO log user create to debug 
+    user_info = api.User("John Doe") #TODO log user create to debug 
     temp_sensor_info = api.Sensor("Temperature")  #TODO log user create to debug
     humidity_sensor_info = api.Sensor("Humidity")
     pressure_sensor_info = api.Sensor("Pressure")
-
-    web_api = api.WebAPI(base_url=base_url,offline=offline)
-    logging.info("TODO: This is a test") # TODO: Log info on Web API 
-    temp_humidity = temp_humidity_sensor.TempAndHumiditySensor()
-    pressure = pressure_sensor.PressureSensor()
+    web_api = api.WebAPI(user_info,base_url=config["base_url"],offline=config["offline"])
+    temp_humidity = tempature.TempAndHumiditySensor(temp_api_info=temp_sensor_info,hum_api_info=humidity_sensor_info)
+    pressure_sensor = pressure.PressureSensor(pressure_sensor_info)
+    api_queue = queue.Queue()
+    # TODO: Add Interpetors
+    pressure_sensor_thread(pressure_sensor_thread,6,config,pressure_sensor,api_queue,None)
+    tempature_sensor_thread(tempature_sensor_thread,6,config,temp_humidity,api_queue,None)
+    humdity_sensor_thread(humdity_sensor_thread,6,config,temp_humidity,api_queue,None)
+    #  start threading, apply queue
     try:
         while True:
-            time.sleep(3)
-            if mock:
-                logging.info("Logging a mock sensor output")
-                web_api.send_data(user_info,temp_sensor_info,'{{"timestamp":{},"value":{}}}'.format(
-                        datetime.now(pytz.timezone("Canada/Eastern")),420
-                    ))
-            else:
-                if temp_humidity.read_from_sensor():
-                    logging.debug("Tempature:{} , Humidity:{}".format(\
-                        temp_humidity.tempVal,temp_humidity.humidityVal))
-                    web_api.send_data(user_info,temp_sensor_info,"{{\"timestamp\":{},\"value\":{}}}".format(
-                        datetime.now(pytz.timezone("Canada/Eastern")),temp_humidity.tempVal
-                    ))
-                    web_api.send_data(user_info,humidity_sensor_info,"{{\"timestamp\":{},\"value\":{}}}".format(
-                        datetime.now(pytz.timezone("Canada/Eastern")),temp_humidity.humidityVal
-                    ))
-                else:
-                    logging.warning("Status Error, please ensure deivce is working correctly")
-
-                web_api.send_data(user_info,pressure_sensor_info,"{{\"timestamp\":{},\"value\":{}}}".format(
-                        datetime.now(pytz.timezone("Canada/Eastern")),pressure.read_from_sensor()
-                    ))
+            if api_queue.empty():
+                logging.warn("Queue is empty")
+            if api_queue.full():
+                logging.warn("Queue is full!")
+            #Stalls until value exists
+            q = api_queue.get()
+            web_api.send_data(q["sensor_info"],api.timestamp_data(q["value"]))
     except KeyboardInterrupt:
-        #Leave system as expected
-        pass
+        config["stop"]=True
+        pass #Leave system as expected
     finally:
         GPIO.cleanup()    
-    return NotImplementedError
     
-
 
 
 if __name__ == "__main__":
     init()
-    # main()
-    # cleanup()
+    main()

@@ -3,7 +3,16 @@ import requests
 import datetime
 import json
 import logging
+from datetime import datetime
+import pytz
 from requests.exceptions import Timeout
+
+
+def get_time():
+    return datetime.now(pytz.timezone("Canada/Eastern"))
+
+def timestamp_data(value):
+    return '{{"timestamp":{},"value":{}}}'.format(get_time(),value)
 
 #TODO: Add documentation and ensure API well defined 
 class User:
@@ -24,18 +33,19 @@ class Sensor:
 json_format = "{{\"user\":{},\"sensor\":{},\"data\":{}}}"
 
 class WebAPI:
-    def __init__(self,base_url="localhost:8080",offline=True):
+    def __init__(self,user_info,base_url="localhost:8080",offline=True):
         self.base_url = base_url
         self.offline = offline
+        self.user_info = user_info
 
 
-    def send_data(self, user ,sensor,data):
+    def send_data(self,sensor,data):
         if self.offline:
-            print("Sending Data => " + json_format.format(user.to_json(),sensor.to_json(),data))
+            print("Sending Data => " + json_format.format(self.user_info.to_json(),sensor.to_json(),data))
         else:
             try:
                 r2 = requests.post(self.base_url,
-                json= json_format.format(user.to_json(),sensor.to_json(),data),
+                json= json_format.format(self.user_info.to_json(),sensor.to_json(),data),
                 timeout=10)
                 logging.info("status code: {}".format(r2.status_code))
             except Timeout:
@@ -44,5 +54,5 @@ class WebAPI:
 
 
 if __name__ == "__main__":
-    offline_api = WebAPI(offline=True)
-    offline_api.send_data(User("Hello World"),Sensor("Test"),"{foobar:30}")
+    offline_api = WebAPI(User("Hello World"),offline=True)
+    offline_api.send_data(Sensor("Test"),"{foobar:30}")
