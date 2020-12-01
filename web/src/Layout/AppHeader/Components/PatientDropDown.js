@@ -16,6 +16,39 @@ import {
     Slide
 } from 'react-toastify';
 
+const defaultPatientData = [
+    {
+        "fname": "James",
+        "lname": "Lee",
+        "gender": "male"
+    },
+    {
+        "fname": "Scott",
+        "lname": "Fulton",
+        "gender": "male"
+    },
+    {
+        "fname": "Mike",
+        "lname": "Diep",
+        "gender": "male"
+    },
+    {
+        "fname": "Nikita",
+        "lname": "Bliumkin",
+        "gender": "male"
+    },
+    {
+        "fname": "Alanna",
+        "lname": "Doyle",
+        "gender": "female"
+    },
+    {
+        "fname": "Robert",
+        "lname": "Conrad",
+        "gender": "male"
+    }
+];
+
 export default class PatientDropDown extends Component {
     constructor(props) {
         super(props);
@@ -27,10 +60,10 @@ export default class PatientDropDown extends Component {
     }
 
     componentDidMount() {
-        let patientArray = ['Nikita', 'James','Mike','Robert','Alanna','Scott'];
+        let patientArray = defaultPatientData;
         let navItemsArray=[];
         for(let patient in patientArray){
-            let navItem = <NavItem onClick={()=>this.handleClick(patient)}><NavLink><i className="nav-link-icon lnr-book"> </i><span>{patientArray[patient]}</span><div className="ml-auto badge badge-pill badge-danger">{Math.floor((Math.random() * 50) + 1)}</div></NavLink></NavItem>
+            let navItem = <NavItem onClick={()=>this.handleClick(patient)}><NavLink><i className="nav-link-icon lnr-book"> </i><span>{patientArray[patient].fname} {patientArray[patient].lname}</span><div className="ml-auto badge badge-pill badge-danger">{Math.floor((Math.random() * 50) + 1)}</div></NavLink></NavItem>
             navItemsArray.push(navItem);
         }
         this.setState({

@@ -66,7 +66,7 @@ export default function UsersAnalysisPage(props) {
                 transitionLeave={false}>
                 <div>
                     <PageTitle
-                        heading={"Charts And Alerts for Patient - " + patientData}
+                        heading={"Charts And Alerts for Patient - " + patientData.fname + ' ' + patientData.lname}
                         subheading="Latest update on - xx/xx/xxxx."
                         icon="pe-7s-user icon-gradient bg-mean-fruit"
                     />

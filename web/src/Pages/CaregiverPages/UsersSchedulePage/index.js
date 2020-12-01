@@ -22,7 +22,7 @@ export default function UsersSchedulePage(props) {
                 transitionLeave={false}>
                 <div>
                     <PageTitle
-                        heading={"Patient Schedule - " + patientData}
+                        heading={"Patient Schedule - " + patientData.fname + ' ' + patientData.lname}
                         subheading="Last updated on xx/xx/xxxx"
                         icon="pe-7s-user icon-gradient bg-mean-fruit"
                     />

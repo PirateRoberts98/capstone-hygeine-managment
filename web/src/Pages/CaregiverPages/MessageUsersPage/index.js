@@ -80,7 +80,7 @@ export default function MessageUserPage(props) {
                 transitionLeave={false}>
                 <div>
                     <PageTitle
-                        heading={"Message Patient - " + patientData}
+                        heading={"Message Patient - " + patientData.fname + ' ' + patientData.lname}
                         subheading="Contact the patient below."
                         icon="pe-7s-user icon-gradient bg-mean-fruit"
                     />
