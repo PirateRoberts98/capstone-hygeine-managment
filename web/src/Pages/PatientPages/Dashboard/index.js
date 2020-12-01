@@ -1,9 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-// Layout
-import PageTitle from '../../../Layout/AppMain/PageTitle';
-
 //Charts
 import WaterUsageChart from './Charts/WaterUsageChart';
 
@@ -35,13 +32,6 @@ export default function MainDashboard(props) {
                 transitionAppearTimeout={0}
                 transitionEnter={false}
                 transitionLeave={false}>
-                <div>
-                    <PageTitle
-                        heading="Dashboard"
-                        subheading="Alerts and Recommended Actions"
-                        icon="pe-7s-user icon-gradient bg-mean-fruit"
-                    />
-                </div>
             <Typography variant="h2" gutterBottom>
                 Alerts
             </Typography>
