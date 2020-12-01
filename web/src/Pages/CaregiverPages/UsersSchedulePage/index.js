@@ -1,10 +1,15 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // Layout
 import PageTitle from '../../../Layout/AppMain/PageTitle';
 
-export default function UsersSchedulePage() {
+export default function UsersSchedulePage(props) {
+    const [patientData, setPatientData] = React.useState('');
+
+    useEffect(()=>{
+        setPatientData(props.patientData);
+    });
 
     return(
         <Fragment>
@@ -17,7 +22,7 @@ export default function UsersSchedulePage() {
                 transitionLeave={false}>
                 <div>
                     <PageTitle
-                        heading="Patient Schedule for xxxxxxxxxx"
+                        heading={"Patient Schedule - " + patientData}
                         subheading="Last updated on xx/xx/xxxx"
                         icon="pe-7s-user icon-gradient bg-mean-fruit"
                     />
