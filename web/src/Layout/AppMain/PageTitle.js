@@ -16,7 +16,7 @@ class PageTitle extends Component {
 
         return (
 
-            <div className="app-page-title">
+            <div className="app-page-title" style={{ position: "fixed", width: "100%", backgroundColor: "#E1DFDF"}}>
                 <div className="page-title-wrapper">
                     <div className="page-title-heading">
                         <div

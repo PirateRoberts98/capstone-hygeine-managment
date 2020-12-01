@@ -119,10 +119,12 @@ export default function AppMain(props) {
                                                 subheading="Latest update on - xx/xx/xxxx."
                                                 icon="pe-7s-user icon-gradient bg-mean-fruit"
                                             />
-                                            <UsersAnalysisPage 
-                                                userData={userData}
-                                                patientData={selectedPatient}
-                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <UsersAnalysisPage 
+                                                    userData={userData}
+                                                    patientData={selectedPatient}
+                                                />
+                                            </div>
                                         </div>
                                     }/>
                                 </Suspense>
@@ -145,10 +147,12 @@ export default function AppMain(props) {
                                                 subheading="Last updated on xx/xx/xxxx"
                                                 icon="pe-7s-user icon-gradient bg-mean-fruit"
                                             />
-                                            <UsersSchedulePage 
-                                                userData={userData}
-                                                patientData={selectedPatient}
-                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <UsersSchedulePage 
+                                                    userData={userData}
+                                                    patientData={selectedPatient}
+                                                />
+                                            </div>
                                         </div>
                                     }/>
                                 </Suspense>
@@ -171,10 +175,12 @@ export default function AppMain(props) {
                                                 subheading="Contact the patient below."
                                                 icon="pe-7s-user icon-gradient bg-mean-fruit"
                                             />
-                                            <MessageUsersPage 
-                                                userData={userData}
-                                                patientData={selectedPatient}
-                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <MessageUsersPage 
+                                                    userData={userData}
+                                                    patientData={selectedPatient}
+                                                />
+                                            </div>
                                         </div>
                                     }/>
                                 </Suspense>
@@ -192,9 +198,11 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/maindashboard" render={(props) =>
-                                        <MainDashboard 
-                                            userData={userData}
-                                        />
+                                        <div style={{ paddingTop: "102px" }}>
+                                            <MainDashboard 
+                                                userData={userData}
+                                            />
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -210,9 +218,11 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/contactdoctor" render={(props)=>
-                                        <ContactDoctorPage 
-                                            userData={userData}
-                                        />
+                                        <div style={{ paddingTop: "102px" }}>
+                                            <ContactDoctorPage 
+                                                userData={userData}
+                                            />
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -228,9 +238,11 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/pills" render={(props)=>
-                                        <PillsPage 
-                                            userData={userData}
-                                        />
+                                        <div style={{ paddingTop: "102px" }}>
+                                            <PillsPage 
+                                                userData={userData}
+                                            />
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -246,9 +258,11 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/schedule" render={(props)=>
-                                        <SchedulePage 
-                                            userData={userData}
-                                        />
+                                        <div style={{ paddingTop: "102px" }}>
+                                            <SchedulePage 
+                                                userData={userData}
+                                            />
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -264,9 +278,11 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/sensors" render={(props)=>
-                                        <SensorPage 
-                                            userData={userData}
-                                        />
+                                        <div style={{ paddingTop: "102px" }}>
+                                            <SensorPage 
+                                                userData={userData}
+                                            />
+                                        </div>
                                     }/>
                                 </Suspense>
 
