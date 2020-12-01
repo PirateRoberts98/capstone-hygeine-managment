@@ -10,10 +10,6 @@ import AppMain from '../../Layout/AppMain';
 // Pages
 import LoginMain from '../Login';
 
-// Firebase Imports
-//import * as firebase from "firebase/app";
-//require("firebase/auth");
-
 class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -21,27 +17,7 @@ class Main extends React.Component {
             closedSmallerSidebar: false,
             isLoggedIn: false,
             userIdNum: ""
-            /*firebaseConfig :{
-                apiKey: "AIzaSyB3pKW3ySHeWEI9bqrwwOLBXALrH1RBu4M",
-                authDomain: "ceg4912project.firebaseapp.com",
-                databaseURL: "https://ceg4912project.firebaseio.com",
-                projectId: "ceg4912project",
-                storageBucket: "ceg4912project.appspot.com",
-                messagingSenderId: "1065298873625",
-                appId: "1:1065298873625:web:72647a9fc8c16b94764988",
-                measurementId: "G-3FQY5ZVMNC"
-              },*/
         });
-        // Initialize Firebase
-        /*if(!firebase.apps.length) {
-            firebase.initializeApp(this.state.firebaseConfig);
-        }
-        // See if user is logged in.
-        if(firebase.auth().currentUser) {
-            this.setState({
-                isLoggedIn: true,
-            })
-        }*/
         this.handleLogin=this.handleLogin.bind(this);
         this.handleLoginDeveloper=this.handleLoginDeveloper.bind(this);
     } 

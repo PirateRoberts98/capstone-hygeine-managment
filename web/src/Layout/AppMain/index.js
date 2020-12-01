@@ -21,7 +21,8 @@ const PillsPage = lazy(() => import('../../Pages/PatientPages/Pills'));
 const SchedulePage = lazy(() => import('../../Pages/PatientPages/Schedule'));
 // Developer Views/Pages
 const SensorPage = lazy(() => import('../../Pages/DeveloperPages/Sensor'));
-
+// Settings Page
+const SettingsPage = lazy(() => import('../../Pages/SettingsPage'));
 
 // These are all examples.
 const Dashboards = lazy(() => import('../../ExamplePages/Dashboards'));
@@ -39,7 +40,7 @@ const exampleUserObject = {
     "userId": 0,
     "fname": "James",
     "lname": "Lee",
-    "bday": "whatUp",
+    "bday": "12/12/1997",
     "gender": "female",
     "doctor": "James Chui",
     "isPatient": false,
@@ -80,6 +81,7 @@ export default function AppMain(props) {
                 userData={userData} 
                 isGatheringDataState={isGatheringDataState} 
                 setSelectedPatient={setSelectedPatient}
+                setUserData={setUserData}
             />
             {isGatheringDataState && 
                 <div className="loader-container">
@@ -314,6 +316,33 @@ export default function AppMain(props) {
                                             />
                                             <div style={{ paddingTop: "102px" }}>
                                                 <SensorPage 
+                                                    userData={userData}
+                                                />
+                                            </div>
+                                        </div>
+                                    }/>
+                                </Suspense>
+
+                                {/* Settings Page */}
+                                <Suspense fallback={
+                                    <div className="loader-container">
+                                        <div className="loader-container-inner">
+                                            <h6 className="mt-5">
+                                                Please wait while we load...
+                                                <small>Please Wait...</small>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                }>
+                                    <Route path="/settingsPage" render={(props)=>
+                                        <div>
+                                            <PageTitle
+                                                heading="Settings Page"
+                                                subheading="User Information"
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <SettingsPage 
                                                     userData={userData}
                                                 />
                                             </div>
