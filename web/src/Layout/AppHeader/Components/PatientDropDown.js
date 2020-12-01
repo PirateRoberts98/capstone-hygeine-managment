@@ -30,12 +30,14 @@ export default class PatientDropDown extends Component {
         let patientArray = ['Nikita', 'James','Mike','Robert','Alanna','Scott'];
         let navItemsArray=[];
         for(let patient in patientArray){
-            let navItem = <NavItem><NavLink><i className="nav-link-icon lnr-book"> </i><span>{patientArray[patient]}</span><div className="ml-auto badge badge-pill badge-danger">{Math.floor((Math.random() * 50) + 1)}</div></NavLink></NavItem>
+            let navItem = <NavItem onClick={()=>this.handleClick(patient)}><NavLink><i className="nav-link-icon lnr-book"> </i><span>{patientArray[patient]}</span><div className="ml-auto badge badge-pill badge-danger">{Math.floor((Math.random() * 50) + 1)}</div></NavLink></NavItem>
             navItemsArray.push(navItem);
         }
         this.setState({
-            navItemsArray: navItemsArray
-        })
+            navItemsArray: navItemsArray,
+            patientArray: patientArray
+        });
+        this.props.setSelectedPatient(patientArray[0]); // Set the selectedPatient as the first item in the dropbox when app launches.
     }
 
     toggle(name) {
@@ -52,6 +54,11 @@ export default class PatientDropDown extends Component {
         position: 'bottom-center',
         type: 'success'
     });
+
+    handleClick(navItemId) {
+        let selectedPatient = this.state.patientArray[navItemId];
+        this.props.setSelectedPatient(selectedPatient); // Send Patient back to AppMain.
+    }
 
     render() {
         return (

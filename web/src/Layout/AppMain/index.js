@@ -49,6 +49,7 @@ const exampleUserObject = {
 export default function AppMain(props) {
     const [userData, setUserData] = React.useState(null);
     const [isGatheringDataState, setIsGatheringDataState] = React.useState(true);
+    const [selectedPatient, setSelectedPatient] = React.useState('');
 
     useEffect(()=>{
         // Fetch user information with userId.
@@ -74,7 +75,12 @@ export default function AppMain(props) {
 
     return (
         <Fragment>
-        <AppHeader userData={userData} isGatheringDataState={isGatheringDataState} />
+            {console.log(selectedPatient)}
+        <AppHeader 
+            userData={userData} 
+            isGatheringDataState={isGatheringDataState} 
+            setSelectedPatient={setSelectedPatient}
+        />
         {isGatheringDataState && 
             <div className="loader-container">
                 <div className="loader-container-inner">

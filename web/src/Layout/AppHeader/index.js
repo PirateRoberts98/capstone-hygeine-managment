@@ -18,7 +18,10 @@ class Header extends React.Component {
             userData: {
                 "fname": "Loading...",
                 "lname": "Loading...",
-                "doctor": "Loading..."
+                "doctor": "Loading...",
+                "isPatient": false,
+                "isDeveloper": false,
+                "isCaregiver": false
             }
         });
     }
@@ -59,9 +62,27 @@ class Header extends React.Component {
                         <div className="app-header-left">
                             <SearchBox/>
                         </div>
-                        <div className="page-title-actions">
-                            <PatientDropDown isGatheringDataState={this.props.isGatheringDataState} />
-                        </div>
+                        {this.state.userData.isCaregiver &&
+                            <div className="page-title-actions">
+                                <PatientDropDown 
+                                    isGatheringDataState={this.props.isGatheringDataState} 
+                                    setSelectedPatient={this.props.setSelectedPatient}
+                                />
+                            </div>
+                        }
+                        {/* This is to have a Caregiver Dropdown component later...*/}
+                        {this.state.userData.isPatient &&
+                            <PatientDropDown 
+                                isGatheringDataState={this.props.isGatheringDataState} 
+                                setSelectedPatient={this.props.setSelectedPatient}
+                            />
+                        }
+                        {this.state.userData.isDeveloper &&
+                            <PatientDropDown 
+                                isGatheringDataState={this.props.isGatheringDataState} 
+                                setSelectedPatient={this.props.setSelectedPatient}
+                            />
+                        }
                         <div className="app-header-right">
                             <UserBox fname={this.state.userData.fname} lname={this.state.userData.lname} doctor={this.state.userData.doctor} />
                         </div>
