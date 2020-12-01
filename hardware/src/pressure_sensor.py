@@ -28,7 +28,7 @@ class PressureSensor:
         return self.underPressure
 
 def main():
-    sensor = PressureSensor()
+    sensor = PressureSensor(None)
     try:
         while True:
             data = sensor.read_from_sensor()
@@ -37,7 +37,7 @@ def main():
             else:
                 print("Not Under Pressure")
             time.sleep(0.3)
-    except KeyboardINterrupt:
+    except KeyboardInterrupt:
         pass
     finally:
         GPIO.cleanup()    

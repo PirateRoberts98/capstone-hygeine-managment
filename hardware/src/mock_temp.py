@@ -86,14 +86,14 @@ class TempAndHumiditySensor:
     
     
 def main():
-    sensor = TempAndHumiditySensor(3)
+    sensor = TempAndHumiditySensor(None,None,mode=3)
     try:
         while True:
             time.sleep(1)
-            status = sensor.read_from_sensor()
+            sensor.read_from_sensor()
             print(sensor.tempVal)
             print(sensor.humidityVal)
-    except KeyboardINterrupt:
+    except KeyboardInterrupt:
         pass 
 
 if __name__ == "__main__":

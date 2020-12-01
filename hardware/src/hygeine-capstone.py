@@ -8,10 +8,17 @@ import api
 import temp_humidity_sensor
 import pressure_sensor
 
+# External Imports 
+import time , argparse , yaml ,logging , sys ,threading , queue
+from datetime import datetime
+
+config = None
+
+
 
 def pressure_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
     logging.info("Running Sensor Data")
-    data = sensor.get_data()
+    data = sensor.read_from_sensor()
     api_queue.put({"sensor_info":sensor.api_info,"value":data})
     if interpretor_queue != None:
         for interpretor in interpretor_queue:
@@ -23,24 +30,21 @@ def pressure_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
         logging.info("Stopping Pressure Thread")
     return 
 
-def tempature_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
+def tempature_humdity_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
     logging.info("Running Sensor Data")
-    threading.Timer(delay,next,args=[
-        next,delay,stop,sensor,api_queue,interpretor_queue]).start()
+    data = sensor.read_from_sensor()
+    api_queue.put({"sensor_info":sensor.temp_api_info,"value":sensor.tempVal})
+    api_queue.put({"sensor_info":sensor.hum_api_info,"value":sensor.humidityVal})
+    if interpretor_queue != None:
+        for interpretor in interpretor_queue:
+            interpretor.put(data)
+    if config["stop"] == False: # Continue Thread if not stopped
+        threading.Timer(delay,next,args=[
+            next,delay,stop,sensor,api_queue,interpretor_queue]).start()
+    else:
+        logging.info("Stopping Temp Humidity Thread")
     return 
 
-def humdity_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
-    logging.info("Running Sensor Data")
-    threading.Timer(delay,next,args=[
-        next,delay,stop,sensor,api_queue,interpretor_queue]).start()
-    return 
-
-# External Imports 
-import time , argparse , yaml ,logging , sys ,threading , queue
-from datetime import datetime
-
-
-config = None
 
 def init():
     '''
@@ -88,8 +92,7 @@ def main():
     api_queue = queue.Queue()
     # TODO: Add Interpetors
     pressure_sensor_thread(pressure_sensor_thread,6,config,pressure_sensor,api_queue,None)
-    tempature_sensor_thread(tempature_sensor_thread,6,config,temp_humidity,api_queue,None)
-    humdity_sensor_thread(humdity_sensor_thread,6,config,temp_humidity,api_queue,None)
+    tempature_humdity_sensor_thread(tempature_humdity_sensor_thread,6,config,temp_humidity,api_queue,None)
     #  start threading, apply queue
     try:
         while True:

@@ -64,7 +64,7 @@ class TempAndHumiditySensor:
 
 
 def main():
-    sensor = TempAndHumiditySensor()
+    sensor = TempAndHumiditySensor(None,None)
     try:
         while True:
             time.sleep(3)
@@ -74,7 +74,7 @@ def main():
                 print(sensor.tempVal)
             else:
                 pass
-    except KeyboardINterrupt:
+    except KeyboardInterrupt:
         pass
     finally:
         GPIO.cleanup()    
