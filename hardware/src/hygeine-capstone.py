@@ -5,8 +5,6 @@ import configuration as cf
 #Local Imports
 import api
 
-import temp_humidity_sensor
-import pressure_sensor
 
 # External Imports 
 import time , argparse , yaml ,logging , sys ,threading , queue
