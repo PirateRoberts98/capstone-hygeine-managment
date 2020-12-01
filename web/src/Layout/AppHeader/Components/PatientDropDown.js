@@ -101,7 +101,7 @@ export default class PatientDropDown extends Component {
 
     handleToggleClick() {
         this.setState({
-            isDropDownOpen: true
+            isDropDownOpen: !this.state.isDropDownOpen
         });
     }
     render() {
