@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 
 import {
-    UncontrolledDropdown, DropdownToggle, DropdownMenu, Nav, NavItem, NavLink,
+    DropdownToggle, DropdownMenu, Nav, NavItem, NavLink, UncontrolledDropdown
 } from 'reactstrap';
 
 import {
@@ -99,11 +99,16 @@ export default class PatientDropDown extends Component {
         });
     }
 
+    handleToggleClick() {
+        this.setState({
+            isDropDownOpen: true
+        });
+    }
     render() {
         return (
             <Fragment>
-                <UncontrolledDropdown className="d-inline-block">
-                    <DropdownToggle isOpen={this.state.isDropDownOpen} color="info" className="btn-shadow" caret>
+                <UncontrolledDropdown isOpen={this.state.isDropDownOpen} className="d-inline-block">
+                    <DropdownToggle onClick={()=>this.handleToggleClick()} color="info" className="btn-shadow" caret>
                         <span className="btn-icon-wrapper pr-2 opacity-7">
                             <FontAwesomeIcon icon={faBusinessTime}/>
                         </span>
