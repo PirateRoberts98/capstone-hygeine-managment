@@ -124,7 +124,7 @@ class UserBox extends React.Component {
                                     <DropdownMenu right className="rm-pointers dropdown-menu-lg">
                                         <Nav vertical>
                                             <NavItem>
-                                                <NavLink href="hello">
+                                                <NavLink href="/login#/settingsPage">
                                                     Settings
                                                 </NavLink>
                                             </NavItem>
