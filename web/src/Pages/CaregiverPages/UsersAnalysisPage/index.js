@@ -21,7 +21,7 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function ContactDoctor(props) {
+export default function UsersAnalysisPage(props) {
     const [openPollSnackBar, setPollSnackBarOpen] = React.useState(false);
     const [pollSnackBarLabel, setPollSnackBarLabel] = React.useState();
     const [userData, setUserData] = React.useState(props.userData);
