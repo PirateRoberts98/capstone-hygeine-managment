@@ -1,10 +1,8 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // Layout
 import PageTitle from '../../../Layout/AppMain/PageTitle';
-import AppHeader from '../../../Layout/AppHeader';
-import AppSidebar from '../../../Layout/AppSidebar';
 
 // Material UI Components
 import Typography from '@material-ui/core/Typography';
@@ -23,11 +21,16 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function MessageUser() {
+export default function MessageUserPage(props) {
     const [messageFormContent, setMessageFormContent] = React.useState('');
     const [snackbarMessage, setSnackbarMessage] = React.useState('');
     const [snackbarSeverity, setSnackbarSeverity] = React.useState('info');
     const [isSnackbarOpen, setSnackbarView] = React.useState(false);
+    const [patientData, setPatientData] = React.useState('');
+
+    useEffect(()=>{
+        setPatientData(props.patientData);
+    });
 
     const onMessageFormChange = (event) => {
         setMessageFormContent(event.target.value);
@@ -77,13 +80,13 @@ export default function MessageUser() {
                 transitionLeave={false}>
                 <div>
                     <PageTitle
-                        heading="Message Patient - xxxxxxxxxx"
+                        heading={"Message Patient - " + patientData.fname + ' ' + patientData.lname}
                         subheading="Contact the patient below."
                         icon="pe-7s-user icon-gradient bg-mean-fruit"
                     />
                 </div>
                 <Typography variant="h2" gutterBottom>
-                    Contact Patient - xxxx
+                    Contact Patient
                 </Typography>
                 <form>
                     <div style={{ marginBottom:'15px' }}>

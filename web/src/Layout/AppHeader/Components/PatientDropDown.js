@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 
 import {
-    UncontrolledDropdown, DropdownToggle, DropdownMenu, Nav, NavItem, NavLink,
+    DropdownToggle, DropdownMenu, Nav, NavItem, NavLink, UncontrolledDropdown
 } from 'reactstrap';
 
 import {
@@ -16,32 +16,70 @@ import {
     Slide
 } from 'react-toastify';
 
+const defaultPatientData = [
+    {
+        "fname": "James",
+        "lname": "Lee",
+        "gender": "male"
+    },
+    {
+        "fname": "Scott",
+        "lname": "Fulton",
+        "gender": "male"
+    },
+    {
+        "fname": "Mike",
+        "lname": "Diep",
+        "gender": "male"
+    },
+    {
+        "fname": "Nikita",
+        "lname": "Bliumkin",
+        "gender": "male"
+    },
+    {
+        "fname": "Alanna",
+        "lname": "Doyle",
+        "gender": "female"
+    },
+    {
+        "fname": "Robert",
+        "lname": "Conrad",
+        "gender": "male"
+    }
+];
+
 export default class PatientDropDown extends Component {
     constructor(props) {
         super(props);
-        this.setState({
+        this.state = ({
             patientArray: [],
-            navItemsArray: ['']
+            navItemsArray: [''],
+            isDropDownOpen: false
         });
 
     }
 
     componentDidMount() {
-        let patientArray = ['Nikita', 'James','Mike','Robert','Alanna','Scott'];
+        let patientArray = defaultPatientData;
         let navItemsArray=[];
         for(let patient in patientArray){
-            let navItem = <NavItem><NavLink><i className="nav-link-icon lnr-book"> </i><span>{patientArray[patient]}</span><div className="ml-auto badge badge-pill badge-danger">{Math.floor((Math.random() * 50) + 1)}</div></NavLink></NavItem>
+            let navItem = <NavItem onClick={()=>this.handleClick(patient)}><NavLink><i className="nav-link-icon lnr-book"> </i><span>{patientArray[patient].fname} {patientArray[patient].lname}</span><div className="ml-auto badge badge-pill badge-danger">{Math.floor((Math.random() * 50) + 1)}</div></NavLink></NavItem>
             navItemsArray.push(navItem);
         }
         this.setState({
-            navItemsArray: navItemsArray
-        })
+            navItemsArray: navItemsArray,
+            patientArray: patientArray
+
+        });
+        this.props.setSelectedPatient(patientArray[0]); // Set the selectedPatient as the first item in the dropbox when app launches.
     }
 
     toggle(name) {
         this.setState({
             [name]: !this.state[name],
             progress: 0.5,
+            isDropDownOpen: true
         })
     }
 
@@ -53,11 +91,24 @@ export default class PatientDropDown extends Component {
         type: 'success'
     });
 
+    handleClick(navItemId) {
+        let selectedPatient = this.state.patientArray[navItemId];
+        this.props.setSelectedPatient(selectedPatient); // Send Patient back to AppMain.
+        this.setState({
+            isDropDownOpen: false
+        });
+    }
+
+    handleToggleClick() {
+        this.setState({
+            isDropDownOpen: !this.state.isDropDownOpen
+        });
+    }
     render() {
         return (
             <Fragment>
-                <UncontrolledDropdown className="d-inline-block">
-                    <DropdownToggle color="info" className="btn-shadow" caret>
+                <UncontrolledDropdown isOpen={this.state.isDropDownOpen} className="d-inline-block">
+                    <DropdownToggle onClick={()=>this.handleToggleClick()} color="info" className="btn-shadow" caret>
                         <span className="btn-icon-wrapper pr-2 opacity-7">
                             <FontAwesomeIcon icon={faBusinessTime}/>
                         </span>

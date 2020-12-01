@@ -1,12 +1,10 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 // Other Components
 import Alerts from '../../../components/Alert';
 
 // Layout
 import PageTitle from '../../../Layout/AppMain/PageTitle';
-import AppHeader from '../../../Layout/AppHeader';
-import AppSidebar from '../../../Layout/AppSidebar';
 
 // Charts
 import SensorHumidityChart from './Charts/SensorHumidity';
@@ -23,10 +21,15 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function ContactDoctor(props) {
+export default function UsersAnalysisPage(props) {
     const [openPollSnackBar, setPollSnackBarOpen] = React.useState(false);
     const [pollSnackBarLabel, setPollSnackBarLabel] = React.useState();
     const [userData, setUserData] = React.useState(props.userData);
+    const [patientData, setPatientData] = React.useState('');
+
+    useEffect(()=>{
+        setPatientData(props.patientData);
+    });
 
     const sensorPollRateControl = (buttonControlName) => {
         switch (buttonControlName) {
@@ -63,7 +66,7 @@ export default function ContactDoctor(props) {
                 transitionLeave={false}>
                 <div>
                     <PageTitle
-                        heading="Charts And Alerts for patient - xxxxxxxxx"
+                        heading={"Charts And Alerts for Patient - " + patientData.fname + ' ' + patientData.lname}
                         subheading="Latest update on - xx/xx/xxxx."
                         icon="pe-7s-user icon-gradient bg-mean-fruit"
                     />
