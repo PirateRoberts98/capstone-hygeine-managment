@@ -40,7 +40,7 @@ const exampleUserObject = {
     "userId": 0,
     "fname": "James",
     "lname": "Lee",
-    "bday": "whatUp",
+    "bday": "12/12/1997",
     "gender": "female",
     "doctor": "James Chui",
     "isPatient": false,
