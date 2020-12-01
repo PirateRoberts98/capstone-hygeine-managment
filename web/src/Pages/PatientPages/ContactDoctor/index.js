@@ -70,13 +70,6 @@ const [messageFormContent, setMessageFormContent] = React.useState('');
             transitionAppearTimeout={0}
             transitionEnter={false}
             transitionLeave={false}>
-            <div>
-                <PageTitle
-                    heading="Contact Caregiver"
-                    subheading="Contact your caregiver or your doctor below."
-                    icon="pe-7s-user icon-gradient bg-mean-fruit"
-                />
-            </div>
             <Typography variant="h2" gutterBottom>
                 Contact Caregiver
             </Typography>

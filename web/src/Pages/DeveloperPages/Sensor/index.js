@@ -30,13 +30,6 @@ const SensorPage = ({match}) => (
             transitionAppearTimeout={0}
             transitionEnter={false}
             transitionLeave={false}>
-            <div>
-                <PageTitle
-                    heading="Sensors and Alerts"
-                    subheading="This dashboard shows all the sensors, temperature and pressure, in additon to alerts."
-                    icon="pe-7s-user icon-gradient bg-mean-fruit"
-                />
-            </div>
             <Row form>
                 <Col md={6}>
                     <Card className="main-card mb-3">
