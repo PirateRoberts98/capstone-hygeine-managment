@@ -7,6 +7,7 @@ import {
 
 import AppHeader from '../AppHeader';
 import AppSidebar from '../AppSidebar';
+import PageTitle from './PageTitle';
 
 // These will be used for the Health Monitoring System.
 // Caregiver Views/Pages
@@ -112,10 +113,17 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/usersanalysis" render={(props)=>
-                                        <UsersAnalysisPage 
-                                            userData={userData}
-                                            patientData={selectedPatient}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading={"Charts And Alerts for Patient - " + selectedPatient.fname + ' ' + selectedPatient.lname}
+                                                subheading="Latest update on - xx/xx/xxxx."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <UsersAnalysisPage 
+                                                userData={userData}
+                                                patientData={selectedPatient}
+                                            />
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -131,10 +139,17 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/usersschedule" render={(props)=>
-                                        <UsersSchedulePage 
-                                            userData={userData}
-                                            patientData={selectedPatient}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading={"Patient Schedule - " + selectedPatient.fname + ' ' + selectedPatient.lname}
+                                                subheading="Last updated on xx/xx/xxxx"
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <UsersSchedulePage 
+                                                userData={userData}
+                                                patientData={selectedPatient}
+                                            />
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -150,10 +165,17 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/messageusers" render={(props)=>
-                                        <MessageUsersPage 
-                                            userData={userData}
-                                            patientData={selectedPatient}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading={"Message Patient - " + selectedPatient.fname + ' ' + selectedPatient.lname}
+                                                subheading="Contact the patient below."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <MessageUsersPage 
+                                                userData={userData}
+                                                patientData={selectedPatient}
+                                            />
+                                        </div>
                                     }/>
                                 </Suspense>
 
