@@ -44,7 +44,7 @@ class UserBox extends React.Component {
     }
 
     handleLogout = () => {
-        this.props.setUserData('')
+        this.props.setUserData('');
     }
 
     notify2 = () => this.toastId = toast("You don't have any new items in your calendar for today! Go out and play!", {
