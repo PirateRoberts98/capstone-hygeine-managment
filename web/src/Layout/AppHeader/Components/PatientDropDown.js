@@ -52,9 +52,10 @@ const defaultPatientData = [
 export default class PatientDropDown extends Component {
     constructor(props) {
         super(props);
-        this.setState({
+        this.state = ({
             patientArray: [],
-            navItemsArray: ['']
+            navItemsArray: [''],
+            isDropDownOpen: false
         });
 
     }
@@ -69,6 +70,7 @@ export default class PatientDropDown extends Component {
         this.setState({
             navItemsArray: navItemsArray,
             patientArray: patientArray
+
         });
         this.props.setSelectedPatient(patientArray[0]); // Set the selectedPatient as the first item in the dropbox when app launches.
     }
@@ -77,6 +79,7 @@ export default class PatientDropDown extends Component {
         this.setState({
             [name]: !this.state[name],
             progress: 0.5,
+            isDropDownOpen: true
         })
     }
 
@@ -91,13 +94,16 @@ export default class PatientDropDown extends Component {
     handleClick(navItemId) {
         let selectedPatient = this.state.patientArray[navItemId];
         this.props.setSelectedPatient(selectedPatient); // Send Patient back to AppMain.
+        this.setState({
+            isDropDownOpen: false
+        });
     }
 
     render() {
         return (
             <Fragment>
                 <UncontrolledDropdown className="d-inline-block">
-                    <DropdownToggle color="info" className="btn-shadow" caret>
+                    <DropdownToggle isOpen={this.state.isDropDownOpen} color="info" className="btn-shadow" caret>
                         <span className="btn-icon-wrapper pr-2 opacity-7">
                             <FontAwesomeIcon icon={faBusinessTime}/>
                         </span>
