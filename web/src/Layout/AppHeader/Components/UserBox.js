@@ -29,7 +29,15 @@ class UserBox extends React.Component {
             active: true,
             fname: 'Loading...',
             lname: '',
-            doctor: 'Loading...'
+            doctor: 'Loading...',
+            userData: {
+                "fname": "Loading...",
+                "lname": "Loading...",
+                "doctor": "Loading...",
+                "isPatient": false,
+                "isDeveloper": false,
+                "isCaregiver": false
+            }
         };
     }
 
@@ -38,7 +46,8 @@ class UserBox extends React.Component {
             this.setState({
                 fname: this.props.fname,
                 lname: this.props.lname,
-                doctor: this.props.doctor
+                doctor: this.props.doctor,
+                userData: this.props.userData
             });
         }
     }
@@ -78,10 +87,24 @@ class UserBox extends React.Component {
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="hello">
-                                                    Messages
-                                                    <div className="ml-auto badge badge-warning">4</div>
-                                                </NavLink>
+                                                {this.state.userData.isCaregiver && 
+                                                    <NavLink href="/login#/messageusers">
+                                                        Message User
+                                                    <div className="ml-auto badge badge-warning">5</div>
+                                                    </NavLink>
+                                                }
+                                                {this.state.userData.isPatient && 
+                                                    <NavLink href="/login#/contactdoctor">
+                                                        Message Caregiver
+                                                    <div className="ml-auto badge badge-warning">1</div>
+                                                    </NavLink>
+                                                }
+                                                {this.state.userData.isDeveloper && 
+                                                    <NavLink href="/login#/messageusers">
+                                                        Message User
+                                                    <div className="ml-auto badge badge-warning">2</div>
+                                                    </NavLink>
+                                                }
                                             </NavItem>
                                             <NavItem onClick={()=>this.handleLogout()}>
                                                 <NavLink href="/login">
