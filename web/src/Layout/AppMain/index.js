@@ -306,10 +306,17 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/sensors" render={(props)=>
-                                        <div style={{ paddingTop: "102px" }}>
-                                            <SensorPage 
-                                                userData={userData}
+                                        <div>
+                                            <PageTitle
+                                                heading="Sensors and Alerts"
+                                                subheading="This dashboard shows all the sensors, temperature and pressure, in additon to alerts."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
                                             />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <SensorPage 
+                                                    userData={userData}
+                                                />
+                                            </div>
                                         </div>
                                     }/>
                                 </Suspense>
