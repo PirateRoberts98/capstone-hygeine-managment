@@ -20,7 +20,11 @@ import {
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import avatar1 from '../../../assets/utils/images/avatars/2.jpg';
+import avatar1 from '../../../assets/utils/images/avatars/1.jpg';
+import avatar2 from '../../../assets/utils/images/avatars/2.jpg';
+import avatar3 from '../../../assets/utils/images/avatars/3.jpg';
+import avatar4 from '../../../assets/utils/images/avatars/4.jpg';
+import avatar5 from '../../../assets/utils/images/avatars/8.jpg';
 
 class UserBox extends React.Component {
     constructor(props) {
@@ -30,6 +34,7 @@ class UserBox extends React.Component {
             fname: 'Loading...',
             lname: '',
             doctor: 'Loading...',
+            userImage: avatar1,
             userData: {
                 "fname": "Loading...",
                 "lname": "Loading...",
@@ -49,6 +54,43 @@ class UserBox extends React.Component {
                 doctor: this.props.doctor,
                 userData: this.props.userData
             });
+            switch (this.props.userData.fname) {
+                case "Alanna":
+                    this.setState({
+                        userImage: avatar1
+                    });
+                break;
+                case "Scott":
+                    this.setState({
+                        userImage: avatar2
+                    });
+                break;
+                case "James":
+                    this.setState({
+                        userImage: avatar3
+                    });
+                break;
+                case "Mike":
+                    this.setState({
+                        userImage: avatar4
+                    });
+                break;
+                case "Nikita":
+                    this.setState({
+                        userImage: avatar5
+                    });
+                break;
+                case "Robert":
+                    this.setState({
+                        userImage: avatar6
+                    });
+                break;
+                default:
+                    this.setState({
+                        userImage: avatar1
+                    });
+                break;
+            }
         }
     }
 
@@ -76,7 +118,7 @@ class UserBox extends React.Component {
                             <div className="widget-content-left">
                                 <UncontrolledButtonDropdown>
                                     <DropdownToggle color="link" className="p-0">
-                                        <img width={42} className="rounded-circle" src={avatar1} alt=""/>
+                                        <img width={42} className="rounded-circle" src={this.state.userImage} alt=""/>
                                         <FontAwesomeIcon className="ml-2 opacity-8" icon={faAngleDown}/>
                                     </DropdownToggle>
                                     <DropdownMenu right className="rm-pointers dropdown-menu-lg">
