@@ -23,7 +23,7 @@ class MessagesComponent extends React.Component {
 
     retrieveMessages = () => {
         var tht = this;
-        var request = new Request(awsConnection.awsEC2Connection+'/api/getMessages/1', {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getMessages/'+this.props.userId, {
             method: 'GET',
         });
         fetch(request).then(function(response) {
