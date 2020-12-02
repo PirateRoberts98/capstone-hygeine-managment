@@ -36,7 +36,7 @@ export default function MainDashboard(props) {
             <Typography variant="h2" gutterBottom>
                 Messages
             </Typography>
-            <MessagesComponent userId={userData.userId} />
+            <MessagesComponent userId={userData.userId} userData={userData}/>
             <Typography variant="h2" gutterBottom>
                 Charts
             </Typography>
