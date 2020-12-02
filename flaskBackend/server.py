@@ -36,6 +36,7 @@ def register():
         bday = request.get_json()['bday']
         gender = request.get_json()['gender']
         doctor = request.get_json()['doctor']
+        doctorId = request.get_json()['doctorId']
         isCaregiver = request.get_json()['isCaregiver']
         isPatient = request.get_json()['isPatient']
         isDeveloper = request.get_json()['isDeveloper']
@@ -43,8 +44,8 @@ def register():
         password = bcrypt.generate_password_hash(request.get_json()['password1']).decode('utf-8') #encrypted
 
         cur = conn.cursor()
-        cur.execute("INSERT INTO Users(fname, lname, bday, gender, doctor, iscaregiver, ispatient, isdeveloper, email, pw) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-         (fname, lname, bday, gender, doctor, isCaregiver, isPatient, isDeveloper, email, password))
+        cur.execute("INSERT INTO Users(fname, lname, bday, gender, doctor, doctorId, iscaregiver, ispatient, isdeveloper, email, pw) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+         (fname, lname, bday, gender, doctor, doctorId, isCaregiver, isPatient, isDeveloper, email, password))
 
         cur.execute("SELECT userid FROM users ORDER BY userid DESC LIMIT 1")
         row = cur.fetchone()
@@ -135,6 +136,33 @@ def insertSensorData():
 
         cur.close()
         return {"value": True}
+
+    except:
+        raise Exception('ERROR POST SensorData')
+
+#get sensor data api
+@app.route("/api/getCaregivers", methods=['GET'])
+def getCaregivers():
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM users WHERE iscaregiver = true ")
+
+        rows = cur.fetchall()
+
+        cur.close()
+
+        output = [] #new array to store our formatted data
+        if rows:
+            for i in range(len(rows)):
+                output.append({
+                    "caregiverId": rows[i][0],
+                    "caregiverfName": rows[i][1],
+                    "caregiverlName": rows[i][2]
+                });
+
+        response = jsonify(output)
+
+        return response
 
     except:
         raise Exception('ERROR POST SensorData')

@@ -80,20 +80,57 @@ class SignUp extends React.Component {
             selectedGender: "",
             selectedDate: new Date(),
             selectedCaregiver: "",
+            selectedCaregiverId: "",
             selectedRole: "",
+            caregiverOptions: [],
+        });
+
+        this.handleCaregiverChange = this.handleCaregiverChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.retrieveCaregivers()
+    }
+
+    retrieveCaregivers() {
+        var tht = this;
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getCaregivers', {
+            method: 'GET',
+        });
+        fetch(request).then(function(response) {
+            response.json()
+                .then(function(data){
+                    if(data){
+                        // Format into JSX
+                        let msgArray = [];
+                        data.map((item,index) => {
+                            let msg = <MenuItem key={item.caregiverId} value={item.caregiverfName + " " + item.caregiverlName}>{item.caregiverfName + " " + item.caregiverlName}</MenuItem>;
+                            msgArray.push(msg);
+                        });
+
+                        return msgArray;
+                    }
+                })
+                .then((msgArray)=>{
+                    tht.setState({
+                        caregiverOptions: msgArray
+                    });
+                })
+                .catch(function(err){
+                    console.log(err)
+                });
         });
     }
 
     handleSignUpBackend = (email,password1,fname,lname) => {
         var that = this;
-        console.log(this.state.selectedRole);
-        console.log(this.state.selectedCaregiver);
         let data= {
             fname: fname,
             lname: lname,
             bday: this.state.selectedDate,
             gender: this.state.selectedGender,
             doctor: this.state.selectedCaregiver,
+            doctorId: this.state.selectedCaregiverId,
             isCaregiver: (this.state.selectedRole === "Caregiver"),
             isPatient: (this.state.selectedRole === "Patient"),
             isDeveloper: (this.state.selectedRole === "Developer"),
@@ -123,10 +160,11 @@ class SignUp extends React.Component {
         })
     };
 
-    handleCaregiverChange = event => {
+    handleCaregiverChange = (event, payload) => {
         this.setState({
             selectedCaregiver: event.target.value,
-        })
+            selectedCaregiverId: payload.key.substr(2)
+        });
     };
 
     handleRoleChange = event => {
@@ -139,12 +177,6 @@ class SignUp extends React.Component {
         this.setState({
             selectedDate: event.target.value,
         })
-    }
-
-    handleCaregiverCheckbox = event => {
-        this.setState({
-            caregiverCheckbox: event.target.checked,
-        });
     }
 
     render() {
@@ -252,7 +284,7 @@ class SignUp extends React.Component {
                     } 
                     {this.state.selectedRole === "Patient" && 
                         <FormControl variant="outlined" className={classes.formControl} style={{ marginTop: "15px" }}>
-                        <InputLabel id="demo-simple-select-outlined-label" required>Caregiver</InputLabel>
+                            <InputLabel id="demo-simple-select-outlined-label" required>Caregiver</InputLabel>
                             <Select
                                 labelId="caregiver"
                                 id="caregiver"
@@ -260,8 +292,7 @@ class SignUp extends React.Component {
                                 onChange={this.handleCaregiverChange}
                                 label="caregiver"
                             >
-                                <MenuItem value="Alanna Doyle">Alanna Doyle</MenuItem>
-                                <MenuItem value="Nikita Bliumkin">Nikita Bliumkin</MenuItem>
+                                {this.state.caregiverOptions}
                             </Select>
                         </FormControl>
                     }
