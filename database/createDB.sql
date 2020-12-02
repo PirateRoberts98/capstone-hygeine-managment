@@ -9,7 +9,7 @@ CREATE TABLE users (
     bday DATE,
     gender VARCHAR(255),
     doctor VARCHAR(255),
-    doctorId VARCHAR(255),
+    doctorId INT,
     isCaregiver BOOLEAN,
     isPatient BOOLEAN,
     isDeveloper BOOLEAN,
