@@ -161,9 +161,11 @@ class UserBox extends React.Component {
                                 <div className="widget-heading">
                                     {this.state.fname+' '+this.state.lname}
                                 </div>
-                                <div className="widget-subheading">
-                                    Patient of {this.state.doctor}
-                                </div>
+                                {this.state.userData.isPatient && 
+                                    <div className="widget-subheading">
+                                        Patient of {this.state.doctor}
+                                    </div>
+                                }
                             </div>
 
                             <div className="widget-content-right header-user-info ml-3">
