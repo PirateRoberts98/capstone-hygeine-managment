@@ -8484,6 +8484,7 @@ button,
       display: flex; }
 
 .app-page-title {
+  z-index: 2;
   padding: 30px;
   margin: -30px -30px 30px;
   position: relative; }
