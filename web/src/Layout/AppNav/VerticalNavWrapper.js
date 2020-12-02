@@ -26,32 +26,6 @@ class Nav extends Component {
         this.setState({
             userData: this.props.userData
         });
-        /*if(firebase.auth().currentUser) {
-            let userId = firebase.auth().currentUser.uid;
-            firebase.database().ref('/users/'+userId).once('value')
-            .then(snapshot => {
-                let isCaregiver = snapshot.val().isCaregiver;
-                if(isCaregiver) {
-                    this.setState({
-                        isDeveloper: false,
-                        isPatient: false,
-                        isCaregiver: true,
-                    })
-                } else {
-                    this.setState({
-                        isDeveloper: false,
-                        isPatient: true,
-                        isCaregiver: false,
-                    })
-                }
-            });
-        } else {
-            this.setState({
-                isDeveloper: true,
-                isPatient: false,
-                isCaregiver: false,
-            })
-        }*/
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -78,10 +52,11 @@ class Nav extends Component {
     }
 
     render() {
+        //console.log(this.props.userData.isDeveloper);
         return (
             <Fragment>
                 {/* Cargiver View */}
-                {this.state.isCaregiver &&
+                {this.props.userData.isCaregiver &&
                 <div>
                     <div onClick={()=>this.props.onMenuClick(1)}><MetisMenu content={CheckUserAnalysisNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <div onClick={()=>this.props.onMenuClick(3)}><MetisMenu content={SetUserScheduleNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
@@ -89,7 +64,7 @@ class Nav extends Component {
                 </div>
                 }
                 {/* Patient View */}
-                {this.state.isPatient &&
+                {this.props.userData.isPatient &&
                 <div>
                     <div onClick={()=>this.props.onMenuClick(1)}><MetisMenu content={MainNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
                     <div onClick={()=>this.props.onMenuClick(5)}><MetisMenu content={PillsNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
@@ -98,7 +73,7 @@ class Nav extends Component {
                 </div>
                 }
                 {/* Developer View */}
-                {this.state.isDeveloper &&
+                {this.props.userData.isDeveloper &&
                 <div>
                     <h5 className="app-sidebar__heading">Caregiver View</h5>
                     <div onClick={()=>this.props.onMenuClick(1)}><MetisMenu content={CheckUserAnalysisNav} activeLinkId={this.props.activeLinkId} className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/></div>
