@@ -7,6 +7,7 @@ import {
 
 import AppHeader from '../AppHeader';
 import AppSidebar from '../AppSidebar';
+import PageTitle from './PageTitle';
 
 // These will be used for the Health Monitoring System.
 // Caregiver Views/Pages
@@ -20,7 +21,8 @@ const PillsPage = lazy(() => import('../../Pages/PatientPages/Pills'));
 const SchedulePage = lazy(() => import('../../Pages/PatientPages/Schedule'));
 // Developer Views/Pages
 const SensorPage = lazy(() => import('../../Pages/DeveloperPages/Sensor'));
-
+// Settings Page
+const SettingsPage = lazy(() => import('../../Pages/SettingsPage'));
 
 // These are all examples.
 const Dashboards = lazy(() => import('../../ExamplePages/Dashboards'));
@@ -38,7 +40,7 @@ const exampleUserObject = {
     "userId": 0,
     "fname": "James",
     "lname": "Lee",
-    "bday": "whatUp",
+    "bday": "12/12/1997",
     "gender": "female",
     "doctor": "James Chui",
     "isPatient": false,
@@ -79,6 +81,7 @@ export default function AppMain(props) {
                 userData={userData} 
                 isGatheringDataState={isGatheringDataState} 
                 setSelectedPatient={setSelectedPatient}
+                setUserData={setUserData}
             />
             {isGatheringDataState && 
                 <div className="loader-container">
@@ -112,10 +115,19 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/usersanalysis" render={(props)=>
-                                        <UsersAnalysisPage 
-                                            userData={userData}
-                                            patientData={selectedPatient}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading={"Charts And Alerts for Patient - " + selectedPatient.fname + ' ' + selectedPatient.lname}
+                                                subheading="Latest update on - xx/xx/xxxx."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <UsersAnalysisPage 
+                                                    userData={userData}
+                                                    patientData={selectedPatient}
+                                                />
+                                            </div>
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -131,10 +143,19 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/usersschedule" render={(props)=>
-                                        <UsersSchedulePage 
-                                            userData={userData}
-                                            patientData={selectedPatient}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading={"Patient Schedule - " + selectedPatient.fname + ' ' + selectedPatient.lname}
+                                                subheading="Last updated on xx/xx/xxxx"
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <UsersSchedulePage 
+                                                    userData={userData}
+                                                    patientData={selectedPatient}
+                                                />
+                                            </div>
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -150,10 +171,19 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/messageusers" render={(props)=>
-                                        <MessageUsersPage 
-                                            userData={userData}
-                                            patientData={selectedPatient}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading={"Message Patient - " + selectedPatient.fname + ' ' + selectedPatient.lname}
+                                                subheading="Contact the patient below."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <MessageUsersPage 
+                                                    userData={userData}
+                                                    patientData={selectedPatient}
+                                                />
+                                            </div>
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -170,9 +200,18 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/maindashboard" render={(props) =>
-                                        <MainDashboard 
-                                            userData={userData}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading="Dashboard"
+                                                subheading="Alerts and Recommended Actions"
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <MainDashboard 
+                                                    userData={userData}
+                                                />
+                                            </div>
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -188,9 +227,18 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/contactdoctor" render={(props)=>
-                                        <ContactDoctorPage 
-                                            userData={userData}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading="Contact Caregiver"
+                                                subheading="Contact your caregiver or your doctor below."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <ContactDoctorPage 
+                                                    userData={userData}
+                                                />
+                                            </div>
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -206,9 +254,18 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/pills" render={(props)=>
-                                        <PillsPage 
-                                            userData={userData}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading="Pills"
+                                                subheading="Required Pills - Time and Date."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <PillsPage 
+                                                    userData={userData}
+                                                />
+                                            </div>
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -224,9 +281,18 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/schedule" render={(props)=>
-                                        <SchedulePage 
-                                            userData={userData}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading="Schedule"
+                                                subheading="This dashboard displays your schedule and routine."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <SchedulePage 
+                                                    userData={userData}
+                                                />
+                                            </div>
+                                        </div>
                                     }/>
                                 </Suspense>
 
@@ -242,9 +308,45 @@ export default function AppMain(props) {
                                     </div>
                                 }>
                                     <Route path="/sensors" render={(props)=>
-                                        <SensorPage 
-                                            userData={userData}
-                                        />
+                                        <div>
+                                            <PageTitle
+                                                heading="Sensors and Alerts"
+                                                subheading="This dashboard shows all the sensors, temperature and pressure, in additon to alerts."
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <SensorPage 
+                                                    userData={userData}
+                                                />
+                                            </div>
+                                        </div>
+                                    }/>
+                                </Suspense>
+
+                                {/* Settings Page */}
+                                <Suspense fallback={
+                                    <div className="loader-container">
+                                        <div className="loader-container-inner">
+                                            <h6 className="mt-5">
+                                                Please wait while we load...
+                                                <small>Please Wait...</small>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                }>
+                                    <Route path="/settingsPage" render={(props)=>
+                                        <div>
+                                            <PageTitle
+                                                heading="Settings Page"
+                                                subheading="User Information"
+                                                icon="pe-7s-user icon-gradient bg-mean-fruit"
+                                            />
+                                            <div style={{ paddingTop: "102px" }}>
+                                                <SettingsPage 
+                                                    userData={userData}
+                                                />
+                                            </div>
+                                        </div>
                                     }/>
                                 </Suspense>
 

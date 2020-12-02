@@ -21,13 +21,6 @@ const PillsPage = ({match}) => (
             transitionAppearTimeout={0}
             transitionEnter={false}
             transitionLeave={false}>
-            <div>
-                <PageTitle
-                    heading="Pills"
-                    subheading="Required Pills - Time and Date."
-                    icon="pe-7s-user icon-gradient bg-mean-fruit"
-                />
-            </div>
             <Typography variant="h2" gutterBottom>
                 Upcoming Pills
             </Typography>

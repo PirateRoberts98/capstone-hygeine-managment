@@ -1,9 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-// Layout
-import PageTitle from '../../../Layout/AppMain/PageTitle';
-
 // Material UI Components
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -78,13 +75,6 @@ export default function MessageUserPage(props) {
                 transitionAppearTimeout={0}
                 transitionEnter={false}
                 transitionLeave={false}>
-                <div>
-                    <PageTitle
-                        heading={"Message Patient - " + patientData.fname + ' ' + patientData.lname}
-                        subheading="Contact the patient below."
-                        icon="pe-7s-user icon-gradient bg-mean-fruit"
-                    />
-                </div>
                 <Typography variant="h2" gutterBottom>
                     Contact Patient
                 </Typography>

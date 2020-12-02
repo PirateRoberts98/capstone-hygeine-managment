@@ -8,7 +8,9 @@ class TempAndHumiditySensor:
     tempVal = 0
     dht_pulses = 41
     dht_max = 32000
-    def __init__(self):
+    def __init__(self,temp_api_info,hum_api_info):
+        self.temp_api_info = temp_api_info
+        self.hum_api_info = hum_api_info
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(TempAndHumiditySensor.GPIO_PIN, GPIO.IN)
         self.read_from_sensor()
@@ -62,7 +64,7 @@ class TempAndHumiditySensor:
 
 
 def main():
-    sensor = TempAndHumiditySensor()
+    sensor = TempAndHumiditySensor(None,None)
     try:
         while True:
             time.sleep(3)
@@ -72,7 +74,7 @@ def main():
                 print(sensor.tempVal)
             else:
                 pass
-    except KeyboardINterrupt:
+    except KeyboardInterrupt:
         pass
     finally:
         GPIO.cleanup()    

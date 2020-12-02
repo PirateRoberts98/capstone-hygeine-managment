@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import {
     DropdownToggle, DropdownMenu,
     Nav, Button, NavItem, NavLink,
@@ -20,13 +20,12 @@ import {
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import avatar1 from '../../../assets/utils/images/avatars/2.jpg';
+import avatar1 from '../../../assets/utils/images/avatars/1.jpg';
+import avatar2 from '../../../assets/utils/images/avatars/2.jpg';
+import avatar3 from '../../../assets/utils/images/avatars/3.jpg';
+import avatar4 from '../../../assets/utils/images/avatars/4.jpg';
+import avatar5 from '../../../assets/utils/images/avatars/8.jpg';
 
-// Firebase Imports
-/*import * as firebase from "firebase/app";
-import "firebase/database";
-import "firebase/auth";*/
-import { Redirect } from 'react-router-dom';
 class UserBox extends React.Component {
     constructor(props) {
         super(props);
@@ -34,26 +33,17 @@ class UserBox extends React.Component {
             active: true,
             fname: 'Loading...',
             lname: '',
-            doctor: 'Loading...'
+            doctor: 'Loading...',
+            userImage: avatar1,
+            userData: {
+                "fname": "Loading...",
+                "lname": "Loading...",
+                "doctor": "Loading...",
+                "isPatient": false,
+                "isDeveloper": false,
+                "isCaregiver": false
+            }
         };
-    }
-
-    componentDidMount(){
-        /*if(firebase.auth().currentUser) {
-            var userId = firebase.auth().currentUser.uid;
-            firebase.database().ref('/users/'+userId).once('value')
-            .then(snapshot => {
-                this.setState({
-                    fname: snapshot.val().fname,
-                    lname: snapshot.val().lname,
-                    doctor: snapshot.val().doctor,
-                    active: true,
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        }*/
     }
 
     componentDidUpdate(prevProps) {
@@ -61,18 +51,51 @@ class UserBox extends React.Component {
             this.setState({
                 fname: this.props.fname,
                 lname: this.props.lname,
-                doctor: this.props.doctor
+                doctor: this.props.doctor,
+                userData: this.props.userData
             });
+            switch (this.props.userData.fname) {
+                case "Alanna":
+                    this.setState({
+                        userImage: avatar1
+                    });
+                break;
+                case "Scott":
+                    this.setState({
+                        userImage: avatar2
+                    });
+                break;
+                case "James":
+                    this.setState({
+                        userImage: avatar3
+                    });
+                break;
+                case "Mike":
+                    this.setState({
+                        userImage: avatar4
+                    });
+                break;
+                case "Nikita":
+                    this.setState({
+                        userImage: avatar5
+                    });
+                break;
+                case "Robert":
+                    this.setState({
+                        userImage: avatar6
+                    });
+                break;
+                default:
+                    this.setState({
+                        userImage: avatar1
+                    });
+                break;
+            }
         }
     }
 
-    handleLogout = () => {/*
-        firebase.auth().signOut()
-        .then(() => {
-            this.setState({
-                active:false,
-            })
-        });*/
+    handleLogout = () => {
+        this.props.setUserData('');
     }
 
     notify2 = () => this.toastId = toast("You don't have any new items in your calendar for today! Go out and play!", {
@@ -95,45 +118,38 @@ class UserBox extends React.Component {
                             <div className="widget-content-left">
                                 <UncontrolledButtonDropdown>
                                     <DropdownToggle color="link" className="p-0">
-                                        <img width={42} className="rounded-circle" src={avatar1} alt=""/>
+                                        <img width={42} className="rounded-circle" src={this.state.userImage} alt=""/>
                                         <FontAwesomeIcon className="ml-2 opacity-8" icon={faAngleDown}/>
                                     </DropdownToggle>
                                     <DropdownMenu right className="rm-pointers dropdown-menu-lg">
                                         <Nav vertical>
-                                            <NavItem className="nav-item-header">
-                                                Activity
-                                            </NavItem>
                                             <NavItem>
-                                                <NavLink href="hello">
-                                                    Chat
-                                                    <div className="ml-auto badge badge-pill badge-info">8</div>
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink href="hello">Recover Password</NavLink>
-                                            </NavItem>
-                                            <NavItem className="nav-item-header">
-                                                My Account
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink href="hello">
+                                                <NavLink href="/login#/settingsPage">
                                                     Settings
-                                                    <div className="ml-auto badge badge-success">New</div>
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href="hello">
-                                                    Messages
-                                                    <div className="ml-auto badge badge-warning">512</div>
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink href="hello">
-                                                    Logs
-                                                </NavLink>
+                                                {this.state.userData.isCaregiver && 
+                                                    <NavLink href="/login#/messageusers">
+                                                        Message User
+                                                    <div className="ml-auto badge badge-warning">5</div>
+                                                    </NavLink>
+                                                }
+                                                {this.state.userData.isPatient && 
+                                                    <NavLink href="/login#/contactdoctor">
+                                                        Message Caregiver
+                                                    <div className="ml-auto badge badge-warning">1</div>
+                                                    </NavLink>
+                                                }
+                                                {this.state.userData.isDeveloper && 
+                                                    <NavLink href="/login#/messageusers">
+                                                        Message User
+                                                    <div className="ml-auto badge badge-warning">2</div>
+                                                    </NavLink>
+                                                }
                                             </NavItem>
                                             <NavItem onClick={()=>this.handleLogout()}>
-                                                <NavLink href="#">
+                                                <NavLink href="/login">
                                                     Logout
                                                 </NavLink>
                                             </NavItem>
