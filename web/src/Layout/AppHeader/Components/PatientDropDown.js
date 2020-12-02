@@ -133,7 +133,7 @@ export default class PatientDropDown extends Component {
                             patientArrayJSX: patientData[0],
                             patientArray: patientData[1]
                         });
-                        tht.props.setSelectedPatient(patientData[0][0]); // By default the first person should be selected. 
+                        tht.props.setSelectedPatient(patientData[1][0]); // By default the first person should be selected. 
                     }
                     tht.setState({
                         errorRetrievingData: false
