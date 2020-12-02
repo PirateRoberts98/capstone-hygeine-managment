@@ -14,10 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import HMSLogo from '../../../assets/utils/images/HealthMonitoringSystemLogoCopy.jpg';
-// Firebase imports
-//import * as firebase from "firebase/app";
-//import "firebase/auth";
-//import "firebase/database";
+
 const awsConnection = require('../../../config/config.json');
 
 function Copyright() {
@@ -25,7 +22,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Health Monitoring System
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
