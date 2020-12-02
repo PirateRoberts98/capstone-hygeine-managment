@@ -39,7 +39,15 @@ class MessagesComponent extends React.Component {
                         // Format into JSX
                         let msgArray = [];
                         data.map((item,index) => {
-                            let msg = <Card className="main-card mb-3"><CardBody><Row key={index} form>From: {defaultPatientData[item.senderId]}. Message: {item.message}.</Row></CardBody></Card>;
+                            // Determine who sent the message.
+                            let senderName = '';
+                            if(tht.props.userData.isCaregiver) {
+                                senderName = tht.props.patientData.patientName;
+                            } else {
+                                senderName = tht.props.userData.doctor;
+                            }
+
+                            let msg = <Card key={index} className="main-card mb-3"><CardBody><Row key={index} form>From: {senderName}. Message: {item.message}.</Row></CardBody></Card>;
                             msgArray.push(msg);
                         });
 
