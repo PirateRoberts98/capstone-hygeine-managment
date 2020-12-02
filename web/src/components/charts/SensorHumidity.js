@@ -35,7 +35,7 @@ class SensorHumidityChart extends React.Component {
                         let sensorDataFulfilled = [];
                         sensorDataObjects.map(item => {
                             var date = new Date(item.timestamp);
-                            var stringDate = date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear();
+                            var stringDate = date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
                             if(item != undefined) {
                                 // Parse timestamp
                                 /*let date = new Date(item.timestamp);
