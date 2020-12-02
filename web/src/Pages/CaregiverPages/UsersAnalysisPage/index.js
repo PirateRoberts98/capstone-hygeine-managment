@@ -82,7 +82,7 @@ export default function UsersAnalysisPage(props) {
                 </Typography>
                 <SensorHumidityChart/>
                 <Typography variant="h2" gutterBottom>
-                    Sensor Chart
+                    Pressure Chart
                 </Typography>
                 <SensorPressureChart/>
                 <Typography variant="h2" gutterBottom>
