@@ -4,7 +4,8 @@ import RPi.GPIO as GPIO
 class PressureSensor:
     GPIO_PIN = 4
     underPressure = 0
-    def __init__(self):
+    def __init__(self,api_info):
+        self.api_info = api_info
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(PressureSensor.GPIO_PIN, GPIO.IN)
         self.underPressure = self.read_from_sensor()
@@ -27,7 +28,7 @@ class PressureSensor:
         return self.underPressure
 
 def main():
-    sensor = PressureSensor()
+    sensor = PressureSensor(None)
     try:
         while True:
             data = sensor.read_from_sensor()
@@ -36,7 +37,7 @@ def main():
             else:
                 print("Not Under Pressure")
             time.sleep(0.3)
-    except KeyboardINterrupt:
+    except KeyboardInterrupt:
         pass
     finally:
         GPIO.cleanup()    

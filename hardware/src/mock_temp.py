@@ -2,7 +2,7 @@ import  time
 import  random
 import  math
 
-class MockTempAndHumiditySensor:
+class TempAndHumiditySensor:
     humidityVal = 50
     tempVal = 21
     randCount = 0
@@ -10,7 +10,9 @@ class MockTempAndHumiditySensor:
     transitionCount = 0
     transitionState = 0
     sinCount = 0
-    def __init__(self, mode):
+    def __init__(self,temp_api_info,hum_api_info, mode=0):
+        self.temp_api_info = temp_api_info
+        self.hum_api_info = hum_api_info
         self.mode = mode
         self.read_from_sensor()
     
@@ -84,14 +86,14 @@ class MockTempAndHumiditySensor:
     
     
 def main():
-    sensor = MockTempAndHumiditySensor(3)
+    sensor = TempAndHumiditySensor(None,None,mode=3)
     try:
         while True:
             time.sleep(1)
-            status = sensor.read_from_sensor()
+            sensor.read_from_sensor()
             print(sensor.tempVal)
             print(sensor.humidityVal)
-    except KeyboardINterrupt:
+    except KeyboardInterrupt:
         pass 
 
 if __name__ == "__main__":

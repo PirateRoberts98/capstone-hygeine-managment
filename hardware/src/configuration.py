@@ -1,4 +1,10 @@
 #!/usr/local/bin/python3
+
+# Setup import 
+import argparse, yaml , logging , sys , os 
+
+
+#!/usr/local/bin/python3
 def create_arguments():
     text = '''
     This application is the middleware application for the CEG4912/3 Group 2 Capstone Project
@@ -12,7 +18,7 @@ def create_arguments():
     return parser.parse_args()
 
 def parse_config():
-    with open('config.yaml') as f:
+    with open('hardware/src/config.yaml') as f:
         return yaml.load(f, Loader=yaml.FullLoader)
 
 def setup_logging(flag = logging.INFO , log_file ="debug.log" , sys_out=sys.stdout ):

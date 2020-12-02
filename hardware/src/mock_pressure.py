@@ -1,12 +1,13 @@
 import  time
 import  random
 
-class MockPressureSensor:
+class PressureSensor:
     underPressure = 0
     mode = 0
     randCount = 0
     randPeriod = 25
-    def __init__(self, mode, randPeriod):
+    def __init__(self,api_info, mode=3, randPeriod=1):
+        self.api_info = api_info
         self.mode = mode
         self.randPeriod = randPeriod
         self.read_from_sensor()
@@ -51,7 +52,7 @@ class MockPressureSensor:
         return
     
 def main():
-    sensor = MockPressureSensor(2, 25)
+    sensor = PressureSensor(2, 25)
     try:
         while True:
             data = sensor.read_from_sensor()
@@ -60,7 +61,7 @@ def main():
             else:
                 print("Not Under Pressure")
             time.sleep(0.3)
-    except KeyboardINterrupt:
+    except KeyboardInterrupt:
         pass
 
 if __name__ == "__main__":
