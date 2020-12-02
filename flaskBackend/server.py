@@ -81,6 +81,32 @@ def login():
     except:
         raise Exception('ERROR POST SensorData')
 
+#get message api
+@app.route("/api/getPatients/<userId>", methods=['GET'])
+def getMessages(userId):
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM users WHERE doctorId = %s AND isPatient = true", (userId))
+
+        rows = cur.fetchall()
+        conn.commit()
+        cur.close()
+
+        output = [] #new array to store our formatted data
+        if rows:
+            for i in range(len(rows)):
+                output.append({
+                    "messageId": rows[i][0],
+                    "senderId": rows[i][1],
+                    "receiverId": rows[i][2],
+                    "message": rows[i][3]
+                })
+
+        response = jsonify(output)
+        return response
+    except:
+        raise Exception('Error POST postMessage')
+
 #get user data api
 @app.route("/api/getUserData", methods=['POST'])
 def getUserData():
@@ -158,7 +184,7 @@ def getCaregivers():
                     "caregiverId": rows[i][0],
                     "caregiverfName": rows[i][1],
                     "caregiverlName": rows[i][2]
-                });
+                })
 
         response = jsonify(output)
 

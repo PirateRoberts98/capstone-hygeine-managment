@@ -67,6 +67,7 @@ class Header extends React.Component {
                                 <PatientDropDown 
                                     isGatheringDataState={this.props.isGatheringDataState} 
                                     setSelectedPatient={this.props.setSelectedPatient}
+                                    userData={this.props.userData}
                                 />
                             </div>
                         }
@@ -74,6 +75,7 @@ class Header extends React.Component {
                             <PatientDropDown 
                                 isGatheringDataState={this.props.isGatheringDataState} 
                                 setSelectedPatient={this.props.setSelectedPatient}
+                                userData={this.props.userData}
                             />
                         }
                         <div className="app-header-right">
