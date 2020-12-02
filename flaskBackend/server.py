@@ -158,7 +158,7 @@ def getCaregivers():
                     "caregiverId": rows[i][0],
                     "caregiverfName": rows[i][1],
                     "caregiverlName": rows[i][2]
-                });
+                })
 
         response = jsonify(output)
 
