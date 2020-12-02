@@ -108,8 +108,8 @@ class SignUp extends React.Component {
 
         fetch(request).then(function(response) {
             response.json().then(function(data){
-                if(data.value){
-                    that.props.handleLogin();
+                if(data){
+                    that.props.handleLogin(data.userId);
                 }
             })
         }).catch(function(err){

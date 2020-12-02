@@ -46,10 +46,13 @@ def register():
         cur.execute("INSERT INTO Users(fname, lname, bday, gender, doctor, iscaregiver, ispatient, isdeveloper, email, pw) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
          (fname, lname, bday, gender, doctor, isCaregiver, isPatient, isDeveloper, email, password))
 
+        cur.execute("SELECT userid FROM users ORDER BY userid DESC LIMIT 1")
+        row = cur.fetchone()
+
         conn.commit()
         cur.close()
 
-        return {"value": True}
+        return {"userId": row[0]}
     except:
         raise Exception('ERROR POST SensorData')
 
