@@ -11,7 +11,8 @@ class Alert extends React.Component {
         this.state = {
             sensorHumidityMessages: [],
             sensorTemperatureMessages: [],
-            sensorPressureMessages: []
+            sensorPressureMessages: [],
+            errorRetrievingData: true,
         }
     }
 
@@ -64,11 +65,15 @@ class Alert extends React.Component {
                 })
                 .then((msgArray)=>{
                     tht.setState({
-                        sensorHumidityMessages: msgArray
+                        sensorHumidityMessages: msgArray,
+                        errorRetrievingData: false
                     });
                 })
                 .catch(function(err){
-                    console.log(err)
+                    console.log(err);
+                    tht.setState({
+                        errorRetrievingData: true
+                    })
                 });
         });
     }
@@ -111,11 +116,15 @@ class Alert extends React.Component {
                 })
                 .then((msgArray)=>{
                     tht.setState({
-                        sensorMessages: msgArray
+                        sensorMessages: msgArray,
+                        errorRetrievingData: false
                     });
                 })
                 .catch(function(err){
                     console.log(err)
+                    tht.setState({
+                        errorRetrievingData: true
+                    });
                 });
         });
     }
@@ -158,11 +167,15 @@ class Alert extends React.Component {
                 })
                 .then((msgArray)=>{
                     tht.setState({
-                        sensorPressureMessages: msgArray
+                        sensorPressureMessages: msgArray,
+                        errorRetrievingData: false
                     });
                 })
                 .catch(function(err){
                     console.log(err)
+                    tht.setState({
+                        errorRetrievingData: true
+                    });
                 });
         });
     }
@@ -170,9 +183,18 @@ class Alert extends React.Component {
     render() {
         return (
             <div>
-                {this.state.sensorHumidityMessages}
-                {this.state.sensorPressureMessages}
-                {this.state.sensorTemperatureMessages}
+                {this.state.errorRetrievingData &&
+                    <Card className="main-card mb-3">
+                        <CardBody>
+                            <Row form>No alerts to be displayed...</Row>
+                        </CardBody>
+                    </Card>
+                }
+                {!this.state.errorRetrievingData && 
+                    this.state.sensorHumidityMessages,
+                    this.state.sensorPressureMessages,
+                    this.state.sensorTemperatureMessages
+                }
             </div>
         )
     }
