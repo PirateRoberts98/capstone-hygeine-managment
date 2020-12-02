@@ -46,6 +46,7 @@ const exampleUserObject = {
     "isPatient": false,
     "isCaregiver": false,
     "isDeveloper": true,
+    "email": "developer@hms.com"
 }
 
 export default function AppMain(props) {

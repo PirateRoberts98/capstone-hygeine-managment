@@ -1,28 +1,27 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
-const awsConnection = require('../../../../config/config.json');
+const awsConnection = require('../../config/config.json');
 
-class SensorHumidityChart extends React.Component {
+class SensorTemperatureChart extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             sensorData:'',
             sensorTimes:'',
             sensorValues:'',
-            dbIsEmpty:false
         }
     }
 
     componentDidMount(){
-      this.retrieveData();
-      setInterval(() => {
         this.retrieveData();
+        setInterval(() => {
+            this.retrieveData();
       }, 5000);
     }
 
     retrieveData = () => {
         var tht = this;
-        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataHumidity', {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getSensorDataTemperature', {
             method: 'GET',
         });
         fetch(request).then(function(response) {
@@ -71,7 +70,7 @@ class SensorHumidityChart extends React.Component {
             labels: this.state.sensorTimes,
             datasets: [
                 {
-                    label: 'Humidity (Percentage)',
+                    label: 'Temperature (Celsius)',
                     fill: false,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(75,192,192,0.4)',
@@ -102,4 +101,4 @@ class SensorHumidityChart extends React.Component {
     }
 }
 
-export default SensorHumidityChart;
+export default SensorTemperatureChart;

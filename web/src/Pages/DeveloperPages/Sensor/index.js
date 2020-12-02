@@ -1,19 +1,11 @@
 import React, {Fragment} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import PageTitle from '../../../Layout/AppMain/PageTitle';
-
-// Layout
-import AppHeader from '../../../Layout/AppHeader';
-import AppSidebar from '../../../Layout/AppSidebar';
-
 // Charts
-import SensorTemperatureChart from './Charts/SensorTemperature';
-import SensorPressureChart from './Charts/SensorPressure';
-import SensorHumidityChart from './Charts/SensorHumidity';
-
+import SensorTemperatureChart from '../../../components/charts/SensorTemperature';
+import SensorPressureChart from '../../../components/charts/SensorPressure';
+import SensorHumidityChart from '../../../components/charts/SensorHumidity';
 //Alert
-import Alert from './Alert';
-
+import Alert from '../../../components/Alert';
 //ReactStrap
 import {
     Row, Col,

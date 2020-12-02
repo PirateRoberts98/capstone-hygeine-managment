@@ -3,13 +3,10 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 // Other Components
 import Alerts from '../../../components/Alert';
 
-// Layout
-import PageTitle from '../../../Layout/AppMain/PageTitle';
-
 // Charts
-import SensorHumidityChart from './Charts/SensorHumidity';
-import SensorPressureChart from './Charts/SensorPressure';
-import SensorTemperatureChart from './Charts/SensorTemperature';
+import SensorHumidityChart from '../../../components/charts/SensorHumidity';
+import SensorPressureChart from '../../../components/charts/SensorPressure';
+import SensorTemperatureChart from '../../../components/charts/SensorTemperature';
 
 // MaterialUI
 import Typography from '@material-ui/core/Typography';
