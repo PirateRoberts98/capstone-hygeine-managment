@@ -31,7 +31,7 @@ export default function ContactDoctor(props) {
     const onSendRequestClick = () => {
         let messageJson = {
             "senderId": props.userData.userId,
-            "receiverId": 1,
+            "receiverId": props.userData.doctorId,
             "message": messageFormContent
         }
         var request = new Request(awsConnection.awsEC2Connection+'/api/postMessage', {
@@ -100,7 +100,7 @@ export default function ContactDoctor(props) {
             <Typography variant="h2" gutterBottom>
                 Messages
             </Typography>
-            <MessagesComponent userId={props.userData.userId}/>
+            <MessagesComponent userId={props.userData.userId} userData={props.userData}/>
             <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handlePollSnackBarClose}>
                 <Alert onClose={handlePollSnackBarClose} severity={snackbarSeverity}>
                     {snackbarMessage}

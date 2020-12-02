@@ -109,7 +109,7 @@ export default function MessageUserPage(props) {
                 <Typography variant="h2" gutterBottom>
                     Messages
                 </Typography>
-                <MessagesComponent userId={props.userData.userId} />
+                <MessagesComponent userId={props.userData.userId} userData={props.userData} patientData={props.patientData} />
                 <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handlePollSnackBarClose}>
                     <Alert onClose={handlePollSnackBarClose} severity={snackbarSeverity}>
                         {snackbarMessage}
