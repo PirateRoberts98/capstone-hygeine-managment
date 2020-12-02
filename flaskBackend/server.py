@@ -31,17 +31,20 @@ logging.basicConfig(
 def register():
     try:
         #parameters
-        email = request.get_json()['email']
-        password = bcrypt.generate_password_hash(request.get_json()['password1']).decode('utf-8') #encrypted
         fname = request.get_json()['fname']
         lname = request.get_json()['lname']
         bday = request.get_json()['bday']
         gender = request.get_json()['gender']
         doctor = request.get_json()['doctor']
         isCaregiver = request.get_json()['isCaregiver']
+        isPatient = request.get_json()['isPatient']
+        isDeveloper = request.get_json()['isDeveloper']
+        email = request.get_json()['email']
+        password = bcrypt.generate_password_hash(request.get_json()['password1']).decode('utf-8') #encrypted
 
         cur = conn.cursor()
-        cur.execute("INSERT INTO Users(fname, lname, email, doctor, bday, gender, pw, iscaregiver) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (fname, lname, email, doctor, bday, gender, password, isCaregiver))
+        cur.execute("INSERT INTO Users(fname, lname, bday, gender, doctor, iscaregiver, ispatient, isdeveloper, email, pw) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+         (fname, lname, bday, gender, doctor, isCaregiver, isPatient, isDeveloper, email, password))
 
         conn.commit()
         cur.close()

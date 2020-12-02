@@ -14,8 +14,6 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 
 const awsConnection = require('../../../config/config.json');
 
@@ -86,14 +84,16 @@ class SignUp extends React.Component {
         });
     }
 
-    handleSignUpBackend = (email,password1,password2,fname,lname, doctor) => {
+    handleSignUpBackend = (email,password1,fname,lname) => {
         var that = this;
+        console.log(this.state.selectedRole);
+        console.log(this.state.selectedCaregiver);
         let data= {
             fname: fname,
             lname: lname,
             bday: this.state.selectedDate,
             gender: this.state.selectedGender,
-            doctor: this.selectedCaregiver,
+            doctor: this.state.selectedCaregiver,
             isCaregiver: (this.state.selectedRole === "Caregiver"),
             isPatient: (this.state.selectedRole === "Patient"),
             isDeveloper: (this.state.selectedRole === "Developer"),
@@ -296,7 +296,6 @@ class SignUp extends React.Component {
                         onClick={()=>this.handleSignUpBackend(
                             document.getElementById('email').value,
                             document.getElementById('password1').value,
-                            document.getElementById('password2').value,
                             document.getElementById('fname').value,
                             document.getElementById('lname').value
                         )}
