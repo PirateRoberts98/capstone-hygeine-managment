@@ -81,13 +81,10 @@ export default class PatientDropDown extends Component {
 
     retrievePatientsForCaregiver() {
         var tht = this;
-        let userName = this.props.userData.fname + ' ' + this.props.userData.lname;
         let messageJson = {
-            "senderId": props.userData.userId,
-            "receiverId": 1,
-            "message": messageFormContent
+            
         }
-        var request = new Request(awsConnection.awsEC2Connection+'/api/retrievePatients/'+userName, {
+        var request = new Request(awsConnection.awsEC2Connection+'/api/retrievePatients/'+this.props.userData.userId, {
             method: 'POST',
             headers: new Headers({ 'Content-Type' : 'application/json', 'Accept': 'application/json' }),
             body: JSON.stringify(messageJson)
