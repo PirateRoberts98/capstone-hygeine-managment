@@ -165,7 +165,7 @@ def getSensorDataTemperature():
                     "message": message
                 })
 
-        response = jsonify(output)
+        response = jsonify(output[-25:])
 
         return response
 
@@ -204,7 +204,7 @@ def getSensorDataHumidity():
                     "message": message
                 })
 
-        response = jsonify(output)
+        response = jsonify(output[-25:])
 
         return response
     except:
@@ -240,7 +240,7 @@ def getSensorDataPressure():
                     "message": message
                 })
 
-        response = jsonify(output)
+        response = jsonify(output[-25:])
     #    response.headers.add("Access-Control-Allow-Origin", "*")
 
         return response
