@@ -24,6 +24,17 @@ CREATE TABLE dataSensor (
     val INT NOT NULL
 );
 
+/*Create table sensors for testing*/
+CREATE TABLE dataSensorTest (
+    sensorId INT NOT NULL,
+    userId VARCHAR(255) NOT NULL,
+    sensorType VARCHAR(255) NOT NULL,
+    tStamp INT NOT NULL,
+    val INT NOT NULL,
+    stat VARCHAR(255),
+    msg VARCHAR(255)
+);
+
 /*Create table Messages*/
 CREATE TABLE messages(
     messageId SERIAL NOT NULL,

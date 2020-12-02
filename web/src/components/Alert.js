@@ -13,18 +13,30 @@ class Alert extends React.Component {
             sensorTemperatureMessages: [],
             sensorPressureMessages: [],
             errorRetrievingData: true,
+            errorRetryCount:0
         }
+
+        this.retrieveDataHumdity = this.retrieveDataHumdity.bind(this);
+        this.retrieveDataPressure = this.retrieveDataPressure.bind(this);
+        this.retrieveDataTemperature = this.retrieveDataTemperature.bind(this);
     }
 
     componentDidMount(){
         this.retrieveDataHumdity();
         this.retrieveDataPressure();
         this.retrieveDataTemperature();
-        setInterval(() => {
+        this.interval = setInterval(() => {
             this.retrieveDataHumdity();
             this.retrieveDataPressure();
             this.retrieveDataTemperature();
-        }, 60000);
+        }, 120000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+        this.setState({
+            errorRetryCount: 0
+        });
     }
 
     retrieveDataHumdity = () => {
@@ -45,6 +57,7 @@ class Alert extends React.Component {
                         // Map the Sensor Data Object to appropriate arrays.
                         sensorDataObjects.map(item => {
                             if(item != undefined) {
+                                console.log(item.message);
                                 sensorTimesArray.push((item.timestamp).toString());
                                 sensorMessagesArray.push(item.message);
                             }
@@ -64,16 +77,24 @@ class Alert extends React.Component {
                     }
                 })
                 .then((msgArray)=>{
+                    if(msgArray.length > 0) {
+                        tht.setState({
+                            sensorHumidityMessages: msgArray,
+                        });
+                    }
                     tht.setState({
-                        sensorHumidityMessages: msgArray,
                         errorRetrievingData: false
                     });
                 })
                 .catch(function(err){
-                    console.log(err);
+                    if(this.state.errorRetryCount === 5) {
+                        clearInterval(this.interval);
+                    }
                     tht.setState({
-                        errorRetrievingData: true
+                        errorRetrievingData: true,
+                        errorRetryCount: this.state.errorRetryCount + 1
                     })
+                    console.log(err);
                 });
         });
     }
@@ -115,8 +136,12 @@ class Alert extends React.Component {
                     }
                 })
                 .then((msgArray)=>{
+                    if(msgArray.length>0){
+                        tht.setState({
+                            sensorMessages: msgArray,
+                        });
+                    }
                     tht.setState({
-                        sensorMessages: msgArray,
                         errorRetrievingData: false
                     });
                 })
@@ -166,8 +191,12 @@ class Alert extends React.Component {
                     }
                 })
                 .then((msgArray)=>{
+                    if(msgArray.length>0) {
+                        tht.setState({
+                            sensorPressureMessages: msgArray,
+                        });
+                    }
                     tht.setState({
-                        sensorPressureMessages: msgArray,
                         errorRetrievingData: false
                     });
                 })
@@ -183,6 +212,7 @@ class Alert extends React.Component {
     render() {
         return (
             <div>
+                {/** Display this if can't fetch data */}
                 {this.state.errorRetrievingData &&
                     <Card className="main-card mb-3">
                         <CardBody>
@@ -190,10 +220,47 @@ class Alert extends React.Component {
                         </CardBody>
                     </Card>
                 }
-                {!this.state.errorRetrievingData && 
-                    this.state.sensorHumidityMessages,
-                    this.state.sensorPressureMessages,
-                    this.state.sensorTemperatureMessages
+                {/** Display this if no message for humidity */}
+                {!this.state.errorRetrievingData &&
+                    !(this.state.sensorHumidityMessages.length > 0) &&
+                    <Card className="main-card mb-3">
+                        <CardBody>
+                            <Row form>No alerts from Humidity sensor...</Row>
+                        </CardBody>
+                    </Card>
+                }
+                {/** Display this if have message for humidity */}
+                {!this.state.errorRetrievingData &&
+                    (this.state.sensorHumidityMessages.length > 0) &&
+                        this.state.sensorHumidityMessages
+                }
+                {/** Display this if no message for pressure */}
+                {!this.state.errorRetrievingData &&
+                    !(this.state.sensorPressureMessages.length > 0) &&
+                    <Card className="main-card mb-3">
+                        <CardBody>
+                            <Row form>No alerts to from pressure sensor...</Row>
+                        </CardBody>
+                    </Card>
+                }
+                {/** Display this if have message for pressure */}
+                {!this.state.errorRetrievingData &&
+                    (this.state.sensorPressureMessages.length > 0) &&
+                        this.state.sensorPressureMessages
+                }
+                {/** Display this if no message for temperature */}
+                {!this.state.errorRetrievingData &&
+                    !(this.state.sensorTemperatureMessages.length > 0) &&
+                    <Card className="main-card mb-3">
+                        <CardBody>
+                            <Row form>No alerts to from temperature sensor...</Row>
+                        </CardBody>
+                    </Card>
+                }
+                {/** Display this if have message for temperature */}
+                {!this.state.errorRetrievingData &&
+                    (this.state.sensorTemperatureMessages.length > 0) &&
+                        this.state.sensorTemperatureMessages
                 }
             </div>
         )
