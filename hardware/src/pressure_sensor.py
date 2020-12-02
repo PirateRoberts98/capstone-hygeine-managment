@@ -35,8 +35,10 @@ def main():
         while True:
             data = sensor.read_from_sensor()
             if(data == 1):
+                print(sensor.count)
                 print("Under Pressure")
             else:
+                print(sensor.count)
                 print("Not Under Pressure")
             time.sleep(0.3)
     except KeyboardInterrupt:
