@@ -18,31 +18,37 @@ import {
 
 const defaultPatientData = [
     {
+        "patientId": 1,
         "fname": "James",
         "lname": "Lee",
         "gender": "male"
     },
     {
+        "patientId": 2,
         "fname": "Scott",
         "lname": "Fulton",
         "gender": "male"
     },
     {
+        "patientId": 3,
         "fname": "Mike",
         "lname": "Diep",
         "gender": "male"
     },
     {
+        "patientId": 4,
         "fname": "Nikita",
         "lname": "Bliumkin",
         "gender": "male"
     },
     {
+        "patientId": 5,
         "fname": "Alanna",
         "lname": "Doyle",
         "gender": "female"
     },
     {
+        "patientId": 6,
         "fname": "Robert",
         "lname": "Conrad",
         "gender": "male"
