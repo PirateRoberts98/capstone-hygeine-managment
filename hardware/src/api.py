@@ -4,12 +4,13 @@ import datetime
 import json
 import logging
 from datetime import datetime
+import time
 import pytz
 from requests.exceptions import Timeout
 
 
 def get_time():
-    return datetime.now(pytz.timezone("Canada/Eastern"))
+    return time.time()
 
 def timestamp_data(value):
     return '{{"timestamp":{},"value":{}}}'.format(get_time(),value)
