@@ -5,7 +5,8 @@ import busio
 import adafruit_mpr121
 
 class ReadSensor:
-    def __init__(self,pin,addr=90):
+    def __init__(self,pin,api_info,addr=90):
+        self.api_info = api_info
         self.pin = pin
         self.i2c = busio.I2C(board.SCL, board.SDA)
         self.buffer = bytearray(2)
@@ -24,7 +25,7 @@ class ReadSensor:
         return self.touched
 
 def main():
-    sensor = ReadSensor(0)
+    sensor = ReadSensor(0,None)
     try:
         while True:
             data = sensor.read_from_sensor()

@@ -7,38 +7,53 @@ import numpy as np
 
 import pressure_sensor as pressure
 
-def createTraining():
-    df = pd.DataFrame(columns=['PressureVal', 'Type'])
-    populating = True
-    pressureVal = 0
-    sensor = pressure.PressureSensor(None)
-    
-    while(populating):
-        option = input("What are you populating the database with? (0 = Non-User, 1 = User, 2 = Quit): ")
-        if(option == "2"):
-            populating = False
-        else:
-            for i in range(10):
-                sensor.read_from_sensor()
-                pressureVal = sensor.count
-                df = df.append({'PressureVal':pressureVal, 'Type':option}, ignore_index=True)
-    df.to_csv('training.csv')
-                
-def trainSensor():
-    X = pd.read_csv("training.csv")
-    y = X.pop("Type").values
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.1, random_state=2)
-    clf_nb = MultinomialNB().fit(X_train, y_train)
-    clf_lr = LogisticRegression(solver = 'lbfgs', max_iter=1000, random_state=1).fit(X_train, y_train)
-    nb_val_predictions = clf_nb.predict(X_val)    
-    lr_val_predictions = clf_lr.predict(X_val)
-    print(y_val)
-    print(nb_val_predictions)
-    print("Naive Bayes Accuracy:")
-    print(accuracy(y_val, nb_val_predictions))
-    print("Linear Regression Accuracy:")
-    print(accuracy(y_val, lr_val_predictions))
+class aiModule:
+    def init(self):
+        self.clf_nb = None
+        self.clf_lr = None
+        self.nb_val_predictions = None
+        self.lr_val_predictions = None
 
+    def createTraining(self):
+        df = pd.DataFrame(columns=['PressureVal', 'Type'])
+        populating = True
+        pressureVal = 0
+        sensor = pressure.PressureSensor(None)
+    
+        while(populating):
+            option = input("What are you populating the database with? (0 = Non-User, 1 = User, 2 = Quit): ")
+            if(option == "2"):
+                populating = False
+            else:
+                for i in range(10):
+                    sensor.read_from_sensor()
+                    pressureVal = sensor.count
+                    df = df.append({'PressureVal':pressureVal, 'Type':option}, ignore_index=True)
+        df.to_csv('training.csv')
+                
+    def trainSensor(self):
+        X = pd.read_csv("training.csv")
+        featureSet = ['PressureVal']
+        y = X.pop("Type").values
+        X = X[featureSet].copy()
+        X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.1, random_state=2)
+        self.clf_nb = MultinomialNB().fit(X_train, y_train)
+        self.clf_lr = LogisticRegression(solver = 'lbfgs', max_iter=1000, random_state=1).fit(X_train, y_train)
+        self.nb_val_predictions = self.clf_nb.predict(X_val)    
+        self.lr_val_predictions = self.clf_lr.predict(X_val)
+        print(X_val)
+        print(self.nb_val_predictions)
+        print("Naive Bayes Accuracy:")
+        print(accuracy(y_val, self.nb_val_predictions))
+        print("Linear Regression Accuracy:")
+        print(accuracy(y_val, self.lr_val_predictions))
+
+    def predict(self,queue):
+        newQueue = np.array(queue)
+        newQueue = newQueue.reshape(-1,1)
+        self.nb_val_predictions = self.clf_nb.predict(newQueue)    
+        self.lr_val_predictions = self.clf_lr.predict(newQueue)
+        return self.lr_val_predictions
 
 def precision(actualTags, predictions, classOfInterest):
     totalFound = 0
@@ -62,8 +77,12 @@ def accuracy(actualTags, predictions):
     return totalFound / len(predictions)
 
 def main():
-    createTraining()
-    trainSensor()
+    test = aiModule()
+    sensor = pressure.PressureSensor(None)
+    test.trainSensor()
+    sensor.read_from_sensor()
+    print(test.predict(sensor.count))
+    
 
 
 if __name__ == "__main__":
