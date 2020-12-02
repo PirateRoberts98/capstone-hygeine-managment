@@ -42,13 +42,17 @@ class MessagesComponent extends React.Component {
                             // Determine who sent the message.
                             let senderName = '';
                             if(tht.props.userData.isCaregiver) {
-                                senderName = tht.props.patientData.patientName;
+                                if(tht.props.patientData.patientId == item.senderId){
+                                    senderName = tht.props.patientData.patientName;
+                                    let msg = <Card key={index} className="main-card mb-3"><CardBody><Row key={index} form>From: {senderName}. Message: {item.message}.</Row></CardBody></Card>;
+                                    msgArray.push(msg);
+                                }
                             } else {
                                 senderName = tht.props.userData.doctor;
+                                let msg = <Card key={index} className="main-card mb-3"><CardBody><Row key={index} form>From: {senderName}. Message: {item.message}.</Row></CardBody></Card>;
+                                msgArray.push(msg);
                             }
 
-                            let msg = <Card key={index} className="main-card mb-3"><CardBody><Row key={index} form>From: {senderName}. Message: {item.message}.</Row></CardBody></Card>;
-                            msgArray.push(msg);
                         });
 
                         return msgArray;

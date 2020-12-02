@@ -25,6 +25,7 @@ import avatar2 from '../../../assets/utils/images/avatars/2.jpg';
 import avatar3 from '../../../assets/utils/images/avatars/3.jpg';
 import avatar4 from '../../../assets/utils/images/avatars/4.jpg';
 import avatar5 from '../../../assets/utils/images/avatars/8.jpg';
+import avatar6 from '../../../assets/utils/images/avatars/11.jpg';
 
 class UserBox extends React.Component {
     constructor(props) {
