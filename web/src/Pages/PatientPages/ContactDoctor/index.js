@@ -1,26 +1,18 @@
 import React, {Fragment} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-// Layout
-import PageTitle from '../../../Layout/AppMain/PageTitle';
-import AppHeader from '../../../Layout/AppHeader';
-import AppSidebar from '../../../Layout/AppSidebar';
-
 // Material UI
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 
 // Other Components.
-import Alerts from './Alert';
-import MessagesComponent from '../../../components/MessagesComponent'
+import MessagesComponent from '../../../components/MessagesComponent';
 
 const awsConnection = require('../../../config/config.json');
 
-export default function ContactDoctor (){
+export default function ContactDoctor(props) {
 const [messageFormContent, setMessageFormContent] = React.useState('');
     const [snackbarMessage, setSnackbarMessage] = React.useState('');
     const [snackbarSeverity, setSnackbarSeverity] = React.useState('info');
@@ -100,7 +92,7 @@ const [messageFormContent, setMessageFormContent] = React.useState('');
             <Typography variant="h2" gutterBottom>
                 Messages
             </Typography>
-            <Alerts />
+            <MessagesComponent userId={props.userData.userId}/>
         </ReactCSSTransitionGroup>
     </Fragment>
     )
