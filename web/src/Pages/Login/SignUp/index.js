@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import DateFnsUtils from '@date-io/date-fns';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -17,15 +16,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-  } from '@material-ui/pickers';
-// Firebase imports
-//import * as firebase from "firebase/app";
-//import "firebase/auth";
-// Get a reference to the database service
-//var database = firebase.database();
 
 const awsConnection = require('../../../config/config.json');
 
@@ -34,7 +24,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Health Monitoring System
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -96,39 +86,8 @@ class SignUp extends React.Component {
     }
 
     handleSignUp = (email,password1,password2,fname,lname, doctor) => {
-        //this.handleSignUpFirebase(email,password1,password2,fname,lname, doctor);
         this.handleSignUpBackend(email,password1,password2,fname,lname, doctor);
     }
-
-    /*handleSignUpFirebase = (email,password1,password2,fname,lname, doctor) => {
-        firebase.auth().createUserWithEmailAndPassword(email, password1)
-        .then(()=>{
-            firebase.database().ref('users/'+ firebase.auth().currentUser.uid).set({
-                email: email,
-                fname:fname,
-                lname:lname,
-                bday:this.state.selectedDate,
-                gender:this.state.selectedGender,
-                doctor: doctor,
-                isCaregiver: this.state.caregiverCheckbox,
-            })
-            .then(()=>{
-                this.props.handleLogin();
-            })
-            .catch((error)=>{
-                var errorCode = error.errorCode;
-                var errorMessage = error.message;
-                console.log(errorCode);
-                console.log(errorMessage);
-            })
-        })
-        .catch((error) => {
-            var errorCode = error.errorCode;
-            var errorMessage = error.message;
-            console.log(errorCode);
-            console.log(errorMessage);
-        })
-    }*/
 
     handleSignUpBackend = (email,password1,password2,fname,lname, doctor) => {
         var that = this;
