@@ -14,31 +14,27 @@ config = None
 
 
 
-def pressure_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
+def pressure_sensor_thread(next,delay,stop,sensor,api_queue,interpretor):
     logging.info("Running Sensor Data")
     data = sensor.read_from_sensor()
     api_queue.put({"sensor_info":sensor.api_info,"value":data})
-    if interpretor_queue != None:
-        for interpretor in interpretor_queue:
-            interpretor.put(data)
+    if interpretor != None:
+        interpretor.put(data)
     if config["stop"] == False: # Continue Thread if not stopped
         threading.Timer(delay,next,args=[
-            next,delay,stop,sensor,api_queue,interpretor_queue]).start()
+            next,delay,stop,sensor,api_queue,interpretor]).start()
     else:
         logging.info("Stopping Pressure Thread")
     return 
 
-def tempature_humdity_sensor_thread(next,delay,stop,sensor,api_queue,interpretor_queue):
+def tempature_humdity_sensor_thread(next,delay,stop,sensor,api_queue):
     logging.info("Running Sensor Data")
-    data = sensor.read_from_sensor()
+    sensor.read_from_sensor()
     api_queue.put({"sensor_info":sensor.temp_api_info,"value":sensor.tempVal})
     api_queue.put({"sensor_info":sensor.hum_api_info,"value":sensor.humidityVal})
-    if interpretor_queue != None:
-        for interpretor in interpretor_queue:
-            interpretor.put(data)
     if config["stop"] == False: # Continue Thread if not stopped
         threading.Timer(delay,next,args=[
-            next,delay,stop,sensor,api_queue,interpretor_queue]).start()
+            next,delay,stop,sensor,api_queue]).start()
     else:
         logging.info("Stopping Temp Humidity Thread")
     return 
@@ -90,12 +86,10 @@ def main():
     api_queue = queue.Queue()
     # TODO: Add Interpetors
     pressure_sensor_thread(pressure_sensor_thread,6,config,pressure_sensor,api_queue,None)
-    tempature_humdity_sensor_thread(tempature_humdity_sensor_thread,6,config,temp_humidity,api_queue,None)
+    tempature_humdity_sensor_thread(tempature_humdity_sensor_thread,6,config,temp_humidity,api_queue)
     #  start threading, apply queue
     try:
         while True:
-            if api_queue.empty():
-                logging.warn("Queue is empty")
             if api_queue.full():
                 logging.warn("Queue is full!")
             #Stalls until value exists
