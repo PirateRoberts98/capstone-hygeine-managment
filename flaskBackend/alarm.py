@@ -34,13 +34,13 @@ output = {
 
 def convertHours(time):
     # hours=((time)/(1000000*60*60))%24
-    hours = round(time/(3.6e+9))
+    hours = round(time/(3.6e+6))
     return hours
 
 
 def convertMin(time):
     # minutes=(time/(1000000*60))%60
-    minutes = round(time/(6e+7))
+    minutes = round(time/(60000))
     return minutes
 
 
