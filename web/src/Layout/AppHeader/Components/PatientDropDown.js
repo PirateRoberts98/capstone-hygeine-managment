@@ -1,20 +1,18 @@
 import React, {Component, Fragment} from 'react';
-
 import {
     DropdownToggle, DropdownMenu, Nav, NavItem, NavLink, UncontrolledDropdown
 } from 'reactstrap';
-
 import {
     faBusinessTime
 
 } from '@fortawesome/free-solid-svg-icons';
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-
 import {
     toast,
     Slide
 } from 'react-toastify';
+
+const awsConnection = require('../../../config/config.json');
 
 const defaultPatientData = [
     {
@@ -79,6 +77,74 @@ export default class PatientDropDown extends Component {
 
         });
         this.props.setSelectedPatient(patientArray[0]); // Set the selectedPatient as the first item in the dropbox when app launches.
+    }
+
+    retrievePatientsForCaregiver() {
+        var tht = this;
+        let userName = this.props.userData.fname + ' ' + this.props.userData.lname;
+        let messageJson = {
+            "senderId": props.userData.userId,
+            "receiverId": 1,
+            "message": messageFormContent
+        }
+        var request = new Request(awsConnection.awsEC2Connection+'/api/retrievePatients/'+userName, {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type' : 'application/json', 'Accept': 'application/json' }),
+            body: JSON.stringify(messageJson)
+        });
+        fetch(request).then(function(response) {
+            response.json()
+                .then(function(data){
+                    if(data){
+                        let sensorDataObjects = data;
+
+                        // Initialize Arrays to store separate attributes of the Sensor Data Object.
+                        let sensorTimesArray = [];
+                        let sensorMessagesArray = [];
+
+                        // Map the Sensor Data Object to appropriate arrays.
+                        sensorDataObjects.map(item => {
+                            if(item != undefined) {
+                                console.log(item.message);
+                                sensorTimesArray.push((item.timestamp).toString());
+                                sensorMessagesArray.push(item.message);
+                            }
+                        });
+
+                        // Remove duplicate messages
+                        sensorMessagesArray = sensorMessagesArray.filter((value,index) => sensorMessagesArray.indexOf(value) === index);
+
+                        // Format into JSX
+                        let msgArray = []
+                        for(let j=sensorMessagesArray.length-1; j > -1; j--) {
+                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>Alert with severity: null. The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
+                            msgArray.push(msg);
+                        }
+
+                        return msgArray;
+                    }
+                })
+                .then((msgArray)=>{
+                    if(msgArray.length > 0) {
+                        tht.setState({
+                            sensorHumidityMessages: msgArray,
+                        });
+                    }
+                    tht.setState({
+                        errorRetrievingData: false
+                    });
+                })
+                .catch(function(err){
+                    if(this.state.errorRetryCount === 5) {
+                        clearInterval(this.interval);
+                    }
+                    tht.setState({
+                        errorRetrievingData: true,
+                        errorRetryCount: this.state.errorRetryCount + 1
+                    })
+                    console.log(err);
+                });
+        });
     }
 
     toggle(name) {
