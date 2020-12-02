@@ -82,10 +82,10 @@ export default class PatientDropDown extends Component {
     retrievePatientsForCaregiver() {
         var tht = this;
         let messageJson = {
-            
+            "userId": this.props.userData.userId
         }
-        var request = new Request(awsConnection.awsEC2Connection+'/api/retrievePatients/'+this.props.userData.userId, {
-            method: 'POST',
+        var request = new Request(awsConnection.awsEC2Connection+'/api/getPatients/'+this.props.userData.userId, {
+            method: 'GET',
             headers: new Headers({ 'Content-Type' : 'application/json', 'Accept': 'application/json' }),
             body: JSON.stringify(messageJson)
         });
@@ -93,11 +93,6 @@ export default class PatientDropDown extends Component {
             response.json()
                 .then(function(data){
                     if(data){
-                        let sensorDataObjects = data;
-
-                        // Initialize Arrays to store separate attributes of the Sensor Data Object.
-                        let sensorTimesArray = [];
-                        let sensorMessagesArray = [];
 
                         // Map the Sensor Data Object to appropriate arrays.
                         sensorDataObjects.map(item => {
