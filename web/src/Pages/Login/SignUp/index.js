@@ -80,7 +80,7 @@ class SignUp extends React.Component {
             selectedGender: "",
             selectedDate: new Date(),
             selectedCaregiver: "",
-            selectedCaregiverId: "",
+            selectedCaregiverId: 99999,
             selectedRole: "",
             caregiverOptions: [],
         });
