@@ -79,7 +79,7 @@ def accuracy(actualTags, predictions):
 def main():
     test = aiModule()
     sensor = pressure.PressureSensor(None)
-    test.trainSensor()
+    test.createTraining()
     sensor.read_from_sensor()
     print(test.predict(sensor.count))
     

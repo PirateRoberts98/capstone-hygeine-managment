@@ -48,7 +48,7 @@ def read_sensor_thread(next,delay,stop,sensor,api_queue):
     api_queue.put({"sensor_info":sensor.api_info,"value":data})
     if config["stop"] == False: # Continue Thread if not stopped
         threading.Timer(delay,next,args=[
-            next,delay,stop,sensor,api_queue,interpretor]).start()
+            next,delay,stop,sensor,api_queue]).start()
     else:
         logging.info("Stopping Read Thread")
     return 
@@ -77,6 +77,8 @@ def main():
     '''
 
     '''
+    import ai as ai
+    import read_sensor as read
     if config["mock"]:
         import mock_GPIO as GPIO # Warning: NOT FULL COVERAGE 
         import mock_pressure as pressure
@@ -89,7 +91,6 @@ def main():
             pass # Not ideal but saves issues with building on none pi devices 
         import pressure_sensor as pressure 
         import temp_humidity_sensor as tempature
-        import ai as ai
 
 
     user_info = api.User("John Doe") #TODO log user create to debug 
@@ -100,7 +101,7 @@ def main():
     web_api = api.WebAPI(user_info,base_url=config["base_url"],offline=config["offline"])
     temp_humidity = tempature.TempAndHumiditySensor(temp_api_info=temp_sensor_info,hum_api_info=humidity_sensor_info)
     pressure_sensor = pressure.PressureSensor(pressure_sensor_info)
-    read_sensor = read.ReadSensor(read_sensor_info)
+    read_sensor = read.ReadSensor(11,read_sensor_info)
     api_queue = queue.Queue()
     aiInterpretor = ai.aiModule()
     aiInterpretor.trainSensor()
