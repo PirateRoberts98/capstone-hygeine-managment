@@ -1,6 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-const awsConnection = require('../../../../config/config.json');
+const awsConnection = require('../../config/config.json');
 
 class SensorPressureChart extends React.Component {
     constructor(props) {
