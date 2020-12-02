@@ -38,6 +38,12 @@ export default function SettingsPage(props) {
                 {userData.bday}
             </Typography>
           <Typography variant="h4" gutterBottom>
+            Email
+          </Typography>
+            <Typography variant="h5" gutterBottom style={{ marginLeft: "50px" }}>
+                {userData.email}
+            </Typography>
+          <Typography variant="h4" gutterBottom>
             Gender
           </Typography>
             <Typography variant="h5" gutterBottom style={{ marginLeft: "50px" }}>
