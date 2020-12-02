@@ -353,12 +353,21 @@ export default function AppMain(props) {
                                 </Suspense>
 
                                 {/* Default Route */}
-                                <Route exact path="/" render={() => (
-                                    <Redirect to="/maindashboard"/>
-                                )}/>
-
-
-
+                                {userData.isCaregiver && 
+                                    <Route exact path="/" render={() => (
+                                        <Redirect to="/usersanalysis"/>
+                                    )}/>
+                                }
+                                {userData.isPatient && 
+                                    <Route exact path="/" render={() => (
+                                        <Redirect to="/maindashboard"/>
+                                    )}/>
+                                }
+                                {userData.isDeveloper && 
+                                    <Route exact path="/" render={() => (
+                                        <Redirect to="/usersanalysis"/>
+                                    )}/>
+                                }
 
 
                                 {/**

@@ -74,7 +74,7 @@ class Main extends React.Component {
                             }
                             {this.state.isLoggedIn &&
                                 <div>
-                                    <Redirect to="/maindashboard" />
+                                    <Redirect to="/" />
                                     <AppMain userId={this.state.userIdNum} />
                                 </div>
                             }
