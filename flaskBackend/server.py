@@ -115,7 +115,7 @@ def getUserData():
             userId = request.get_json()['userId']
 
             cur = conn.cursor()
-            cur.execute("SELECT userId, fname, lname, bday, gender, doctor, ispatient, iscaregiver, isdeveloper, email FROM Users WHERE userId = %s", (userId,))
+            cur.execute("SELECT userId, fname, lname, bday, gender, doctor, doctorId, ispatient, iscaregiver, isdeveloper, email FROM Users WHERE userId = %s", (userId,))
 
             row = cur.fetchone()
             conn.commit()
@@ -128,17 +128,18 @@ def getUserData():
                 'bday': row[3],
                 'gender': row[4],
                 'doctor': row[5],
-                'isPatient': row[6],
-                'isCaregiver': row[7],
-                'isDeveloper': row[8],
-                'email': row[9]
+                'doctorId': row[6],
+                'isPatient': row[7],
+                'isCaregiver': row[8],
+                'isDeveloper': row[9],
+                'email': row[10]
             }
 
             return data
         else:
             return {'userId': "Devleoper", "isDeveloper": True}
     except:
-        raise Exception('ERROR POST SensorData')
+        raise Exception('ERROR: Could not retrieve userData.')
 
 #insert sensor data api
 @app.route("/api/postSensorData", methods=['POST'])
