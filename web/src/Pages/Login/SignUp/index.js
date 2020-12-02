@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import DateFnsUtils from '@date-io/date-fns';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -15,17 +14,6 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-  } from '@material-ui/pickers';
-// Firebase imports
-//import * as firebase from "firebase/app";
-//import "firebase/auth";
-// Get a reference to the database service
-//var database = firebase.database();
 
 const awsConnection = require('../../../config/config.json');
 
@@ -34,7 +22,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Health Monitoring System
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -91,56 +79,26 @@ class SignUp extends React.Component {
         this.state=({
             selectedGender: "",
             selectedDate: new Date(),
-            caregiverCheckbox: false,
+            selectedCaregiver: "",
+            selectedRole: "",
         });
     }
 
-    handleSignUp = (email,password1,password2,fname,lname, doctor) => {
-        //this.handleSignUpFirebase(email,password1,password2,fname,lname, doctor);
-        this.handleSignUpBackend(email,password1,password2,fname,lname, doctor);
-    }
-
-    /*handleSignUpFirebase = (email,password1,password2,fname,lname, doctor) => {
-        firebase.auth().createUserWithEmailAndPassword(email, password1)
-        .then(()=>{
-            firebase.database().ref('users/'+ firebase.auth().currentUser.uid).set({
-                email: email,
-                fname:fname,
-                lname:lname,
-                bday:this.state.selectedDate,
-                gender:this.state.selectedGender,
-                doctor: doctor,
-                isCaregiver: this.state.caregiverCheckbox,
-            })
-            .then(()=>{
-                this.props.handleLogin();
-            })
-            .catch((error)=>{
-                var errorCode = error.errorCode;
-                var errorMessage = error.message;
-                console.log(errorCode);
-                console.log(errorMessage);
-            })
-        })
-        .catch((error) => {
-            var errorCode = error.errorCode;
-            var errorMessage = error.message;
-            console.log(errorCode);
-            console.log(errorMessage);
-        })
-    }*/
-
-    handleSignUpBackend = (email,password1,password2,fname,lname, doctor) => {
+    handleSignUpBackend = (email,password1,fname,lname) => {
         var that = this;
+        console.log(this.state.selectedRole);
+        console.log(this.state.selectedCaregiver);
         let data= {
-            email: email,
-            password1: password1,
             fname: fname,
             lname: lname,
             bday: this.state.selectedDate,
             gender: this.state.selectedGender,
-            doctor: doctor,
-            isCaregiver: this.state.caregiverCheckbox,
+            doctor: this.state.selectedCaregiver,
+            isCaregiver: (this.state.selectedRole === "Caregiver"),
+            isPatient: (this.state.selectedRole === "Patient"),
+            isDeveloper: (this.state.selectedRole === "Developer"),
+            email: email,
+            password1: password1
         }
         var request = new Request(awsConnection.awsEC2Connection+'/api/register', {
             method: 'POST',
@@ -163,7 +121,19 @@ class SignUp extends React.Component {
         this.setState({
             selectedGender: event.target.value,
         })
-      };
+    };
+
+    handleCaregiverChange = event => {
+        this.setState({
+            selectedCaregiver: event.target.value,
+        })
+    };
+
+    handleRoleChange = event => {
+        this.setState({
+            selectedRole: event.target.value,
+        })
+    };
 
     handleDateChange = event => {
         this.setState({
@@ -224,17 +194,6 @@ class SignUp extends React.Component {
                         autoComplete="email"
                         autoFocus
                     />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="doctor"
-                        label="Your General Physician"
-                        name="doctor"
-                        autoComplete="doctor"
-                        autoFocus
-                    />
                     <form className={classes.container} noValidate>
                         <TextField
                             id="bday"
@@ -249,7 +208,7 @@ class SignUp extends React.Component {
                         />
                     </form>
                     <FormControl variant="outlined" className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-outlined-label">Gender</InputLabel>
+                        <InputLabel id="demo-simple-select-outlined-label" required>Gender</InputLabel>
                         <Select
                             labelId="gender"
                             id="gender"
@@ -265,17 +224,47 @@ class SignUp extends React.Component {
                         <MenuItem value="Other">Other</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={this.state.caregiverCheckbox}
-                                onChange={this.handleCaregiverCheckbox}
-                                name="Cargiver"
-                                color="primary"
-                            />
-                        }
-                        label={"Caregiver"}
-                    />
+                    <FormControl variant="outlined" className={classes.formControl} style={{ marginTop: "15px" }}>
+                        <InputLabel id="demo-simple-select-outlined-label" required>Role</InputLabel>
+                        <Select
+                            labelId="role"
+                            id="role"
+                            value={this.state.selectedRole}
+                            onChange={this.handleRoleChange}
+                            label="Role"
+                        >
+                        <MenuItem value="Caregiver">Caregiver</MenuItem>
+                        <MenuItem value="Patient">Patient</MenuItem>
+                        <MenuItem value="Developer">Developer</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {this.state.selectedRole === "Developer" &&
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            id="Developer Passcode"
+                            label="Developer Passcode"
+                            name="Developer Passcode"
+                            required
+                            autoFocus
+                        />
+                    } 
+                    {this.state.selectedRole === "Patient" && 
+                        <FormControl variant="outlined" className={classes.formControl} style={{ marginTop: "15px" }}>
+                        <InputLabel id="demo-simple-select-outlined-label" required>Caregiver</InputLabel>
+                            <Select
+                                labelId="caregiver"
+                                id="caregiver"
+                                value={this.state.selectedCaregiver}
+                                onChange={this.handleCaregiverChange}
+                                label="caregiver"
+                            >
+                                <MenuItem value="Alanna Doyle">Alanna Doyle</MenuItem>
+                                <MenuItem value="Nikita Bliumkin">Nikita Bliumkin</MenuItem>
+                            </Select>
+                        </FormControl>
+                    }
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -307,10 +296,8 @@ class SignUp extends React.Component {
                         onClick={()=>this.handleSignUpBackend(
                             document.getElementById('email').value,
                             document.getElementById('password1').value,
-                            document.getElementById('password2').value,
                             document.getElementById('fname').value,
-                            document.getElementById('lname').value,
-                            document.getElementById('doctor').value
+                            document.getElementById('lname').value
                         )}
                     >
                         Sign Up

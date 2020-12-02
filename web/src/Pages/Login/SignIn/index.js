@@ -138,7 +138,6 @@ class SignIn extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={()=>this.handleSignIn()}
                         onClick={()=>this.handleSignIn(
                             document.getElementById('email').value,
                             document.getElementById('password').value,
