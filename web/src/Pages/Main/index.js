@@ -33,7 +33,7 @@ class Main extends React.Component {
     handleLoginDeveloper(){
         this.setState({
             isLoggedIn: true,
-            userIdNum: "Developer"
+            userIdNum: "1"
         });
     }
 

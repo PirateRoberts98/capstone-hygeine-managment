@@ -4,6 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import WaterUsageChart from '../../../components/charts/WaterUsageChart';
 // Other Components
 import Alerts from '../../../components/Alert';
+import MessagesComponent from '../../../components/MessagesComponent';
 // Material UI
 import Typography from '@material-ui/core/Typography';
 import {
@@ -35,7 +36,7 @@ export default function MainDashboard(props) {
             <Typography variant="h2" gutterBottom>
                 Messages
             </Typography>
-            <Alerts />
+            <MessagesComponent userId={userData.userId} />
             <Typography variant="h2" gutterBottom>
                 Charts
             </Typography>

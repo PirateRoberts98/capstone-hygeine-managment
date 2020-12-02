@@ -17,7 +17,7 @@ class MessagesComponent extends React.Component {
         this.retrieveMessages()
         setInterval(
             this.retrieveMessages(),
-            5000
+            60000
         );
     }
 

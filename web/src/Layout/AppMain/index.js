@@ -64,6 +64,7 @@ export default function AppMain(props) {
         fetch(request).then((response) => {
             response.json().then((data) => {
                 if(data.userId){
+                    console.log(data);
                     setUserData(data);
                     setIsGatheringDataState(false);
                 }
