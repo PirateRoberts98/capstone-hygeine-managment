@@ -14,12 +14,41 @@ import {
 } from '../../reducers/ThemeOptions';
 
 class AppSidebar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = ({
+            userData: this.props.userData,
+            activeLinkId: 1,
+            isNavMenuItemClicked: false
+        })
 
-    state = {};
+        this.onMenuClick = this.onMenuClick.bind(this);
+    }
+
+    componentDidMount(){
+       this.setState({
+            userData: this.props.userData
+       });
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps !== this.props) {
+            this.setState({
+                userData: this.props.userData
+           });
+        }
+    }
 
     toggleMobileSidebar = () => {
         let {enableMobileMenu, setEnableMobileMenu} = this.props;
         setEnableMobileMenu(!enableMobileMenu);
+    }
+
+    onMenuClick(linkId) {
+        this.setState({
+            activeLinkId: linkId,
+            isNavMenuItemClicked: !this.state.isNavMenuItemClicked
+        });
     }
 
     render() {
@@ -45,7 +74,12 @@ class AppSidebar extends Component {
                     <HeaderLogo/>
                     <PerfectScrollbar>
                         <div className="app-sidebar__inner">
-                            <Nav/>
+                            {this.state.isNavMenuItemClicked && 
+                                <Nav userData={this.state.userData} onMenuClick={(linkId)=>this.onMenuClick(linkId)} activeLinkId={this.state.activeLinkId}/>
+                            }
+                            {!this.state.isNavMenuItemClicked && 
+                                <Nav userData={this.state.userData} onMenuClick={(linkId)=>this.onMenuClick(linkId)} activeLinkId={this.state.activeLinkId}/>
+                            }
                         </div>
                     </PerfectScrollbar>
                     <div

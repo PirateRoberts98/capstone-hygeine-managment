@@ -27,7 +27,13 @@ class LoginMain extends React.Component {
                         </div>
                     </div>
                 }>
-                    <Route path="/login" render={(props) => <SignIn {...props} handleLogin={this.props.handleLogin} />}/>
+                    <Route path="/login" render={(props) => 
+                        <SignIn 
+                            {...props} 
+                            handleLogin={this.props.handleLogin}
+                            handleLoginDeveloper={this.props.handleLoginDeveloper}
+                        />
+                    }/>
                 </Suspense>
     
                 {/* Sign Up */}
@@ -41,7 +47,11 @@ class LoginMain extends React.Component {
                         </div>
                     </div>
                 }>
-                    <Route path="/signup" render={(props) => <SignUp {...props} handleLogin={this.props.handleLogin} /> } />
+                    <Route path="/signup" render={(props) => 
+                        <SignUp {...props}
+                            handleLogin={this.props.handleLogin} 
+                        /> 
+                    }/>
                 </Suspense>
     
                 {/* Default Route */}

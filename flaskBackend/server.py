@@ -74,6 +74,36 @@ def login():
     except:
         raise Exception('ERROR POST SensorData')
 
+#get user data api
+@app.route("/api/getUserData", methods=['POST'])
+def getUserData():
+    try:
+        #parameters
+        if(request.get_json()['userId'] != 'Developer'):
+            userId = request.get_json()['userId']
+
+            cur = conn.cursor()
+            cur.execute("SELECT userId, fname, lname, bday, gender, iscaregiver FROM Users WHERE userId = %s", (userId,))
+
+            row = cur.fetchone()
+            conn.commit()
+            cur.close()
+
+            data = {
+                'userId': row[0],
+                'fname': row[1],
+                'lname': row[2],
+                'bday': row[3],
+                'gender': row[4],
+                'isCaregiver': row[5]
+            }
+
+            return data
+        else:
+            return {'userId': "Devleoper", "isDeveloper": True}
+    except:
+        raise Exception('ERROR POST SensorData')
+
 #insert sensor data api
 @app.route("/api/postSensorData", methods=['POST'])
 def insertSensorData():

@@ -1,55 +1,63 @@
 export const MainNav = [
     {
-        icon: 'pe-7s-rocket',
+        id: 1,
+        icon: 'pe-7s-home',
         label: 'Dashboard',
         to: '#/maindashboard',
     },
 ];
 export const ContactDoctorNav = [
     {
-        icon: 'pe-7s-rocket',
+        id: 7,
+        icon: 'pe-7s-users',
         label: 'Contact Doctor',
         to: '#/contactdoctor',
     },
 ];
 export const PillsNav = [
     {
-        icon: 'pe-7s-rocket',
+        id: 5,
+        icon: 'pe-7s-note2',
         label: 'Pills',
         to: '#/pills',
     },
 ];
 export const ScheduleNav = [
     {
-        icon: 'pe-7s-rocket',
+        id: 6,
+        icon: 'pe-7s-bookmarks',
         label: 'Schedule',
         to: '#/schedule',
     },
 ];
 export const CheckUserAnalysisNav = [
     {
-        icon: 'pe-7s-rocket',
+        id: 1,
+        icon: 'pe-7s-graph2',
         label: 'Users Analysis',
         to: '#/usersanalysis',
     },
 ];
 export const SetUserScheduleNav = [
     {
-        icon: 'pe-7s-rocket',
+        id: 3,
+        icon: 'pe-7s-bookmarks',
         label: 'Users Schedule',
         to: '#/usersschedule',
     },
 ];
 export const MessageUsersNav = [
     {
-        icon: 'pe-7s-rocket',
+        id: 4,
+        icon: 'pe-7s-users',
         label: 'Message Users',
         to: '#/messageusers',
     },
 ];
 export const SensorNav = [
     {
-        icon: 'pe-7s-rocket',
+        id: 8,
+        icon: 'pe-7s-graph1',
         label: 'Sensors \& Alerts',
         to: '#/sensors',
     },

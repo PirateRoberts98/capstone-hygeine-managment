@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import cx from 'classnames';
 
-import TitleComponent2 from './PageTitle/Variation2'
-
 class PageTitle extends Component {
 
     render() {
@@ -18,7 +16,7 @@ class PageTitle extends Component {
 
         return (
 
-            <div className="app-page-title">
+            <div className="app-page-title" style={{ position: "fixed", width: "100%", backgroundColor: "#E1DFDF"}}>
                 <div className="page-title-wrapper">
                     <div className="page-title-heading">
                         <div
@@ -32,9 +30,6 @@ class PageTitle extends Component {
                                 {subheading}
                             </div>
                         </div>
-                    </div>
-                    <div className="page-title-actions">
-                        <TitleComponent2/>
                     </div>
                 </div>
             </div>

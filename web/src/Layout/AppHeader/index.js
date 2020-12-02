@@ -9,8 +9,33 @@ import HeaderLogo from '../AppLogo';
 
 import SearchBox from './Components/SearchBox';
 import UserBox from './Components/UserBox';
+import PatientDropDown from './Components/PatientDropDown';
 
 class Header extends React.Component {
+    constructor(props){
+        super(props)
+        this.state=({
+            userData: {
+                "fname": "Loading...",
+                "lname": "Loading...",
+                "doctor": "Loading...",
+                "isPatient": false,
+                "isDeveloper": false,
+                "isCaregiver": false
+            }
+        });
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps !== this.props) {
+            if(this.props.userData) {
+                this.setState({
+                    userData: this.props.userData
+                });
+            }
+        }
+    }
+
     render() {
         let {
             headerBackgroundColor,
@@ -37,8 +62,33 @@ class Header extends React.Component {
                         <div className="app-header-left">
                             <SearchBox/>
                         </div>
+                        {this.state.userData.isCaregiver &&
+                            <div className="page-title-actions">
+                                <PatientDropDown 
+                                    isGatheringDataState={this.props.isGatheringDataState} 
+                                    setSelectedPatient={this.props.setSelectedPatient}
+                                />
+                            </div>
+                        }
+                        {this.state.userData.isDeveloper &&
+                            <PatientDropDown 
+                                isGatheringDataState={this.props.isGatheringDataState} 
+                                setSelectedPatient={this.props.setSelectedPatient}
+                            />
+                        }
                         <div className="app-header-right">
-                            <UserBox/>
+                            {this.props.isGatheringDataState &&
+                                <span>Loading...</span>
+                            }
+                            {!this.props.isGatheringDataState &&
+                                <UserBox 
+                                    fname={this.state.userData.fname} 
+                                    lname={this.state.userData.lname} 
+                                    doctor={this.state.userData.doctor}
+                                    userData={this.state.userData} 
+                                    setUserData={this.props.setUserData}
+                                />
+                            }
                         </div>
                     </div>
                 </ReactCSSTransitionGroup>

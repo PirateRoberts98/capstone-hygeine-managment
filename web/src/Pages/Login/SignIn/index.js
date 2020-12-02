@@ -13,17 +13,16 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
-// Firebase imports
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
+import HMSLogo from '../../../assets/utils/images/HealthMonitoringSystemLogoCopy.jpg';
+
+const awsConnection = require('../../../config/config.json');
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Health Monitoring System
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -36,9 +35,7 @@ const styles = (theme) => ({
       height: '100vh',
     },
     image: {
-      backgroundImage: '',
       backgroundRepeat: 'no-repeat',
-      backgroundColor: '#7FC4FD',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     },
@@ -66,29 +63,31 @@ class SignIn extends React.Component {
         super(props);
     }
 
-    handleSignIn() {
-        let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(()=>{
-            // Existing and future Auth states are now persisted in the current
-            // session only. Closing the window would clear any existing state even
-            // if a user forgets to sign out.
-            // ...
-            // New sign-in will be persisted with session persistence.
-            return firebase.auth().signInWithEmailAndPassword(email, password).then(() => this.props.handleLogin());
-        })
-        .catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode);
-            console.log(errorMessage);
+    handleSignIn = (email,password) => {
+        var that = this;
+        let data= {
+            email: email,
+            password: password
+        }
+        var request = new Request(awsConnection.awsEC2Connection+'/api/login', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type' : 'application/json' }),
+            body: JSON.stringify(data)
+        });
+
+        fetch(request).then(function(response) {
+            response.json().then(function(data){
+                if(data.userId){
+                    that.props.handleLogin(data.userId);
+                }
+            })
+        }).catch(function(err){
+            console.log(err)
         });
     }
 
     handleDeveloperButton() {
-        this.props.handleLogin()
+        this.props.handleLoginDeveloper();
     }
 
     render() {
@@ -96,7 +95,9 @@ class SignIn extends React.Component {
         return(
             <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={false} sm={4} md={7}>
+            <img className={classes.image} src={HMSLogo} alt=""/>
+            </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
@@ -138,6 +139,10 @@ class SignIn extends React.Component {
                         color="primary"
                         className={classes.submit}
                         onClick={()=>this.handleSignIn()}
+                        onClick={()=>this.handleSignIn(
+                            document.getElementById('email').value,
+                            document.getElementById('password').value,
+                        )}
                     >
                         Sign In
                     </Button>

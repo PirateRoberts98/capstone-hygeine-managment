@@ -14,39 +14,22 @@ import Alerts from './Alert';
 
 const PillsPage = ({match}) => (
     <Fragment>
-        <AppHeader/>
-        <div className="app-main">
-            <AppSidebar/>
-            <div className="app-main__outer">
-                <div className="app-main__inner">
-                    <Fragment>
-                        <ReactCSSTransitionGroup
-                            component="div"
-                            transitionName="TabsAnimation"
-                            transitionAppear={true}
-                            transitionAppearTimeout={0}
-                            transitionEnter={false}
-                            transitionLeave={false}>
-                            <div>
-                                <PageTitle
-                                    heading="Pills"
-                                    subheading="Required Pills - Time and Date."
-                                    icon="pe-7s-user icon-gradient bg-mean-fruit"
-                                />
-                            </div>
-                            <Typography variant="h2" gutterBottom>
-                                Upcoming Pills
-                            </Typography>
-                            <Alerts />
-                            <Typography variant="h2" gutterBottom>
-                                Prescribed Pills - Pickup
-                            </Typography>
-                            <Alerts />
-                        </ReactCSSTransitionGroup>
-                    </Fragment>
-                </div>
-            </div>
-        </div>
+        <ReactCSSTransitionGroup
+            component="div"
+            transitionName="TabsAnimation"
+            transitionAppear={true}
+            transitionAppearTimeout={0}
+            transitionEnter={false}
+            transitionLeave={false}>
+            <Typography variant="h2" gutterBottom>
+                Upcoming Pills
+            </Typography>
+            <Alerts />
+            <Typography variant="h2" gutterBottom>
+                Prescribed Pills - Pickup
+            </Typography>
+            <Alerts />
+        </ReactCSSTransitionGroup>
     </Fragment>
 );
 
