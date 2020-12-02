@@ -47,9 +47,8 @@ const styles = (theme) => ({
       height: '100vh',
     },
     image: {
-      backgroundImage: '',
+      backgroundImage: "url(" + "https://pbs.twimg.com/media/EoLKVN-XEAAjFaD?format=png&name=medium" + ")",
       backgroundRepeat: 'no-repeat',
-      backgroundColor: '#7FC4FD',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     },

@@ -13,10 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
-// Firebase imports
-//import * as firebase from "firebase/app";
-//import "firebase/auth";
-//import "firebase/database";
+import HMSLogo from '../../../assets/utils/images/HealthMonitoringSystemLogoCopy.jpg';
+
 const awsConnection = require('../../../config/config.json');
 
 function Copyright() {
@@ -24,7 +22,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Health Monitoring System
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -37,9 +35,7 @@ const styles = (theme) => ({
       height: '100vh',
     },
     image: {
-      backgroundImage: '',
       backgroundRepeat: 'no-repeat',
-      backgroundColor: '#7FC4FD',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     },
@@ -99,7 +95,9 @@ class SignIn extends React.Component {
         return(
             <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={false} sm={4} md={7}>
+            <img className={classes.image} src={HMSLogo} alt=""/>
+            </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
