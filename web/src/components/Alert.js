@@ -239,7 +239,7 @@ class Alert extends React.Component {
                     !(this.state.sensorPressureMessages.length > 0) &&
                     <Card className="main-card mb-3">
                         <CardBody>
-                            <Row form>No alerts to from pressure sensor...</Row>
+                            <Row form>No alerts from pressure sensor...</Row>
                         </CardBody>
                     </Card>
                 }
@@ -253,7 +253,7 @@ class Alert extends React.Component {
                     !(this.state.sensorTemperatureMessages.length > 0) &&
                     <Card className="main-card mb-3">
                         <CardBody>
-                            <Row form>No alerts to from temperature sensor...</Row>
+                            <Row form>No alerts from temperature sensor...</Row>
                         </CardBody>
                     </Card>
                 }
