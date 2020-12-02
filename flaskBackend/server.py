@@ -83,7 +83,7 @@ def login():
 
 #get message api
 @app.route("/api/getPatients/<userId>", methods=['GET'])
-def getMessages(userId):
+def getPatients(userId):
     try:
         cur = conn.cursor()
         cur.execute("SELECT * FROM users WHERE doctorId = %s AND isPatient = true", (userId))
@@ -96,16 +96,15 @@ def getMessages(userId):
         if rows:
             for i in range(len(rows)):
                 output.append({
-                    "messageId": rows[i][0],
-                    "senderId": rows[i][1],
-                    "receiverId": rows[i][2],
-                    "message": rows[i][3]
+                    "patientId": rows[i][0],
+                    "patientfName": rows[i][1],
+                    "patientlName": rows[i][2],
                 })
 
         response = jsonify(output)
         return response
     except:
-        raise Exception('Error POST postMessage')
+        raise Exception('Error: Cannot retrieve patient data.')
 
 #get user data api
 @app.route("/api/getUserData", methods=['POST'])
