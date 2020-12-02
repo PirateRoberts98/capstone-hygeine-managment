@@ -8,6 +8,3 @@ VALUES (1, 'James', 'Lee', '12/12/1997', 'male', 'James Chui', false, false, tru
 
 /* Query users in DB*/
 SELECT * FROM users
-
-/* Query users in DB*/
-SELECT * FROM users

@@ -83,7 +83,7 @@ def getUserData():
             userId = request.get_json()['userId']
 
             cur = conn.cursor()
-            cur.execute("SELECT userId, fname, lname, bday, gender, doctor, ispatient, iscaregiver, isdeveloper FROM Users WHERE userId = %s", (userId,))
+            cur.execute("SELECT userId, fname, lname, bday, gender, doctor, ispatient, iscaregiver, isdeveloper, email FROM Users WHERE userId = %s", (userId,))
 
             row = cur.fetchone()
             conn.commit()
@@ -98,7 +98,8 @@ def getUserData():
                 'doctor': row[5],
                 'isPatient': row[6],
                 'isCaregiver': row[7],
-                'isDeveloper': row[8]
+                'isDeveloper': row[8],
+                'email': row[9]
             }
 
             return data
