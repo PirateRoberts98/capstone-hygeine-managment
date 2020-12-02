@@ -1,15 +1,11 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
 //Charts
-import WaterUsageChart from './Charts/WaterUsageChart';
-
+import WaterUsageChart from '../../../components/charts/WaterUsageChart';
 // Other Components
-import Alerts from './Alert';
-
+import Alerts from '../../../components/Alert';
 // Material UI
 import Typography from '@material-ui/core/Typography';
-
 import {
     Row, Col,
     Card, CardBody,
