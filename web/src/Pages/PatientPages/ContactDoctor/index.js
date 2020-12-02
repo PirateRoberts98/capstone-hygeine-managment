@@ -1,19 +1,25 @@
 import React, {Fragment} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-// Material UI
+// Material UI Components
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Other Components.
 import MessagesComponent from '../../../components/MessagesComponent';
 
 const awsConnection = require('../../../config/config.json');
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default function ContactDoctor(props) {
-const [messageFormContent, setMessageFormContent] = React.useState('');
+    const [messageFormContent, setMessageFormContent] = React.useState('');
     const [snackbarMessage, setSnackbarMessage] = React.useState('');
     const [snackbarSeverity, setSnackbarSeverity] = React.useState('info');
     const [isSnackbarOpen, setSnackbarView] = React.useState(false);
@@ -24,7 +30,7 @@ const [messageFormContent, setMessageFormContent] = React.useState('');
 
     const onSendRequestClick = () => {
         let messageJson = {
-            "senderId": 0,
+            "senderId": props.userData.userId,
             "receiverId": 1,
             "message": messageFormContent
         }
@@ -75,6 +81,8 @@ const [messageFormContent, setMessageFormContent] = React.useState('');
                         rows={4}
                         defaultValue=""
                         variant="outlined"
+                        onChange={(event)=>onMessageFormChange(event)}
+                        value={messageFormContent}
                     />
                 </div>
                 <div>
@@ -93,6 +101,11 @@ const [messageFormContent, setMessageFormContent] = React.useState('');
                 Messages
             </Typography>
             <MessagesComponent userId={props.userData.userId}/>
+            <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={handlePollSnackBarClose}>
+                <Alert onClose={handlePollSnackBarClose} severity={snackbarSeverity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </ReactCSSTransitionGroup>
     </Fragment>
     )
