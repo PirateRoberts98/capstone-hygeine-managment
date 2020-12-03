@@ -1,3 +1,3 @@
 {
-  "awsEC2Connection": "http://ec2-35-182-142-178.ca-central-1.compute.amazonaws.com:3001"
+  "awsEC2Connection": "http://ec2-35-182-75-95.ca-central-1.compute.amazonaws.com:3001"
 }
