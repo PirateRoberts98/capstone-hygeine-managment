@@ -69,7 +69,7 @@ class Alert extends React.Component {
                         // Format into JSX
                         let msgArray = []
                         for(let j=sensorMessagesArray.length-1; j > -1; j--) {
-                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>Alert with severity: null. The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
+                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
                             msgArray.push(msg);
                         }
 
@@ -117,6 +117,7 @@ class Alert extends React.Component {
                         // Map the Sensor Data Object to appropriate arrays.
                         sensorDataObjects.map(item => {
                             if(item != undefined) {
+                                console.log(item.message);
                                 sensorTimesArray.push((item.timestamp).toString());
                                 sensorMessagesArray.push(item.message);
                             }
@@ -128,7 +129,7 @@ class Alert extends React.Component {
                         // Format into JSX
                         let msgArray = []
                         for(let j=sensorMessagesArray.length-1; j > -1; j--) {
-                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>Alert with severity: null. The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
+                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
                             msgArray.push(msg);
                         }
 
@@ -183,7 +184,7 @@ class Alert extends React.Component {
                         // Format into JSX
                         let msgArray = []
                         for(let j=sensorMessagesArray.length-1; j > -1; j--) {
-                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>Alert with severity: null. The warning message: {sensorMessagesArray[j]}.</Row></CardBody></Card>;
+                            let msg = <Card className="main-card mb-3"><CardBody><Row key={j} form>The warning message: ALARM: Have not been to the washroom for at least a day.</Row></CardBody></Card>;
                             msgArray.push(msg);
                         }
 
@@ -253,7 +254,7 @@ class Alert extends React.Component {
                     !(this.state.sensorTemperatureMessages.length > 0) &&
                     <Card className="main-card mb-3">
                         <CardBody>
-                            <Row form>No alerts from temperature sensor...</Row>
+                            <Row form>The warning message: ALARM: The water temperature is low.</Row>
                         </CardBody>
                     </Card>
                 }
