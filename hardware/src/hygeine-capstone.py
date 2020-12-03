@@ -17,9 +17,12 @@ config = None
 def pressure_sensor_thread(next,delay,stop,sensor,api_queue,interpretor):
     logging.info("Running Sensor Data")
     data = sensor.read_from_sensor()
-    api_queue.put({"sensor_info":sensor.api_info,"value":data})
     if interpretor != None:
-        interpretor.put(data)
+        if interpretor.predict(data)[0]:  
+            api_queue.put({"sensor_info":sensor.api_info,"value":data})
+        else:
+            data = 0
+            api_queue.put({"sensor_info":sensor.api_info,"value":data})
     if config["stop"] == False: # Continue Thread if not stopped
         threading.Timer(delay,next,args=[
             next,delay,stop,sensor,api_queue,interpretor]).start()
@@ -37,6 +40,17 @@ def tempature_humdity_sensor_thread(next,delay,stop,sensor,api_queue):
             next,delay,stop,sensor,api_queue]).start()
     else:
         logging.info("Stopping Temp Humidity Thread")
+    return
+
+def read_sensor_thread(next,delay,stop,sensor,api_queue):
+    logging.info("Running Sensor Data")
+    data = sensor.read_from_sensor()
+    api_queue.put({"sensor_info":sensor.api_info,"value":data})
+    if config["stop"] == False: # Continue Thread if not stopped
+        threading.Timer(delay,next,args=[
+            next,delay,stop,sensor,api_queue]).start()
+    else:
+        logging.info("Stopping Read Thread")
     return 
 
 
@@ -63,10 +77,13 @@ def main():
     '''
 
     '''
+    import ai as ai
+    import read_sensor as read
     if config["mock"]:
         import mock_GPIO as GPIO # Warning: NOT FULL COVERAGE 
         import mock_pressure as pressure
         import mock_temp as tempature
+        import ai as ai
     else:
         try:
             import RPi.GPIO as GPIO
@@ -80,13 +97,17 @@ def main():
     temp_sensor_info = api.Sensor("Temperature")  #TODO log user create to debug
     humidity_sensor_info = api.Sensor("Humidity")
     pressure_sensor_info = api.Sensor("Pressure")
+    read_sensor_info = api.Sensor("Read")
     web_api = api.WebAPI(user_info,base_url=config["base_url"],offline=config["offline"])
     temp_humidity = tempature.TempAndHumiditySensor(temp_api_info=temp_sensor_info,hum_api_info=humidity_sensor_info)
     pressure_sensor = pressure.PressureSensor(pressure_sensor_info)
+    read_sensor = read.ReadSensor(11,read_sensor_info)
     api_queue = queue.Queue()
-    # TODO: Add Interpetors
-    pressure_sensor_thread(pressure_sensor_thread,6,config,pressure_sensor,api_queue,None)
+    aiInterpretor = ai.aiModule()
+    aiInterpretor.trainSensor()
+    pressure_sensor_thread(pressure_sensor_thread,6,config,pressure_sensor,api_queue,aiInterpretor)
     tempature_humdity_sensor_thread(tempature_humdity_sensor_thread,6,config,temp_humidity,api_queue)
+    read_sensor_thread(read_sensor_thread,6,config,read_sensor,api_queue)
     #  start threading, apply queue
     try:
         while True:

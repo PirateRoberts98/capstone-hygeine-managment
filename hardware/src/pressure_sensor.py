@@ -4,14 +4,16 @@ import RPi.GPIO as GPIO
 class PressureSensor:
     GPIO_PIN = 4
     underPressure = 0
+    count = 0
     def __init__(self,api_info):
         self.api_info = api_info
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(PressureSensor.GPIO_PIN, GPIO.IN)
         self.underPressure = self.read_from_sensor()
+        self.count = 0
     
     def read_from_sensor(self):
-        count = 0
+        self.count = 0
     
         GPIO.setup(PressureSensor.GPIO_PIN, GPIO.OUT)
         GPIO.output(PressureSensor.GPIO_PIN, GPIO.LOW)
@@ -20,8 +22,8 @@ class PressureSensor:
         GPIO.setup(PressureSensor.GPIO_PIN, GPIO.IN)
     
         while(GPIO.input(PressureSensor.GPIO_PIN) == GPIO.LOW):
-            count += 1
-        if(count >= 10000):
+            self.count += 1
+        if(self.count >= 10000):
             self.underPressure = 0
         else:
             self.underPressure = 1
@@ -33,8 +35,10 @@ def main():
         while True:
             data = sensor.read_from_sensor()
             if(data == 1):
+                print(sensor.count)
                 print("Under Pressure")
             else:
+                print(sensor.count)
                 print("Not Under Pressure")
             time.sleep(0.3)
     except KeyboardInterrupt:
