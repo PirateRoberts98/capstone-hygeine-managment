@@ -145,7 +145,7 @@ class SignIn extends React.Component {
                     >
                         Sign In
                     </Button>
-                    <Button
+                    {/*<Button
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -154,7 +154,7 @@ class SignIn extends React.Component {
                         onClick={()=>this.handleDeveloperButton()}
                     >
                         / Developer
-                    </Button>
+                    </Button>*/}
                     <Grid container>
                         <Grid item xs>
                             <Link to="/Sign" variant="body2">
