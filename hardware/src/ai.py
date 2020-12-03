@@ -80,8 +80,11 @@ def main():
     test = aiModule()
     sensor = pressure.PressureSensor(None)
     test.createTraining()
-    sensor.read_from_sensor()
-    print(test.predict(sensor.count))
+    test.trainSensor()
+    while(True):
+        option = input("Test: ")
+        sensor.read_from_sensor()
+        print(test.predict(sensor.count))
     
 
 
