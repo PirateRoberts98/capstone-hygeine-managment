@@ -9,7 +9,7 @@ humidity = {
 }
 temperature = {
     'highest_value': 26,
-    'lowest_value': 16
+    'lowest_value': 17
 }
 
 minLimit = 1
