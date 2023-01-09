@@ -14,7 +14,7 @@
   "private": true,
   "dependencies": {
     "connect": "^3.2.0",
-    "firebase-admin": "^8.10.0",
+    "firebase-admin": "^11.4.1",
     "js-yaml": "^3.3.0",
     "oas3-tools": "^2.0.2"
   }
